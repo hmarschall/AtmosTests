@@ -12,6 +12,17 @@ $(eval $(call Copy,$(patsubst %/,%,$(dir $1)),$(notdir $1),$(patsubst %/,%,$(dir
   
 endef
 
+# Copy files from a source directory to a destination directory.
+#
+# $1 -- source directory
+# $2 -- source filenames
+# $3 -- target directory
+define CopyNamedFiles
+
+$(foreach file,$2,$(eval $(call CopyNamedFile,$1,$(file),$3)))
+
+endef
+
 # Copy a file from a source directory to a destination directory.
 # Convenient when the filename remains the same.
 #

@@ -1,1 +1,2 @@
 $(eval $(call BlockMesh,build/advection-noOrography,src/advection/mesh-noOrography))
+$(eval $(call TerrainFollowingMesh,build/advection-btf,build/advection-noOrography,src/advection/mesh-btf))
