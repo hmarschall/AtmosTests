@@ -1,0 +1,42 @@
+# Create $1/$2/l2error$3.txt by analysing $1/$2/$3_diff
+# (which should be defined using FieldDiff)
+#
+# $1 -- case
+# $2 -- time
+# $3 -- field
+define L2Error
+
+$1/$2/l2error$3.txt: $1/$2/globalSum$3_diff.dat
+
+$(eval $(call GlobalSum,$1,$2,$3_diff))
+
+endef
+
+# Creates $1/$2/$3_diff by subtracting the analytic field from the numeric field
+#
+# $1 -- case
+# $2 -- time
+# $3 -- numeric field (e.g. T)
+# $4 -- analytic field filename (e.g. mycase/5000/T_analytic)
+define FieldDiff
+
+$1/$2/$3_diff: $1/$2/$3 $1/$2/$3_analytic $(sumFields)
+	$(sumFields) -case $1 $2 $3_diff $2 $3 $2 $3_analytic -scale0 1 -scale1 -1
+
+$(eval $(call CopyFile,$4,$1/$2/$3_analytic))
+$(eval $(call MakeDir,$1/$2))
+
+endef
+
+# $1 -- case
+# $2 -- time
+# $3 -- field 
+define GlobalSum
+
+$1/$2/globalSum$3.dat: \
+  $1/$2/$3 \
+  $(globalSum)
+	$(globalSum) -case $1 -time $2 $3
+	mv $1/globalSum$3.dat $$@ # TODO: not parallel safe
+
+endef

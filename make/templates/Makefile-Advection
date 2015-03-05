@@ -14,7 +14,7 @@ endef
 # $5 -- field name
 define Tracer
 
-$1/$4/T: \
+$1/$4/$5: \
   $(addprefix $1/,$(meshFiles)) \
   $(addprefix $1/,$(systemFiles)) \
   $1/$(radialTracerDict) \
