@@ -1,4 +1,6 @@
 add2dMountain := add2dMountain
 advectionFoam := advectionFoam
 blockMesh := blockMesh
+setDivFreeVelocityField := $(FOAM_USER_APPBIN)/setDivFreeVelocityField
 setRadialTracer := $(FOAM_USER_APPBIN)/setRadialTracer
+setTerrainFollowingVelocityField := $(FOAM_USER_APPBIN)/setTerrainFollowingVelocityField

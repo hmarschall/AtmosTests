@@ -1,3 +1,6 @@
+# $1 -- case
+# $2 -- mesh
+# $3 -- x centre of tracer
 define InitialTracer
 
 $(eval $(call Tracer,$1,$2,$3,0,T))
@@ -15,6 +18,7 @@ $1/$4/T: \
   $(addprefix $1/,$(meshFiles)) \
   $(addprefix $1/,$(systemFiles)) \
   $1/$(radialTracerDict) \
+  $(setRadialTracer) \
 | $1/$4
 	$(setRadialTracer) -case $1 -x0 $3 -fieldName $5
 	$(if $(filter 0,$4),,mv $1/0/$5 $1/$4/$5)
@@ -30,3 +34,26 @@ $(eval $(call MakeDir,$1/system))
 
 endef
 
+# $1 -- case
+# $2 -- mesh
+# $3 -- original velocity field
+define DivFreeVelocityField
+
+$1/0/phi: \
+  $(addprefix $1/,$(systemFiles)) \
+  $(addprefix $1/,$(meshFiles)) \
+  $1/0/Uf \
+  $1/0/p \
+  $(setDivFreeVelocityField) \
+| $1/0
+	$(setDivFreeVelocityField) -case $1
+
+$(eval $(call CopyNamedFiles,src/divFreeVelocityField,0/p $(systemFiles),$1))
+$(eval $(call CopyFile,$3,$1/0/Uf))
+$(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
+
+$(eval $(call MakeDir,$1/0))
+$(eval $(call MakeDir,$1/system))
+$(eval $(call MakeDir,$1/$(polyMesh)))
+
+endef

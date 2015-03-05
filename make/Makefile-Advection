@@ -1,5 +1,4 @@
 $(eval $(call BlockMesh,build/advection-noOrography,src/advection/mesh-noOrography))
 $(eval $(call TerrainFollowingMesh,build/advection-btf,build/advection-noOrography,src/advection/mesh-btf))
 
-$(eval $(call InitialTracer,build/advection-btf-initialTracer,build/advection-btf,-50000))
-$(eval $(call TerrainFollowingAdvection,build/advection-terrainFollowing-btf,build/advection-btf,build/advection-btf-initialTracer/0/T))
+$(eval $(call TerrainFollowingAdvection,build/advection-terrainFollowing-btf,build/advection-btf))

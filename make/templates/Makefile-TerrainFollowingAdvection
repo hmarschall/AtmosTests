@@ -1,9 +1,36 @@
 # $1 -- case directory
 # $2 -- mesh case
-# $3 -- initial tracer field
 define TerrainFollowingAdvection
 
-$(eval $(call Advection,$1,$2,$3,4,5000 10000,25,5000,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+$(eval $(call InitialTracer,$1-initialTracer,$2,-50000))
+
+$(eval $(call TerrainFollowingVelocityField,$1-velocity,$2,src/advection/terrainFollowingVelocityField))
+
+$(eval $(call DivFreeVelocityField,$1-velocity-divFree,$2,$1-velocity/0/Uf))
+
+$(eval $(call Advection,$1,$2,$1-initialTracer/0/T,$1-velocity-divFree/0/phi,5000 10000,25,5000,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+
+endef
+
+# $1 -- case directory
+# $2 -- mesh case
+# $3 -- velocityFieldDict
+define TerrainFollowingVelocityField
+
+$1/0/Uf: \
+  $1/$(velocityFieldDict) \
+  $(addprefix $1/,$(meshFiles)) \
+  $(addprefix $1/,$(systemFiles)) \
+  $(setTerrainFollowingVelocityField)
+	$(setTerrainFollowingVelocityField) -case $1
+
+$(eval $(call CopyFile,$3,$1/$(velocityFieldDict)))
+$(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
+$(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
+
+$(eval $(call MakeDir,$1/constant))
+$(eval $(call MakeDir,$1/system))
+$(eval $(call MakeDir,$1/$(polyMesh)))
 
 endef
 

@@ -5,6 +5,7 @@ add2dMountainDict := constant/add2dMountainDict
 blockMeshDict := $(polyMesh)/blockMeshDict
 controlDict := system/controlDict
 radialTracerDict := constant/radialTracerDict
+velocityFieldDict := constant/velocityFieldDict
 
 fvSchemes := system/fvSchemes
 fvSolution := system/fvSolution
