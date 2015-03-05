@@ -1,9 +1,11 @@
 polyMesh := constant/polyMesh
 meshFiles := $(addprefix $(polyMesh)/,boundary faces neighbour owner points)
+
+add2dMountainDict := constant/add2dMountainDict
 blockMeshDict := $(polyMesh)/blockMeshDict
 controlDict := system/controlDict
-add2dMountainDict := constant/add2dMountainDict
+radialTracerDict := constant/radialTracerDict
+
 fvSchemes := system/fvSchemes
 fvSolution := system/fvSolution
 systemFiles := $(controlDict) $(fvSchemes) $(fvSolution)
-

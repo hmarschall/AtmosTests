@@ -1,0 +1,14 @@
+FoamFile {
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object	radialTracerDict;
+}
+
+max_magnitude 1;
+centre_x -50000;
+centre_z 9000;
+halfWidth_x 25000;
+halfWidth_z 3000;
+

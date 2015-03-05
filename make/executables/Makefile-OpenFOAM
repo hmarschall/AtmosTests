@@ -1,2 +1,4 @@
-blockMesh := blockMesh
 add2dMountain := add2dMountain
+advectionFoam := advectionFoam
+blockMesh := blockMesh
+setRadialTracer := $(FOAM_USER_APPBIN)/setRadialTracer
