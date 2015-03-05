@@ -1,0 +1,6 @@
+polyMesh := constant/polyMesh
+meshFiles := $(addprefix $(polyMesh)/,boundary faces neighbour owner points)
+blockMeshDict := $(polyMesh)/blockMeshDict
+controlDict := system/controlDict
+
+

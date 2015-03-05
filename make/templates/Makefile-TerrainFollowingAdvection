@@ -1,0 +1,20 @@
+# $1 -- case directory
+# $2 -- mesh case
+define TerrainFollowingAdvection
+
+$(eval $(call Advection,$1,$2))
+
+endef
+
+# $1 -- case directory
+# $2 -- mesh case
+# $3 -- tracer field
+# $4 -- velocity field
+# $5 -- times (e.g. 0 5000 10000)
+define Advection
+
+.INTERMEDIATE: $1.intermediate
+
+$(addprefix $1/,$(addsuffix /T,$5)): $1.intermediate
+
+endef
