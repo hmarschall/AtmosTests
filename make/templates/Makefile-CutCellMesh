@@ -1,0 +1,49 @@
+groundPatch := patchFaces_ground_constant.obj
+
+snappyHexMeshFiles := \
+  $(polyMesh)/level0Edge \
+  $(polyMesh)/refinementHistory \
+  $(polyMesh)/cellLevel \
+  $(polyMesh)/pointLevel \
+  $(polyMesh)/surfaceIndex \
+  $(polyMesh)/pointZones \
+  $(polyMesh)/cellZones \
+  $(polyMesh)/faceZones
+
+# $1 -- case
+# $2 -- noOrography case
+# $3 -- add2dMountainDict for ground patch
+# $4 -- add2dMountainDict for base mesh
+define CutCellMesh
+
+$(eval $(call __TerrainFollowingMesh,$1-groundPatch,$2,$3,$(dummy)/$(controlDict)Ascii))
+$(eval $(call __TerrainFollowingMesh,$1-baseMesh,$2,$4,$(dummy)/$(controlDict)Ascii))
+
+.INTERMEDIATE: $1.intermediate
+
+$(addprefix $1/,$(meshFiles)): $1.intermediate
+
+$1.intermediate: \
+  src/mesh/cutCell \
+  $1/$(triSurface)/$(groundPatch) \
+  $(addprefix $1/,$(systemFiles)) \
+  $(addprefix $1-baseMesh/,$(meshFiles)) \
+| $1/$(polyMesh)
+	cp $(addprefix $1-baseMesh/,$(meshFiles)) $1/$(polyMesh)
+	$(RM) $(addprefix $1/,$(snappyHexMeshFiles))
+	$(snappyHexMesh) -overwrite -case $1 -dict $(abspath src/mesh/cutCell)
+	mv $1/$(boundary) $1/$(boundary).snappyHexMeshGenerated
+	perl -ne 'print if !( m/^\s*ground/ .. m/}/ or /^\d*$$$$/ )' < $1/$(boundary).snappyHexMeshGenerated | sed -e 's/patchFaces_ground_constant.obj/ground/' > $1/$(boundary)
+
+$1-groundPatch/$(groundPatch): \
+  $(addprefix $1-groundPatch/,$(meshFiles)) \
+  $(addprefix $1-groundPatch/,$(systemFiles))
+	$(writeMeshObj) -case $1-groundPatch -patchFaces -time -1 -constant
+
+$(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
+$(eval $(call CopyNamedFile,$1-groundPatch,$(groundPatch),$1/$(triSurface)))
+$(eval $(call MakeDir,$1/$(triSurface)))
+$(eval $(call MakeDir,$1/$(polyMesh)))
+$(eval $(call MakeDir,$1/system))
+
+endef

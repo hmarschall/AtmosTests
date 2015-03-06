@@ -5,4 +5,6 @@ globalSum := $(FOAM_USER_APPBIN)/globalSum
 setDivFreeVelocityField := $(FOAM_USER_APPBIN)/setDivFreeVelocityField
 setRadialTracer := $(FOAM_USER_APPBIN)/setRadialTracer
 setTerrainFollowingVelocityField := $(FOAM_USER_APPBIN)/setTerrainFollowingVelocityField
+snappyHexMesh := snappyHexMesh
 sumFields := $(FOAM_USER_APPBIN)/sumFields
+writeMeshObj := writeMeshObj

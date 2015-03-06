@@ -18,8 +18,9 @@ include make/templates/Makefile-FileSystem
 include make/templates/Makefile-OpenFOAM
 include make/templates/Makefile-Diagnostics
 include make/templates/Makefile-BlockMesh
-include make/templates/Makefile-Advection
 include make/templates/Makefile-TerrainFollowingMesh
+include make/templates/Makefile-CutCellMesh
+include make/templates/Makefile-Advection
 include make/templates/Makefile-TerrainFollowingAdvection
 include make/Makefile-Advection
 

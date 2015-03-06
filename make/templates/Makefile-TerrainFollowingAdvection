@@ -10,7 +10,7 @@ $(eval $(call TerrainFollowingVelocityField,$1-velocity,$2,src/advection/terrain
 
 $(eval $(call DivFreeVelocityField,$1-velocity-divFree,$2,$1-velocity/0/Uf))
 
-$(eval $(call Advection,$1,$2,$1-initialTracer/0/T,$1-velocity-divFree/0/phi,5000 10000,25,5000,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+$(eval $(call Advection,$1,$2,$1-initialTracer/0/T,$1-velocity-divFree/0/phi,5000 10000,25,1000,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
 
 $(eval $(call Tracer,$1-analyticTracer,$2,51500,10000,T_analytic))
 

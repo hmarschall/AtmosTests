@@ -3,6 +3,16 @@
 # $3 -- add2dMountainDict
 define TerrainFollowingMesh
 
+$(eval $(call __TerrainFollowingMesh,$1,$2,$3,$(dummy)/$(controlDict)))
+
+endef
+
+# $1 -- case
+# $2 -- noOrography mesh
+# $3 -- add2dMountainDict
+# $4 -- controlDict
+define __TerrainFollowingMesh
+
 .INTERMEDIATE: $1.intermediate
 
 $(addprefix $1/,$(meshFiles)): $1.intermediate
@@ -16,7 +26,8 @@ $1.intermediate: \
 	$(add2dMountain) -case $1
 
 $(eval $(call CopyFile,$3,$1/$(add2dMountainDict)))
-$(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
+$(eval $(call CopyFile,$4,$1/$(controlDict)))
+$(eval $(call CopyNamedFiles,$(dummy),$(fvSchemes) $(fvSolution),$1))
 $(eval $(call MakeDir,$1/constant))
 $(eval $(call MakeDir,$1/system))
 
