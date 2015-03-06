@@ -4,6 +4,8 @@ MAKEFLAGS += --no-builtin-rules
 .SUFFIXES:
 .PHONY: clean
 
+all::
+
 clean:
 	rm -rf build
 

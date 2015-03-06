@@ -7,6 +7,7 @@
 define L2Error
 
 $1/$2/l2error$3.txt: $1/$2/globalSum$3_diff.dat
+	$(call ExtractStat,$$@,$$<,3,3)
 
 $(eval $(call GlobalSum,$1,$2,$3_diff))
 
@@ -40,3 +41,13 @@ $1/$2/globalSum$3.dat: \
 	mv $1/globalSum$3.dat $$@ # TODO: not parallel safe
 
 endef
+
+# $1 -- stat filename                                                           
+# $2 -- globalSum filename
+# $3 -- field index
+# $4 -- precision
+define ExtractStat
+	tail -n1 $2 | cut -d' ' -f$3 > $1
+	sed -i -re 's/(.*)/\\num[round-mode=figures, round-precision=$4]{\1}/' $1
+endef
+

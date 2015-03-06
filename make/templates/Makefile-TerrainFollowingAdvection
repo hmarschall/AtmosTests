@@ -2,6 +2,8 @@
 # $2 -- mesh case
 define TerrainFollowingAdvection
 
+all:: $1/10000/l2errorT.txt
+
 $(eval $(call InitialTracer,$1-initialTracer,$2,-50000))
 
 $(eval $(call TerrainFollowingVelocityField,$1-velocity,$2,src/advection/terrainFollowingVelocityField))
