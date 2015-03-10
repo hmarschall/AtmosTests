@@ -61,7 +61,7 @@ $1.intermediate: \
   $(addprefix $1/,$(systemFiles)) \
   $1/0/T \
   $1/0/phi
-	$(advectionFoam) -case $1 -usePhi
+	$(advectionFoam) -case $1
 
 # primary fvSchemes file depends upon any auxiliary fvSchemes files
 $1/$(fvSchemes): $(addprefix $1/system/,$(notdir $(call rest,$8)))
