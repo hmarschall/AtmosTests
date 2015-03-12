@@ -1,6 +1,8 @@
 $(eval $(call BlockMesh,build/advection-noOrography,src/advection/mesh-noOrography))
 $(eval $(call TerrainFollowingMesh,build/advection-btf,build/advection-noOrography,src/advection/mesh-btf))
+$(eval $(call TerrainFollowingMesh,build/advection-sleve,build/advection-noOrography,src/advection/mesh-sleve))
 $(eval $(call CutCellMesh,build/advection-cutCell,build/advection-noOrography,src/advection/mesh-btf,src/advection/mesh-snapCol-baseMesh))
 
 $(eval $(call TerrainFollowingAdvection,build/advection-terrainFollowing-btf,build/advection-btf))
+$(eval $(call TerrainFollowingAdvection,build/advection-terrainFollowing-sleve,build/advection-sleve))
 $(eval $(call TerrainFollowingAdvection,build/advection-terrainFollowing-cutCell,build/advection-cutCell))
