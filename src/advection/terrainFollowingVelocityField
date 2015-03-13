@@ -6,6 +6,7 @@ FoamFile {
     object      velocityFieldDict;
 }
     
+velocityProfile		SCHAER_COS;
 maxVelocity		10;
 domainHeight		25e3;
 mountainHalfWidth	25e3;

@@ -1,33 +1,38 @@
 # $1 -- case
 # $2 -- mesh
-# $3 -- x centre of tracer
+# $3 -- velocityFieldDict
 define InitialTracer
 
-$(eval $(call Tracer,$1,$2,$3,0,T))
+$(eval $(call Tracer,$1,$2,0,$3,T))
 
 endef
 
 # $1 -- case
 # $2 -- mesh
-# $3 -- x centre of tracer
-# $4 -- time
+# $3 -- times
+# $4 -- velocityFieldDict
 # $5 -- field name
 define Tracer
 
-$1/$4/$5: \
+.INTERMEDIATE: $1.tracer.intermediate
+
+$(addprefix $1/,$(addsuffix /$5,$3)): $1.$5.intermediate
+
+$1.$5.intermediate: \
   $(addprefix $1/,$(meshFiles)) \
   $(addprefix $1/,$(systemFiles)) \
-  $1/$(radialTracerDict) \
-  $(setRadialTracer) \
-| $1/$4
-	$(setRadialTracer) -case $1 -x0 $3 -fieldName $5
-	$(if $(filter 0,$4),,mv $1/0/$5 $1/$4/$5)
+  $1/$(setScalarOverOrographyDict) \
+  $1/$(velocityFieldDict) \
+  $(setScalarOverOrography) \
+| $(addprefix $1/,$3)
+	$(setScalarOverOrography) -case $1 -tracerFieldFileName $5
 
-$(eval $(call CopyFile,src/advection/radialTracer,$1/$(radialTracerDict)))
+$(eval $(call CopyFile,src/advection/radialTracer,$1/$(setScalarOverOrographyDict)))
+$(eval $(call CopyFile,$4,$1/$(velocityFieldDict)))
 $(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
 $(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
 
-$(eval $(call MakeDir,$1/$4))
+$(eval $(call MakeDirs,$(addprefix $1/,$3)))
 $(eval $(call MakeDir,$1/$(polyMesh)))
 $(eval $(call MakeDir,$1/constant))
 $(eval $(call MakeDir,$1/system))

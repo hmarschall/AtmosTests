@@ -3,12 +3,12 @@ FoamFile {
     format      ascii;
     class       dictionary;
     location    "constant";
-    object	radialTracerDict;
+    object	setScalarOverOrographyDict;
 }
 
-max_magnitude 1;
-centre_x -50000;
-centre_z 9000;
-halfWidth_x 25000;
-halfWidth_z 3000;
+rho0		1;
+x0		-50000;
+z0		9000;
+Ax		25000;
+Az		3000;
 

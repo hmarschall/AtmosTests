@@ -53,3 +53,10 @@ $1:
 	mkdir -p $$@
 
 endef
+
+# $1 -- directories
+define MakeDirs
+
+$(foreach dir,$1,$(eval $(call MakeDir,$(dir))))
+
+endef
