@@ -34,7 +34,7 @@ boundary (
 	}
 
 	outlet {
-		type wall;
+		type patch;
 		faces (
 			(1 2 6 5)
 		);
