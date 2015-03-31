@@ -6,11 +6,9 @@ all:: $1/10000/l2errorT.txt
 
 $(eval $(call InitialTracer,$1-initialTracer,$2,src/advection/terrainFollowingVelocityField))
 
-$(eval $(call TerrainFollowingVelocityField,$1-velocity,$2,src/advection/terrainFollowingVelocityField))
+$(eval $(call VelocityField,$1-velocity,$2,src/advection/terrainFollowingVelocityField))
 
-$(eval $(call DivFreeVelocityField,$1-velocity-divFree,$2,$1-velocity/0/Uf))
-
-$(eval $(call Advection,$1,$2,$1-initialTracer/0/T,$1-velocity-divFree/0/phi,5000 10000,25,1000,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+$(eval $(call Advection,$1,$2,$1-initialTracer/0/T,$1-velocity/0/phi,5000 10000,25,1000,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
 
 $(eval $(call Tracer,$1-analyticTracer,$2,10000,src/advection/terrainFollowingVelocityField,T_analytic))
 
@@ -23,14 +21,14 @@ endef
 # $1 -- case directory
 # $2 -- mesh case
 # $3 -- velocityFieldDict
-define TerrainFollowingVelocityField
+define VelocityField
 
-$1/0/Uf: \
+$1/0/phi: \
   $1/$(velocityFieldDict) \
   $(addprefix $1/,$(meshFiles)) \
   $(addprefix $1/,$(systemFiles)) \
-  $(setTerrainFollowingVelocityField)
-	$(setTerrainFollowingVelocityField) -case $1
+  $(setVelocityField)
+	$(setVelocityField) -case $1
 
 $(eval $(call CopyFile,$3,$1/$(velocityFieldDict)))
 $(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))

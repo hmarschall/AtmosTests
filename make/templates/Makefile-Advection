@@ -39,26 +39,3 @@ $(eval $(call MakeDir,$1/system))
 
 endef
 
-# $1 -- case
-# $2 -- mesh
-# $3 -- original velocity field
-define DivFreeVelocityField
-
-$1/0/phi: \
-  $(addprefix $1/,$(systemFiles)) \
-  $(addprefix $1/,$(meshFiles)) \
-  $1/0/Uf \
-  $1/0/p \
-  $(setDivFreeVelocityField) \
-| $1/0
-	$(setDivFreeVelocityField) -case $1
-
-$(eval $(call CopyNamedFiles,src/divFreeVelocityField,0/p $(systemFiles),$1))
-$(eval $(call CopyFile,$3,$1/0/Uf))
-$(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
-
-$(eval $(call MakeDir,$1/0))
-$(eval $(call MakeDir,$1/system))
-$(eval $(call MakeDir,$1/$(polyMesh)))
-
-endef
