@@ -13,6 +13,23 @@ $(eval $(call GlobalSum,$1,$2,$3_diff))
 
 endef
 
+# $1 -- case
+# $2 -- time
+# $3 -- field
+define Extrema
+
+$1/$2/min$3.txt $1/$2/max$3.txt: $1/$2/globalSum$3.dat
+
+$1/$2/min$3.txt:
+	$(call ExtractStat,$$@,$$<,7,3)
+
+$1/$2/max$3.txt:
+	$(call ExtractStat,$$@,$$<,8,3)
+
+$(eval $(call GlobalSum,$1,$2,$3))
+
+endef
+
 # Creates $1/$2/$3_diff by subtracting the analytic field from the numeric field
 #
 # $1 -- case
