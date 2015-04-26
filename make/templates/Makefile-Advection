@@ -1,8 +1,16 @@
 # $1 -- case directory
 # $2 -- mesh case
-define HorizontalAdvection
+define LinearHorizontalAdvection
 
-$(eval $(call Advection,$1,$2,src/advection/horizontalVelocityField))
+$(eval $(call Advection,$1,$2,src/advection/horizontalVelocityField,src/advection/system/linear src/advection/system/commonFvSchemes))
+
+endef
+
+# $1 -- case directory
+# $2 -- mesh case
+define CubicUpwindHorizontalAdvection
+
+$(eval $(call Advection,$1,$2,src/advection/horizontalVelocityField,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
 
 endef
 
@@ -10,13 +18,14 @@ endef
 # $2 -- mesh case
 define TerrainFollowingAdvection
 
-$(eval $(call Advection,$1,$2,src/advection/terrainFollowingVelocityField))
+$(eval $(call Advection,$1,$2,src/advection/terrainFollowingVelocityField,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
 
 endef
 
 # $1 -- case directory
 # $2 -- mesh case
 # $3 -- velocityFieldDict
+# $4 -- fvSchemes
 define Advection
 
 all:: $1/10000/l2errorT.txt $1/10000/minT.txt $1/10000/maxT.txt
@@ -25,7 +34,7 @@ $(eval $(call InitialTracer,$1-initialTracer,$2,$3))
 
 $(eval $(call VelocityField,$1-velocity,$2,$3))
 
-$(eval $(call AdvectTracer,$1,$2,$1-initialTracer/0/T,$1-velocity/0/phi,5000 10000,25,1000,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+$(eval $(call AdvectTracer,$1,$2,$1-initialTracer/0/T,$1-velocity/0/phi,5000 10000,25,1000,$4))
 
 $(eval $(call Tracer,$1-analyticTracer,$2,10000,$3,T_analytic))
 
