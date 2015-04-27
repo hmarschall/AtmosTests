@@ -1,0 +1,27 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      sampleDict;
+}
+
+setFormat raw;
+
+surfaceFormat raw;
+
+interpolationScheme cell;
+
+fields ($FIELD);
+
+surfaces
+(
+    constantPlane
+    {
+        type            plane;
+        basePoint       (0 10 10e3);
+        normalVector    (0 1 0);
+        interpolate     false;
+        triangulate     false;
+    }
+);

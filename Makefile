@@ -17,6 +17,7 @@ include make/executables/Makefile-OpenFOAM
 include make/templates/Makefile-FileSystem
 include make/templates/Makefile-OpenFOAM
 include make/templates/Makefile-Diagnostics
+include make/templates/Makefile-Sample
 include make/templates/Makefile-BlockMesh
 include make/templates/Makefile-TerrainFollowingMesh
 include make/templates/Makefile-CutCellMesh
