@@ -13,6 +13,7 @@ include make/gmsl
 include make/globals/Makefile
 include make/globals/Makefile-OpenFOAM
 include make/executables/Makefile
+include make/executables/Makefile-GMT
 include make/executables/Makefile-OpenFOAM
 include make/templates/Makefile-FileSystem
 include make/templates/Makefile-OpenFOAM

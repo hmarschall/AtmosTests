@@ -1,6 +1,28 @@
 # $1 -- case
 # $2 -- time
-# $3 -- field name
+# $3 -- field
+# $4 -- sample data
+# $5 -- contour interval
+define Contour
+
+$1/$2/$3.contour.positive $1/$2/$3.contour.negative: $1/$2/$3.contour
+
+$1/$2/$3.contour.positive:
+	-grep -ve "-[0-9]*\.\?[0-9]\+$$$$" $$< | grep -ve "[[:space:]]0$$$$" | sed -re 's/^>.*$$$$//' > $$@
+
+$1/$2/$3.contour.negative:
+	-grep -e "-[0-9]*\.\?[0-9]\+$$$$" $$< | sed -re 's/^>.*$$$$//' > $$@
+
+$1/$2/$3.contour: $4
+	cut -d' ' -f1,3,4 $4 | $(pscontour) -C$5 -D > $$@
+
+endef
+
+# Save a sample plane to $1/$2/$3.$(notdir $4)
+#
+# $1 -- case
+# $2 -- time
+# $3 -- field
 # $4 -- sampleDict
 define SamplePlane
 
@@ -16,7 +38,7 @@ $(eval $(call SampleDict,$1,$3,$4))
 endef
 
 # $1 -- case
-# $2 -- field name
+# $2 -- field
 # $3 -- sampleDict template
 define SampleDict
 
