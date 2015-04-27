@@ -16,7 +16,15 @@ endef
 
 # $1 -- case directory
 # $2 -- mesh case
-define TerrainFollowingAdvection
+define LinearTerrainFollowingAdvection
+
+$(eval $(call Advection,$1,$2,src/advection/terrainFollowingVelocityField,src/advection/system/linear src/advection/system/commonFvSchemes))
+
+endef
+#
+# $1 -- case directory
+# $2 -- mesh case
+define CubicUpwindTerrainFollowingAdvection
 
 $(eval $(call Advection,$1,$2,src/advection/terrainFollowingVelocityField,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
 
@@ -46,10 +54,8 @@ $(eval $(call Contour,$1,0,T,$1/0/T.samplePlane,0.1))
 $(eval $(call Contour,$1,5000,T,$1/5000/T.samplePlane,0.1))
 $(eval $(call Contour,$1,10000,T,$1/10000/T.samplePlane,0.1))
 $(eval $(call Contour,$1,10000,T_diff,$1/10000/T_diff.samplePlane,0.01))
-$(eval $(call SamplePlane,$1,0,T,src/advection/samplePlane))
-$(eval $(call SamplePlane,$1,5000,T,src/advection/samplePlane))
-$(eval $(call SamplePlane,$1,10000,T,src/advection/samplePlane))
-$(eval $(call SamplePlane,$1,10000,T_diff,src/advection/samplePlane))
+$(eval $(call SamplePlanes,$1,0 5000 10000,T,src/advection/samplePlane))
+$(eval $(call SamplePlanes,$1,10000,T_diff,src/advection/samplePlane))
 
 endef
 
