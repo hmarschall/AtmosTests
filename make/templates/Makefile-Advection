@@ -45,9 +45,11 @@ $(eval $(call L2Error,$1,10000,T))
 $(eval $(call Contour,$1,0,T,$1/0/T.samplePlane,0.1))
 $(eval $(call Contour,$1,5000,T,$1/5000/T.samplePlane,0.1))
 $(eval $(call Contour,$1,10000,T,$1/10000/T.samplePlane,0.1))
+$(eval $(call Contour,$1,10000,T_diff,$1/10000/T_diff.samplePlane,0.01))
 $(eval $(call SamplePlane,$1,0,T,src/advection/samplePlane))
 $(eval $(call SamplePlane,$1,5000,T,src/advection/samplePlane))
 $(eval $(call SamplePlane,$1,10000,T,src/advection/samplePlane))
+$(eval $(call SamplePlane,$1,10000,T_diff,src/advection/samplePlane))
 
 endef
 
