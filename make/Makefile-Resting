@@ -4,3 +4,6 @@ $(eval $(call TerrainFollowingMesh,build/resting-mesh-sleve,build/resting-noOrog
 $(eval $(call CutCellMesh,build/resting-mesh-cutCell,build/resting-mesh-noOrography,src/resting/mesh-btf,src/resting/mesh-snapCol-baseMesh))
 
 $(eval $(call Resting,build/resting-noOrography,build/resting-mesh-noOrography))
+$(eval $(call Resting,build/resting-btf,build/resting-mesh-btf))
+$(eval $(call Resting,build/resting-sleve,build/resting-mesh-sleve))
+$(eval $(call Resting,build/resting-cutCell,build/resting-mesh-cutCell))

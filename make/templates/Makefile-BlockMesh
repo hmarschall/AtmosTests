@@ -14,7 +14,7 @@ $1.intermediate: \
 	$(blockMesh) -case $1
 
 $(eval $(call CopyFile,$2,$1/$(blockMeshDict)))
-$(info $(call CopyNamedFile,$(dummy),$(controlDict),$1))
+$(eval $(call CopyNamedFile,$(dummy),$(controlDict),$1))
 
 $(eval $(call MakeDir,$1/$(polyMesh)))
 $(eval $(call MakeDir,$1/system))

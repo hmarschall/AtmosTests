@@ -5,6 +5,7 @@ exnerFoamH := $(FOAM_USER_APPBIN)/exnerFoamH
 globalSum := $(FOAM_USER_APPBIN)/globalSum
 sample := sample
 setDivFreeVelocityField := $(FOAM_USER_APPBIN)/setDivFreeVelocityField
+setExnerBalancedH := $(FOAM_USER_APPBIN)/setExnerBalancedH
 setScalarOverOrography := $(FOAM_USER_APPBIN)/setScalarOverOrography
 setTheta := $(FOAM_USER_APPBIN)/setTheta
 setVelocityField := $(FOAM_USER_APPBIN)/setVelocityField

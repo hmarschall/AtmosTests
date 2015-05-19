@@ -2,8 +2,9 @@
 # $2 -- mesh
 define Resting
 
-$(eval $(call Physical,$1,$2,src/resting/0/Uf,$1-theta/0/theta))
+$(eval $(call Physical,$1,$2,src/resting/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/resting/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/resting/$(fvSchemes),src/resting/$(fvSolution),21600,100,3600))
 $(eval $(call InitialTheta,$1-theta,$2,src/resting/$(thetaInit),src/resting/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/resting/$(fvSchemes),src/resting/$(fvSolution)))
+$(eval $(call InitialExner,$1-exner,$2,src/resting/$(exnerInit),$1-theta/0/theta,src/resting/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/resting/$(fvSchemes),src/resting/$(fvSolution)))
 
 endef
 
@@ -42,13 +43,63 @@ endef
 
 # $1 -- case
 # $2 -- mesh
+# $3 -- exner_init dictionary
+# $4 -- initial theta
+# $5 -- environmentalProperties
+# $6 -- thermophysicalProperties
+# $7 -- fvSchemes
+# $8 -- fvSolution
+define InitialExner
+
+$1/0/Exner: \
+  $1/0/theta \
+  $1/$(exnerInit) \
+  $(addprefix $1/,$(meshFiles)) \
+  $(addprefix $1/,$(systemFiles)) \
+  $1/$(environmentalProperties) \
+  $1/$(thermophysicalProperties) \
+  $(setExnerBalancedH) \
+| $1/constant $1/system
+	$(setExnerBalancedH) -case $1
+	sed -i 's/fixedValue;/fixedFluxBuoyantExner; gradient uniform 0;/g' $$@
+
+$(eval $(call CopyFile,$4,$1/0/theta))
+$(eval $(call CopyFile,$3,$1/$(exnerInit)))
+$(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
+$(eval $(call CopyFile,$7,$1/$(fvSchemes)))
+$(eval $(call CopyFile,$8,$1/$(fvSolution)))
+$(eval $(call CopyNamedFile,$(dummy),$(controlDict),$1))
+$(eval $(call CopyFile,$5,$1/$(environmentalProperties)))
+$(eval $(call CopyFile,$6,$1/$(thermophysicalProperties)))
+
+$(eval $(call MakeDir,$1/0))
+$(eval $(call MakeDir,$1/constant))
+$(eval $(call MakeDir,$1/system))
+$(eval $(call MakeDir,$1/$(polyMesh)))
+
+endef
+
+# $1 -- case
+# $2 -- mesh
 # $3 -- initial Uf
 # $4 -- initial theta
+# $5 -- initial exner
+# $6 -- environmentalProperties
+# $7 -- thermophysicalProperties
+# $8 -- fvSchemes
+# $9 -- fvSolution
+# $10 -- duration (must be a multiple of timestep and writeInterval)
+# $11 -- timestep
+# $12 -- writeInterval (must be a multiple of timestep)
 define Physical
+
+all:: $1.fields.intermediate
 
 .INTERMEDIATE: $1.fields.intermediate
 
-$(addprefix $1/21600/,Exner theta Uf) $1/energy.dat: $1.fields.intermediate \
+$(addprefix $1/21600/,Exner theta Uf) $1/energy.dat: $1.fields.intermediate
+
+$1.fields.intermediate: \
   $1/0/Uf \
   $1/0/theta \
   $1/0/Exner \
@@ -62,9 +113,17 @@ $(addprefix $1/21600/,Exner theta Uf) $1/energy.dat: $1.fields.intermediate \
 
 $(eval $(call CopyFile,$3,$1/0/Uf))
 $(eval $(call CopyFile,$4,$1/0/theta))
+$(eval $(call CopyFile,$5,$1/0/Exner))
+$(eval $(call CopyFile,$6,$1/$(environmentalProperties)))
+$(eval $(call CopyFile,$7,$1/$(thermophysicalProperties)))
+$(eval $(call CopyFile,$8,$1/$(fvSchemes)))
+$(eval $(call CopyFile,$9,$1/$(fvSolution)))
+$(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
+$(eval $(call ControlDict,$1,$(10),$(11),$(12)))
 
 $(eval $(call MakeDir,$1/0))
+$(eval $(call MakeDir,$1/constant))
+$(eval $(call MakeDir,$1/system))
+$(eval $(call MakeDir,$1/$(polyMesh)))
 
 endef
-
-# need to create initial Uf, theta, exner

@@ -11,6 +11,7 @@ velocityFieldDict := constant/velocityFieldDict
 environmentalProperties := constant/environmentalProperties
 thermophysicalProperties := constant/thermophysicalProperties
 thetaInit := constant/theta_init
+exnerInit := constant/Exner_init
 
 fvSchemes := system/fvSchemes
 fvSolution := system/fvSolution

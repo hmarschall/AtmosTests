@@ -2,7 +2,7 @@ MAKEFLAGS += --no-builtin-rules
 .DEFAULT_GOAL := all
 .DELETE_ON_ERROR:
 .SUFFIXES:
-.PHONY: clean
+.PHONY: all clean
 
 all::
 
