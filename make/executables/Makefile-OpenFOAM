@@ -1,6 +1,7 @@
-add2dMountain := add2dMountain
-advectionFoam := advectionFoam
+add2dMountain := $(FOAM_USER_APPBIN)/add2dMountain
+advectionFoam := $(FOAM_USER_APPBIN)/advectionFoam
 blockMesh := blockMesh
+createSpongeLayer := $(FOAM_USER_APPBIN)/createSpongeLayer
 exnerFoamH := $(FOAM_USER_APPBIN)/exnerFoamH
 globalSum := $(FOAM_USER_APPBIN)/globalSum
 sample := sample

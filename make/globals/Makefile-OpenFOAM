@@ -12,6 +12,7 @@ environmentalProperties := constant/environmentalProperties
 thermophysicalProperties := constant/thermophysicalProperties
 thetaInit := constant/theta_init
 exnerInit := constant/Exner_init
+spongeLayer := constant/muSponge
 
 fvSchemes := system/fvSchemes
 fvSolution := system/fvSolution

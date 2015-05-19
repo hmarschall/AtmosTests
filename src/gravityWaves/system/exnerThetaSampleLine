@@ -1,0 +1,27 @@
+FoamFile {
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      sampleDict;
+}
+
+setFormat raw;
+
+interpolationScheme cell;
+
+fields (
+    theta
+    Exner
+);
+
+sets (
+    line {
+        type        midPoint;
+        axis        z;
+
+        start       (50e3 0.5e3 0);
+        end         (50e3 0.5e3 30e3);
+    }
+
+);
+

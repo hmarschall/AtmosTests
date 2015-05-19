@@ -10,6 +10,24 @@ endef
 
 # $1 -- case
 # $2 -- mesh
+define GravityWaves
+
+$(eval $(call Physical,$1,$2,src/gravityWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution),18000,8,3600))
+$(eval $(call InitialTheta,$1-theta,$2,src/gravityWaves/$(thetaInit),src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
+$(eval $(call InitialExner,$1-exner,$2,src/gravityWaves/$(exnerInit),$1-theta/0/theta,src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
+
+$1.fields.intermediate: $1/$(spongeLayer)
+
+$1/$(spongeLayer): \
+  $1/$(environmentalProperties) \
+  $(addprefix $1/,$(meshFiles)) \
+  $(addprefix $1/,$(systemFiles))
+	$(createSpongeLayer) -case $1
+
+endef
+
+# $1 -- case
+# $2 -- mesh
 # $3 -- theta_init dictionary
 # $4 -- environmentalProperties
 # $5 -- thermophysicalProperties
@@ -97,7 +115,7 @@ all:: $1.fields.intermediate
 
 .INTERMEDIATE: $1.fields.intermediate
 
-$(addprefix $1/21600/,Exner theta Uf) $1/energy.dat: $1.fields.intermediate
+$(addprefix $1/$(10)/,Exner theta Uf) $1/energy.dat: $1.fields.intermediate
 
 $1.fields.intermediate: \
   $1/0/Uf \
