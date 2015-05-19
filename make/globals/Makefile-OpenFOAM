@@ -8,6 +8,9 @@ blockMeshDict := $(polyMesh)/blockMeshDict
 controlDict := system/controlDict
 setScalarOverOrographyDict := constant/setScalarOverOrographyDict
 velocityFieldDict := constant/velocityFieldDict
+environmentalProperties := constant/environmentalProperties
+thermophysicalProperties := constant/thermophysicalProperties
+thetaInit := constant/theta_init
 
 fvSchemes := system/fvSchemes
 fvSolution := system/fvSolution

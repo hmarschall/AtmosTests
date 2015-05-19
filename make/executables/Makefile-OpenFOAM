@@ -1,10 +1,12 @@
 add2dMountain := add2dMountain
 advectionFoam := advectionFoam
 blockMesh := blockMesh
+exnerFoamH := $(FOAM_USER_APPBIN)/exnerFoamH
 globalSum := $(FOAM_USER_APPBIN)/globalSum
 sample := sample
 setDivFreeVelocityField := $(FOAM_USER_APPBIN)/setDivFreeVelocityField
 setScalarOverOrography := $(FOAM_USER_APPBIN)/setScalarOverOrography
+setTheta := $(FOAM_USER_APPBIN)/setTheta
 setVelocityField := $(FOAM_USER_APPBIN)/setVelocityField
 snappyHexMesh := snappyHexMesh
 sumFields := $(FOAM_USER_APPBIN)/sumFields
