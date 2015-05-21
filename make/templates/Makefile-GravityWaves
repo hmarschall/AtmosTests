@@ -1,0 +1,11 @@
+# $1 -- case
+define GravityWavesSampleLine
+
+$(eval $(call SampleLine,$1,exnerTheta-sampleLine.dat,src/gravityWaves/system/exnerThetaSampleLine,18000,line_Exner_theta.xy))
+
+$1/postProcessing/sets/18000/line_Exner_theta.xy: \
+  $1/18000/Exner \
+  $1/18000/theta
+
+endef
+

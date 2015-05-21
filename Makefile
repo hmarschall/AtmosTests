@@ -24,6 +24,7 @@ include make/templates/Makefile-TerrainFollowingMesh
 include make/templates/Makefile-CutCellMesh
 include make/templates/Makefile-Advection
 include make/templates/Makefile-Physical
+include make/templates/Makefile-GravityWaves
 include make/Makefile-Advection
 include make/Makefile-Resting
 include make/Makefile-GravityWaves
