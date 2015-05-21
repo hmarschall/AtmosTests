@@ -15,6 +15,6 @@ $(eval $(call GravityWaves,build/gravityWaves-cutCell-500m,build/gravityWaves-me
 
 $(eval $(call SampleLine,build/gravityWaves-cutCell-500m,exnerTheta-sampleLine.dat,src/gravityWaves/system/exnerThetaSampleLine,18000,line_Exner_theta.xy))
 
-build/gravityWaves-cutCell-500m/postProcessing/sets/line_Exner_theta.xy: \
+build/gravityWaves-cutCell-500m/postProcessing/sets/18000/line_Exner_theta.xy: \
   build/gravityWaves-cutCell-500m/18000/Exner \
   build/gravityWaves-cutCell-500m/18000/theta
