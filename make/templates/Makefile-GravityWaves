@@ -1,11 +1,46 @@
+
 # $1 -- case
-define GravityWavesSampleLine
+# $2 -- mesh
+define GravityWaves
 
-$(eval $(call SampleLine,$1,exnerTheta-sampleLine.dat,src/gravityWaves/system/exnerThetaSampleLine,18000,line_Exner_theta.xy))
+$(eval $(call GravityWavesSampleLine,$1,18000))
+$(eval $(call GravityWavesWContour,$1,18000))
 
-$1/postProcessing/sets/18000/line_Exner_theta.xy: \
-  $1/18000/Exner \
-  $1/18000/theta
+$(eval $(call Physical,$1,$2,src/gravityWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution),18000,8,3600))
+$(eval $(call InitialTheta,$1-theta,$2,src/gravityWaves/$(thetaInit),src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
+$(eval $(call InitialExner,$1-exner,$2,src/gravityWaves/$(exnerInit),$1-theta/0/theta,src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
+
+$1.fields.intermediate: $1/$(spongeLayer)
+
+$1/$(spongeLayer): \
+  $1/$(environmentalProperties) \
+  $(addprefix $1/,$(meshFiles)) \
+  $(addprefix $1/,$(systemFiles))
+	$(createSpongeLayer) -case $1
 
 endef
 
+# $1 -- case
+# $2 -- time
+define GravityWavesSampleLine
+
+$(eval $(call SampleLine,$1,exnerTheta-sampleLine.dat,src/gravityWaves/system/exnerThetaSampleLine,$2,line_Exner_theta.xy))
+
+$1/postProcessing/sets/$2/line_Exner_theta.xy: \
+  $1/$2/Exner \
+  $1/$2/theta
+
+endef
+
+# $1 -- case
+# $2 -- time
+define GravityWavesWContour
+
+$(eval $(call Contour,$1,$2,w,$1/18000/w.dat,0.05))
+
+$1/$2/w.dat: $1/$2/Uf.xyz
+	tr -s ' ' < $$< | cut -d' ' -f 1,2,3,6 > $$@
+
+$(eval $(call WriteField,$1,$2,Uf))
+
+endef

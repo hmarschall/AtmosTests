@@ -63,6 +63,19 @@ $1/$2/$3.$(notdir $4): \
 
 endef
 
+# Use writeCellDataxyz to get raw field data
+#
+# $1 -- case
+# $2 -- time
+# $3 -- field
+define WriteField
+
+$1/$2/$3.xyz : \
+  $(writeCellDataXYZ)
+	$(writeCellDataXYZ) -case $1 -time $2 $3
+
+endef
+
 # $1 -- case
 # $2 -- field
 # $3 -- sampleDict template

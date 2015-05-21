@@ -12,4 +12,5 @@ setTheta := $(FOAM_USER_APPBIN)/setTheta
 setVelocityField := $(FOAM_USER_APPBIN)/setVelocityField
 snappyHexMesh := snappyHexMesh
 sumFields := $(FOAM_USER_APPBIN)/sumFields
+writeCellDataXYZ := $(FOAM_USER_APPBIN)/writeCellDataxyz
 writeMeshObj := writeMeshObj
