@@ -12,3 +12,9 @@ $(eval $(call GravityWaves,build/gravityWaves-sleve-250m,build/gravityWaves-mesh
 $(eval $(call GravityWaves,build/gravityWaves-sleve-500m,build/gravityWaves-mesh-sleve-500m))
 $(eval $(call GravityWaves,build/gravityWaves-cutCell-250m,build/gravityWaves-mesh-cutCell-250m))
 $(eval $(call GravityWaves,build/gravityWaves-cutCell-500m,build/gravityWaves-mesh-cutCell-500m))
+
+$(eval $(call SampleLine,build/gravityWaves-cutCell-500m,exnerTheta-sampleLine.dat,src/gravityWaves/system/exnerThetaSampleLine,18000,line_Exner_theta.xy))
+
+build/gravityWaves-cutCell-500m/postProcessing/sets/line_Exner_theta.xy: \
+  build/gravityWaves-cutCell-500m/18000/Exner \
+  build/gravityWaves-cutCell-500m/18000/theta

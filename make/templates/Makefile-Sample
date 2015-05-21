@@ -18,6 +18,22 @@ $1/$2/$3.contour: $4
 
 endef
 
+# $1 -- case directory
+# $2 -- target filename
+# $3 -- sampleDict filename
+# $4 -- time
+# $5 -- sample filename (e.g. line_Exner_theta.xy)
+define SampleLine
+
+$(eval $(call CopyFile,$1/postProcessing/sets/$4/$5,$1/$4/$2))
+
+$1/postProcessing/sets/$4/$5: $1/system/$(notdir $3)
+	$(sample) -case $1 -time $4 -dict system/$(notdir $3)
+
+$(eval $(call CopyFile,$3,$1/system/$(notdir $3)))
+
+endef
+
 # $1 -- case
 # $2 -- times (e.g. 0 5000 10000)
 # $3 -- field
