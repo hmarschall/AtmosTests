@@ -16,7 +16,7 @@ snappyHexMeshFiles := \
 # $4 -- add2dMountainDict for base mesh
 define CutCellMesh
 
-$(eval $(call __TerrainFollowingMesh,$1-groundPatch,$2,$3,$(dummy)/$(controlDict)Ascii))
+$(eval $(call __TerrainFollowingMesh,$1-groundPatch,$2,$3,$(dummy)/$(controlDict)))
 $(eval $(call __TerrainFollowingMesh,$1-baseMesh,$2,$4,$(dummy)/$(controlDict)Ascii))
 
 .INTERMEDIATE: $1.intermediate
