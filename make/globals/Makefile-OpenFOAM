@@ -1,11 +1,5 @@
-polyMesh := constant/polyMesh
-triSurface := constant/triSurface
-boundary := $(polyMesh)/boundary
-meshFiles := $(addprefix $(polyMesh)/,boundary faces neighbour owner points)
-
 add2dMountainDict := constant/add2dMountainDict
 blockMeshDict := $(polyMesh)/blockMeshDict
-controlDict := system/controlDict
 setScalarOverOrographyDict := constant/setScalarOverOrographyDict
 velocityFieldDict := constant/velocityFieldDict
 environmentalProperties := constant/environmentalProperties
@@ -14,6 +8,3 @@ thetaInit := constant/theta_init
 exnerInit := constant/Exner_init
 spongeLayer := constant/muSponge
 
-fvSchemes := system/fvSchemes
-fvSolution := system/fvSolution
-systemFiles := $(controlDict) $(fvSchemes) $(fvSolution)

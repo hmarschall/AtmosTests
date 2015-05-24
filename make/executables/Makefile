@@ -1,2 +1,1 @@
 envsubst := envsubst
-rsync := rsync
