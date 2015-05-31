@@ -1,0 +1,3 @@
+$(eval $(call BlockMesh,build/inertiaWaves-mesh-noOrography,src/inertiaWaves/mesh-noOrography))
+
+$(eval $(call InertiaWaves,build/inertiaWaves-noOrography,build/inertiaWaves-mesh-noOrography))

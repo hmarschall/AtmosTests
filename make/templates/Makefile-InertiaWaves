@@ -1,0 +1,9 @@
+# $1 -- case
+# $2 -- mesh
+define InertiaWaves
+
+$(eval $(call Physical,$1,$2,src/inertiaWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution),3000,12,3000))
+$(eval $(call InitialTheta,$1-theta,$2,src/inertiaWaves/$(thetaInit),src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution)))
+$(eval $(call InitialExner,$1-exner,$2,src/inertiaWaves/$(exnerInit),$1-theta/0/theta,src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution)))
+
+endef
