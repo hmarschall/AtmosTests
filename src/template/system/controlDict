@@ -30,6 +30,5 @@ functions {
         functionObjectLibs ("libutilityFunctionObjects.so");
 
         outputControl outputTime;
-        timeInterval  1;
     }
 }
