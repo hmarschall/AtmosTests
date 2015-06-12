@@ -1,9 +1,36 @@
 # $1 -- case
 # $2 -- mesh
+# $3 -- background theta field
+define PerturbTheta
+
+$1/0/theta: \
+  $3 \
+  $(addprefix $1/,$(meshFiles)) \
+  $(addprefix $1/,$(systemFiles)) \
+  $(perturbField) \
+| $1/0
+	cp $3 $$@
+	$(perturbField) -case $1
+
+$(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
+$(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
+$(eval $(call MakeDir,$1/0))
+$(eval $(call MakeDir,$1/system))
+$(eval $(call MakeDir,$1/$(polyMesh)))
+
+endef
+
+# $1 -- case
+# $2 -- mesh
 define InertiaWaves
 
+$(eval $(call FieldDiff,$1,0,theta,$1-backgroundTheta/0/theta))
+$(eval $(call FieldDiff,$1,3000,theta,$1-backgroundTheta/0/theta))
+
 $(eval $(call Physical,$1,$2,src/inertiaWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution),3000,12,3000))
-$(eval $(call InitialTheta,$1-theta,$2,src/inertiaWaves/$(thetaInit),src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution)))
+$(eval $(call PerturbTheta,$1-theta,$2,$1-backgroundTheta/0/theta))
+$(eval $(call InitialTheta,$1-backgroundTheta,$2,src/inertiaWaves/$(thetaInit),src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution)))
 $(eval $(call InitialExner,$1-exner,$2,src/inertiaWaves/$(exnerInit),$1-theta/0/theta,src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution)))
 
 endef
+

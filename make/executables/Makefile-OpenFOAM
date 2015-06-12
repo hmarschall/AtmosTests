@@ -4,6 +4,7 @@ blockMesh := blockMesh
 createSpongeLayer := $(FOAM_USER_APPBIN)/createSpongeLayer
 exnerFoamH := $(FOAM_USER_APPBIN)/exnerFoamH
 globalSum := $(FOAM_USER_APPBIN)/globalSum
+perturbField := $(FOAM_USER_APPBIN)/perturbField
 sample := sample
 setDivFreeVelocityField := $(FOAM_USER_APPBIN)/setDivFreeVelocityField
 setExnerBalancedH := $(FOAM_USER_APPBIN)/setExnerBalancedH

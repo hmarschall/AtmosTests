@@ -38,7 +38,12 @@ endef
 # $4 -- analytic field filename (e.g. mycase/5000/T_analytic)
 define FieldDiff
 
-$1/$2/$3_diff: $1/$2/$3 $1/$2/$3_analytic $(sumFields)
+$1/$2/$3_diff: \
+  $1/$2/$3 \
+  $1/$2/$3_analytic \
+  $(addprefix $1/,$(meshFiles)) \
+  $(addprefix $1/,$(systemFiles)) \
+  $(sumFields)
 	$(sumFields) -case $1 $2 $3_diff $2 $3 $2 $3_analytic -scale0 1 -scale1 -1
 
 $(eval $(call CopyFile,$4,$1/$2/$3_analytic))

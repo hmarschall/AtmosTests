@@ -23,7 +23,7 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 g               g [0 1 -2 0 0 0 0] (0 0 -9.81);
-Omega           Omega [0 0 -1 0 0 0 0] (0 0 7.292e-5);
+Omega           Omega [0 0 -1 0 0 0 0] (0 0 0);
 diffusionCoefficient diffusionCoeff [0 2 -1 0 0] 0;
 
 // Settings for setTheta

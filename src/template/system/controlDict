@@ -24,11 +24,3 @@ adjustTimeStep no;
 maxCo          1;
 libs           ("libOpenFOAM.so" "libExnerTheta.so" "libspecie.so" "libfiniteVolumeUser.so");
 
-functions {
-    courantNo {
-        type          CourantNo;
-        functionObjectLibs ("libutilityFunctionObjects.so");
-
-        outputControl outputTime;
-    }
-}
