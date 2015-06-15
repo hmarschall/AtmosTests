@@ -1,5 +1,6 @@
 add2dMountainDict := constant/add2dMountainDict
 blockMeshDict := $(polyMesh)/blockMeshDict
+decomposeParDict := system/decomposeParDict
 setScalarOverOrographyDict := constant/setScalarOverOrographyDict
 velocityFieldDict := constant/velocityFieldDict
 environmentalProperties := constant/environmentalProperties

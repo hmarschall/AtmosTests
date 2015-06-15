@@ -107,9 +107,14 @@ $1.fields.intermediate: \
   $(addprefix $1/,$(systemFiles)) \
   $1/$(environmentalProperties) \
   $1/$(thermophysicalProperties) \
+  $1/$(decomposeParDict) \
   $(exnerFoamH) \
 | $1/constant $1/system
-	$(exnerFoamH) -case $1
+	$(decomposePar) -case $1 -force -constant
+	bin/correctMPIinitialUf.sh $1
+	$(mpirun) --hostfile machines -np 4 $(exnerFoamH) -case $1 -parallel
+	$(reconstructPar) -case $1 -constant
+	$(CP) $(addprefix $1/processor0/,$(DIAGNOSTICS)) $1/
 
 $(eval $(call CopyFile,$3,$1/0/Uf))
 $(eval $(call CopyFile,$4,$1/0/theta))
@@ -118,6 +123,7 @@ $(eval $(call CopyFile,$6,$1/$(environmentalProperties)))
 $(eval $(call CopyFile,$7,$1/$(thermophysicalProperties)))
 $(eval $(call CopyFile,$8,$1/$(fvSchemes)))
 $(eval $(call CopyFile,$9,$1/$(fvSolution)))
+$(eval $(call CopyNamedFile,src/physical,$(decomposeParDict),$1))
 $(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
 $(eval $(call ControlDict,$1,$(10),$(11),$(12)))
 

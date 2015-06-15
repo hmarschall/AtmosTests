@@ -1,1 +1,2 @@
 envsubst := envsubst
+mpirun := mpirun
