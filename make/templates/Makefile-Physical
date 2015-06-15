@@ -110,11 +110,7 @@ $1.fields.intermediate: \
   $1/$(decomposeParDict) \
   $(exnerFoamH) \
 | $1/constant $1/system
-	$(decomposePar) -case $1 -force -constant
-	bin/correctMPIinitialUf.sh $1
-	$(mpirun) --hostfile machines -np 4 $(exnerFoamH) -case $1 -parallel
-	$(reconstructPar) -case $1 -constant
-	$(CP) $(addprefix $1/processor0/,$(DIAGNOSTICS)) $1/
+	$(exnerFoamH) -case $1
 
 $(eval $(call CopyFile,$3,$1/0/Uf))
 $(eval $(call CopyFile,$4,$1/0/theta))
