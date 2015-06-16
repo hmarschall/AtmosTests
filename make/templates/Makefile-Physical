@@ -97,7 +97,7 @@ all:: $1.fields.intermediate
 
 .INTERMEDIATE: $1.fields.intermediate
 
-$(addprefix $1/$(10)/,Exner theta Uf) $1/energy.dat: $1.fields.intermediate
+$(addprefix $1/$(10)/,Exner theta Uf) $1/energy.dat $1/courant.dat: $1.fields.intermediate
 
 $1.fields.intermediate: \
   $1/0/Uf \
@@ -114,7 +114,7 @@ $1.fields.intermediate: \
 	bin/correctMPIinitialUf.sh $1
 	$(mpirun) --hostfile machines -np 4 $(exnerFoamH) -case $1 -parallel
 	$(reconstructPar) -case $1 -constant
-	$(CP) $(addprefix $1/processor0/,energy.dat courant.dat) $1/
+	cp $(addprefix $1/processor0/,energy.dat courant.dat) $1/
 
 $(eval $(call CopyFile,$3,$1/0/Uf))
 $(eval $(call CopyFile,$4,$1/0/theta))
