@@ -14,8 +14,10 @@ $(eval $(call CutCellMesh,build/gravityWaves-mesh-cutCell-4000m,build/gravityWav
 
 $(eval $(call GravityWaves,build/gravityWaves-btf-250m,build/gravityWaves-mesh-btf-250m))
 $(eval $(call GravityWaves,build/gravityWaves-btf-500m,build/gravityWaves-mesh-btf-500m))
+$(eval $(call GravityWaves,build/gravityWaves-btf-1000m,build/gravityWaves-mesh-btf-1000m))
 $(eval $(call GravityWaves,build/gravityWaves-sleve-250m,build/gravityWaves-mesh-sleve-250m))
 $(eval $(call GravityWaves,build/gravityWaves-sleve-500m,build/gravityWaves-mesh-sleve-500m))
+$(eval $(call GravityWaves,build/gravityWaves-sleve-1000m,build/gravityWaves-mesh-sleve-1000m))
 $(eval $(call GravityWaves,build/gravityWaves-cutCell-250m,build/gravityWaves-mesh-cutCell-250m))
 $(eval $(call GravityWaves,build/gravityWaves-cutCell-500m,build/gravityWaves-mesh-cutCell-500m))
 $(eval $(call GravityWaves,build/gravityWaves-cutCell-1000m,build/gravityWaves-mesh-cutCell-1000m))
