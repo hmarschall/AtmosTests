@@ -1,5 +1,7 @@
 $(eval $(call BlockMesh,build/inertiaWaves-mesh-noOrography,src/inertiaWaves/mesh-noOrography))
 $(eval $(call TerrainFollowingMesh,build/inertiaWaves-mesh-btf-500m,build/inertiaWaves-mesh-noOrography,src/inertiaWaves/mesh-btf-500m))
+$(eval $(call CutCellMesh,build/inertiaWaves-mesh-cutCell-500m,build/inertiaWaves-mesh-noOrography,src/inertiaWaves/mesh-btf-500m,src/inertiaWaves/mesh-cutCell-baseMesh-500m))
 
 $(eval $(call InertiaWaves,build/inertiaWaves-noOrography,build/inertiaWaves-mesh-noOrography))
 $(eval $(call InertiaWaves,build/inertiaWaves-btf-500m,build/inertiaWaves-mesh-btf-500m))
+$(eval $(call InertiaWaves,build/inertiaWaves-cutCell-500m,build/inertiaWaves-mesh-cutCell-500m))
