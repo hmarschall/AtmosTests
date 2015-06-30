@@ -7,9 +7,9 @@ $(eval $(call GravityWavesSampleLine,$1,18000))
 $(eval $(call GravityWavesWContour,$1,18000))
 $(eval $(call FieldDiff,$1,18000,theta,$1/0/theta))
 
-$(eval $(call Physical,$1,$2,src/gravityWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution),18000,8,3600))
+$(eval $(call Physical,$1,$2,src/gravityWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution),18000,8,3600,$(exnerFoamH)))
 $(eval $(call InitialTheta,$1-theta,$2,src/gravityWaves/$(thetaInit),src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
-$(eval $(call InitialExner,$1-exner,$2,src/gravityWaves/$(exnerInit),$1-theta/0/theta,src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
+$(eval $(call InitialExnerInterpTheta,$1-exner,$2,src/gravityWaves/$(exnerInit),$1-theta/0/theta,src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
 
 $1.fields.intermediate: $1/$(spongeLayer)
 

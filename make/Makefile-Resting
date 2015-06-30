@@ -3,7 +3,8 @@ $(eval $(call TerrainFollowingMesh,build/resting-mesh-btf,build/resting-noOrogra
 $(eval $(call TerrainFollowingMesh,build/resting-mesh-sleve,build/resting-noOrography,src/resting/mesh-sleve))
 $(eval $(call CutCellMesh,build/resting-mesh-cutCell,build/resting-mesh-noOrography,src/resting/mesh-btf,src/resting/mesh-snapCol-baseMesh))
 
-$(eval $(call Resting,build/resting-noOrography,build/resting-mesh-noOrography))
-$(eval $(call Resting,build/resting-btf,build/resting-mesh-btf))
-$(eval $(call Resting,build/resting-sleve,build/resting-mesh-sleve))
-$(eval $(call Resting,build/resting-cutCell,build/resting-mesh-cutCell))
+$(eval $(call RestingLorenz,build/resting-noOrography-lorenz,build/resting-mesh-noOrography))
+$(eval $(call RestingCharneyPhillips,build/resting-noOrography-charneyPhillips,build/resting-mesh-noOrography))
+$(eval $(call RestingLorenz,build/resting-btf-lorenz,build/resting-mesh-btf))
+$(eval $(call RestingLorenz,build/resting-sleve-lorenz,build/resting-mesh-sleve))
+$(eval $(call RestingLorenz,build/resting-cutCell-lorenz,build/resting-mesh-cutCell))
