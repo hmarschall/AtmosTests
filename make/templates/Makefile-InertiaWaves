@@ -4,14 +4,19 @@
 # $4 -- perturbFieldDict
 define PerturbTheta
 
-$1/0/theta: \
+.INTERMEDIATE: $1.intermediate
+
+$1/0/theta $1/0/thetaf: $1.intermediate
+
+$1.intermediate: \
   $1/constant/perturbFieldDict \
   $3 \
   $(addprefix $1/,$(meshFiles)) \
   $(addprefix $1/,$(systemFiles)) \
   $(perturbField) \
 | $1/0
-	cp $3 $$@
+	cp $3 $1/0/theta
+	cp $3f $1/0/thetaf
 	$(perturbField) -case $1
 
 $(eval $(call CopyFile,$4,$1/constant/perturbFieldDict))
@@ -26,16 +31,36 @@ endef
 
 # $1 -- case
 # $2 -- mesh
+define InertiaWavesLorenz
+
+$(eval $(call InertiaWaves,$1,$2,$(exnerFoamH),InitialExnerInterpTheta))
+
+endef
+
+# $1 -- case
+# $2 -- mesh
+define InertiaWavesCharneyPhillips
+
+$(eval $(call InertiaWaves,$1,$2,$(exnerFoamCP),InitialExnerNoInterpTheta))
+
+endef
+
+# $1 -- case
+# $2 -- mesh
+# $3 -- solver
+# $4 -- InitialExner template
 define InertiaWaves
 
 $(eval $(call FieldDiff,$1,0,theta,$1-backgroundTheta/0/theta))
+$(eval $(call FieldDiff,$1,0,thetaf,$1-backgroundTheta/0/thetaf))
 $(eval $(call FieldDiff,$1,3000,theta,$1-backgroundTheta/0/theta))
+$(eval $(call FieldDiff,$1,3000,thetaf,$1-backgroundTheta/0/thetaf))
 $(eval $(call MakeDir,$1/$3000))
 
-$(eval $(call Physical,$1,$2,src/inertiaWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution),3000,12,3000,$(exnerFoamH)))
+$(eval $(call Physical,$1,$2,src/inertiaWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution),3000,12,3000,$3))
 $(eval $(call PerturbTheta,$1-theta,$2,$1-backgroundTheta/0/theta,src/inertiaWaves/constant/perturbFieldDict))
 $(eval $(call InitialTheta,$1-backgroundTheta,$2,src/inertiaWaves/$(thetaInit),src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution)))
-$(eval $(call InitialExnerInterpTheta,$1-exner,$2,src/inertiaWaves/$(exnerInit),$1-theta/0/theta,src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution)))
+$(eval $(call $4,$1-exner,$2,src/inertiaWaves/$(exnerInit),$1-theta/0/theta,src/inertiaWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/inertiaWaves/$(fvSchemes),src/inertiaWaves/$(fvSolution)))
 
 endef
 

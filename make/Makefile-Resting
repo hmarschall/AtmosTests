@@ -1,10 +1,14 @@
 $(eval $(call BlockMesh,build/resting-mesh-noOrography,src/resting/mesh-noOrography))
-$(eval $(call TerrainFollowingMesh,build/resting-mesh-btf,build/resting-noOrography,src/resting/mesh-btf))
-$(eval $(call TerrainFollowingMesh,build/resting-mesh-sleve,build/resting-noOrography,src/resting/mesh-sleve))
+$(eval $(call TerrainFollowingMesh,build/resting-mesh-btf,build/resting-mesh-noOrography,src/resting/mesh-btf))
+$(eval $(call TerrainFollowingMesh,build/resting-mesh-sleve,build/resting-mesh-noOrography,src/resting/mesh-sleve))
 $(eval $(call CutCellMesh,build/resting-mesh-cutCell,build/resting-mesh-noOrography,src/resting/mesh-btf,src/resting/mesh-snapCol-baseMesh))
 
 $(eval $(call RestingLorenz,build/resting-noOrography-lorenz,build/resting-mesh-noOrography))
-$(eval $(call RestingCharneyPhillips,build/resting-noOrography-charneyPhillips,build/resting-mesh-noOrography))
 $(eval $(call RestingLorenz,build/resting-btf-lorenz,build/resting-mesh-btf))
 $(eval $(call RestingLorenz,build/resting-sleve-lorenz,build/resting-mesh-sleve))
 $(eval $(call RestingLorenz,build/resting-cutCell-lorenz,build/resting-mesh-cutCell))
+
+$(eval $(call RestingCharneyPhillips,build/resting-noOrography-charneyPhillips,build/resting-mesh-noOrography))
+$(eval $(call RestingCharneyPhillips,build/resting-btf-charneyPhillips,build/resting-mesh-btf))
+$(eval $(call RestingCharneyPhillips,build/resting-sleve-charneyPhillips,build/resting-mesh-sleve))
+$(eval $(call RestingCharneyPhillips,build/resting-cutCell-charneyPhillips,build/resting-mesh-cutCell))
