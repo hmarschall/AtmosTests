@@ -1,4 +1,7 @@
 $(eval $(call BlockMesh,build/inertiaWaves-mesh-noOrography,src/inertiaWaves/mesh-noOrography))
+$(eval $(call BlockMesh,build/inertiaWaves-mesh-noOrography-distorted,src/inertiaWaves/mesh-noOrography-distorted))
 
 $(eval $(call InertiaWavesLorenz,build/inertiaWaves-noOrography-lorenz,build/inertiaWaves-mesh-noOrography))
+$(eval $(call InertiaWavesLorenz,build/inertiaWaves-noOrography-distorted-lorenz,build/inertiaWaves-mesh-noOrography-distorted))
 $(eval $(call InertiaWavesCharneyPhillips,build/inertiaWaves-noOrography-charneyPhillips,build/inertiaWaves-mesh-noOrography))
+$(eval $(call InertiaWavesCharneyPhillips,build/inertiaWaves-noOrography-distorted-charneyPhillips,build/inertiaWaves-mesh-noOrography-distorted))

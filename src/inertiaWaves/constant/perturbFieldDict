@@ -9,5 +9,5 @@ FoamFile
 
 amplitude 1e-2;
 height 10e3;
-x_centre -50e3;
+x_centre 0e3;
 halfWidth 5e3;
