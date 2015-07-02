@@ -1,0 +1,31 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.4                                   |
+|   \\  /    A nd           | Web:      http://www.openfoam.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+
+    root            "";
+    case            "";
+    instance        "";
+    local           "";
+
+    class           dictionary;
+    object          environmentalProperties;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+BruntVaisallaFreq  BruntVaisallaFreq [0 0 -1 0 0 0 0] 0.01;
+thetaPrime thetaPrime [0 0 0 1 0 0 0] 0.01;
+bubbleCentre bubbleCentre [0 1 0 0 0 0 0] -1e6;
+bubbleHeight bubbleHeight [0 1 0 0 0 0 0] 10e3;
+bubbleHalfWidth  bubbleHalfWidth [0 1 0 0 0 0 0] 100e3;
+
+// ************************************************************************* //
