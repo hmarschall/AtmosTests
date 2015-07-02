@@ -1,15 +1,22 @@
 # Create $1/$2/l2error$3.txt by analysing $1/$2/$3_diff
-# (which should be defined using FieldDiff)
+# (which should be defined using FieldDiff) and $1/$2/$3_analytic
 #
 # $1 -- case
 # $2 -- time
 # $3 -- field
 define L2Error
 
-$1/$2/l2error$3.txt: $1/$2/globalSum$3_diff.dat
-	$(call ExtractStat,$$@,$$<,3,3)
+$1/$2/l2error$3.txt: $1/$2/l2error$3_diff.txt $1/$2/l2error$3_analytic.txt
+	paste -d'/' $1/$2/l2error$3_diff.txt $1/$2/l2error$3_analytic.txt | bc -l > $$@
+
+$1/$2/l2error$3_diff.txt: $1/$2/globalSum$3_diff.dat
+	$(call ExtractStat,$$@,$$<,3)
+
+$1/$2/l2error$3_analytic.txt: $1/$2/globalSum$3_analytic.dat
+	$(call ExtractStat,$$@,$$<,3)
 
 $(eval $(call GlobalSum,$1,$2,$3_diff))
+$(eval $(call GlobalSum,$1,$2,$3_analytic))
 
 endef
 
@@ -21,10 +28,10 @@ define Extrema
 $1/$2/min$3.txt $1/$2/max$3.txt: $1/$2/globalSum$3.dat
 
 $1/$2/min$3.txt:
-	$(call ExtractStat,$$@,$$<,7,3)
+	$(call ExtractStat,$$@,$$<,7)
 
 $1/$2/max$3.txt:
-	$(call ExtractStat,$$@,$$<,8,3)
+	$(call ExtractStat,$$@,$$<,8)
 
 $(eval $(call GlobalSum,$1,$2,$3))
 
@@ -66,9 +73,7 @@ endef
 # $1 -- stat filename                                                           
 # $2 -- globalSum filename
 # $3 -- field index
-# $4 -- precision
 define ExtractStat
 	tail -n1 $2 | cut -d' ' -f$3 > $1
-	sed -i -re 's/(.*)/\\num[round-mode=figures, round-precision=$4]{\1}/' $1
 endef
 
