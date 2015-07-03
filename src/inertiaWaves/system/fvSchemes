@@ -26,8 +26,8 @@ ddtSchemes
 {
     default Euler;
 }
-offCentre 0.5;
-SIgravityWaves true;
+offCentre 1;
+SIgravityWaves false;
 
 gradSchemes
 {
