@@ -1,7 +1,7 @@
 add2dMountain := $(FOAM_USER_APPBIN)/add2dMountain
 advectionFoam := $(FOAM_USER_APPBIN)/advectionFoam
 blockMesh := blockMesh
-computeThetaf := $(FOAM_USER_APPBIN)/computeThetaf
+computeTheta := $(FOAM_USER_APPBIN)/computeTheta
 createSpongeLayer := $(FOAM_USER_APPBIN)/createSpongeLayer
 decomposePar := decomposePar
 exnerFoamH := $(FOAM_USER_APPBIN)/exnerFoamH
