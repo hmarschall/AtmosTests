@@ -30,6 +30,14 @@ $(eval $(call MakeDir,$1/$(polyMesh)))
 endef
 
 # $1 -- case
+define ComputeThetaf
+
+$1/0/computedThetaf: $1/0/thetaf $(computeThetaf)
+	$(computeThetaf) -case $1
+
+endef
+
+# $1 -- case
 # $2 -- mesh
 define sk94NonHydroWavesLorenz
 
@@ -52,9 +60,10 @@ endef
 define sk94NonHydroWaves
 
 $(eval $(call FieldDiff,$1,0,theta,$1-backgroundTheta/0/theta))
-$(eval $(call FieldDiff,$1,0,thetaf,$1-backgroundTheta/0/thetaf))
+$(eval $(call FieldDiff,$1,0,thetaf,$1-backgroundTheta/0/computedThetaf))
 $(eval $(call FieldDiff,$1,3000,theta,$1-backgroundTheta/0/theta))
-$(eval $(call FieldDiff,$1,3000,thetaf,$1-backgroundTheta/0/thetaf))
+$(eval $(call FieldDiff,$1,3000,thetaf,$1-backgroundTheta/0/computedThetaf))
+$(eval $(call ComputeThetaf,$1-backgroundTheta))
 $(eval $(call MakeDir,$1/$3000))
 
 $(eval $(call Physical,$1,$2,src/sk94NonHydroWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/sk94NonHydroWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/sk94NonHydroWaves/$(fvSchemes),src/sk94NonHydroWaves/$(fvSolution),3000,12,3000,$3))
@@ -63,4 +72,5 @@ $(eval $(call InitialTheta,$1-backgroundTheta,$2,src/sk94NonHydroWaves/$(thetaIn
 $(eval $(call $4,$1-exner,$2,src/sk94NonHydroWaves/$(exnerInit),$1-theta/0/theta,src/sk94NonHydroWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/sk94NonHydroWaves/$(fvSchemes),src/sk94NonHydroWaves/$(fvSolution)))
 
 endef
+
 

@@ -53,6 +53,7 @@ interpolationSchemes
     default        none; 
     interpolate(theta)    midPoint;
     interpolate(grad((volIntegrate((bf*magSf))&(g|mag(g))))) midPoint;
+    interpolate((volIntegrate((bf*magSf))&(g|mag(g)))) midPoint;
     interpolate((volIntegrate((bf*magSf))_0&(g|mag(g)))) midPoint;
     interpolate(rho)    midPoint;
     interpolate(convection(U,u)) midPoint;
