@@ -1,0 +1,4 @@
+$(eval $(call BlockMesh,build/sk94NonHydroWaves-mesh-noOrography,src/sk94NonHydroWaves/mesh-noOrography))
+
+$(eval $(call sk94NonHydroWavesLorenz,build/sk94NonHydroWaves-noOrography-lorenz,build/sk94NonHydroWaves-mesh-noOrography))
+$(eval $(call sk94NonHydroWavesCharneyPhillips,build/sk94NonHydroWaves-noOrography-charneyPhillips,build/sk94NonHydroWaves-mesh-noOrography))

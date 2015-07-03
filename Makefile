@@ -29,8 +29,8 @@ include make/templates/Makefile-Advection
 include make/templates/Makefile-Physical
 include make/templates/Makefile-Resting
 include make/templates/Makefile-GravityWaves
-include make/templates/Makefile-InertiaWaves
+include make/templates/Makefile-sk94NonHydroWaves
 include make/Makefile-Advection
 include make/Makefile-Resting
 include make/Makefile-GravityWaves
-include make/Makefile-InertiaWaves
+include make/Makefile-sk94NonHydroWaves
