@@ -1,0 +1,47 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  dev                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.2;
+    format      ascii;
+    class       surfaceScalarField;
+    location    "constant";
+    object      thetaf_init;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 300;
+
+boundaryField
+{
+    ground
+    {
+        type            fixedValue;
+        value           uniform 300;
+    }
+    top
+    {
+        type            fixedValue;
+        value           uniform 300;
+    }
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 300;
+    }
+    outlet
+    {
+        type            fixedValue;
+	value           uniform 300;
+    }
+}
+
+
+// ************************************************************************* //

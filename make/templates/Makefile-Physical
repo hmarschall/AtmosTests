@@ -5,6 +5,7 @@
 # $5 -- thermophysicalProperties
 # $6 -- fvSchemes
 # $7 -- fvSolution
+# $8 -- thetaf_init dictionary
 define InitialTheta
 
 .INTERMEDIATE: $1.intermediate
@@ -13,6 +14,7 @@ $1/0/theta $1/0/thetaf: $1.intermediate
 
 $1.intermediate: \
   $1/$(thetaInit) \
+  $1/$(thetafInit) \
   $(addprefix $1/,$(meshFiles)) \
   $(addprefix $1/,$(systemFiles)) \
   $1/$(environmentalProperties) \
@@ -22,6 +24,7 @@ $1.intermediate: \
 	$(setTheta) -case $1
 
 $(eval $(call CopyFile,$3,$1/$(thetaInit)))
+$(eval $(call CopyFile,$8,$1/$(thetafInit)))
 $(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
 $(eval $(call CopyFile,$6,$1/$(fvSchemes)))
 $(eval $(call CopyFile,$7,$1/$(fvSolution)))

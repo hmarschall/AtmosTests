@@ -6,6 +6,7 @@ velocityFieldDict := constant/velocityFieldDict
 environmentalProperties := constant/environmentalProperties
 thermophysicalProperties := constant/thermophysicalProperties
 thetaInit := constant/theta_init
+thetafInit := constant/thetaf_init
 exnerInit := constant/Exner_init
 spongeLayer := constant/muSponge
 
