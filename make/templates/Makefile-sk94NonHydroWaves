@@ -2,52 +2,6 @@ sk94NonHydroWavesEndTime := 3000
 
 # $1 -- case
 # $2 -- mesh
-# $3 -- background theta field
-# $4 -- perturbFieldDict
-define PerturbTheta
-
-.INTERMEDIATE: $1.intermediate
-
-$1/0/theta $1/0/thetaf: $1.intermediate
-
-$1.intermediate: \
-  $1/constant/perturbFieldDict \
-  $3 \
-  $(addprefix $1/,$(meshFiles)) \
-  $(addprefix $1/,$(systemFiles)) \
-  $(perturbField) \
-| $1/0
-	cp $3 $1/0/theta
-	cp $3f $1/0/thetaf
-	$(perturbField) -case $1
-
-$(eval $(call CopyFile,$4,$1/constant/perturbFieldDict))
-$(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
-$(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
-$(eval $(call MakeDir,$1/0))
-$(eval $(call MakeDir,$1/system))
-$(eval $(call MakeDir,$1/constant))
-$(eval $(call MakeDir,$1/$(polyMesh)))
-
-endef
-
-# $1 -- case
-define ComputeTheta
-
-.INTERMEDIATE: $1.intermediate.computeTheta
-
-$1/0/computedTheta $1/0/computedThetaf: $1.intermediate.computeTheta
-
-$1.intermediate.computeTheta: \
-  $1/0/thetaf \
-  $1/$(environmentalProperties) \
-  $(computeTheta)
-	$(computeTheta) -case $1
-
-endef
-
-# $1 -- case
-# $2 -- mesh
 define sk94NonHydroWavesLorenz
 
 $(eval $(call sk94NonHydroWaves,$1,$2,$(exnerFoamH),InitialExnerInterpTheta))

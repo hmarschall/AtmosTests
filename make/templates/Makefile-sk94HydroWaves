@@ -1,0 +1,45 @@
+sk94HydroWavesEndTime := 60000
+
+# $1 -- case
+# $2 -- mesh
+define sk94HydroWavesLorenz
+
+$(eval $(call sk94HydroWaves,$1,$2,$(exnerFoamH),InitialExnerInterpTheta))
+
+$(eval $(call FieldDiff,$1,0,theta,$1-backgroundTheta/0/theta))
+$(eval $(call FieldDiff,$1,$(sk94HydroWavesEndTime),theta,$1-backgroundTheta/0/theta))
+
+endef
+
+# $1 -- case
+# $2 -- mesh
+define sk94HydroWavesCharneyPhillips
+
+$(eval $(call sk94HydroWaves,$1,$2,$(exnerFoamCP),InitialExnerNoInterpTheta))
+
+$(eval $(call FieldDiff,$1-theta,0,computedTheta,$1-backgroundTheta/0/computedTheta))
+$(eval $(call FieldDiff,$1-theta,0,computedThetaf,$1-backgroundTheta/0/computedThetaf))
+$(eval $(call FieldDiff,$1,$(sk94HydroWavesEndTime),theta,$1-backgroundTheta/0/computedTheta))
+$(eval $(call FieldDiff,$1,$(sk94HydroWavesEndTime),thetaf,$1-backgroundTheta/0/computedThetaf))
+$(eval $(call ComputeTheta,$1-backgroundTheta))
+$(eval $(call ComputeTheta,$1-theta))
+$(eval $(call CopyFile,src/sk94HydroWaves/$(environmentalProperties),$1-theta/$(environmentalProperties)))
+
+endef
+
+# $1 -- case
+# $2 -- mesh
+# $3 -- solver
+# $4 -- InitialExner template
+define sk94HydroWaves
+
+$(eval $(call MakeDir,$1/$(sk94HydroWavesEndTime)))
+
+$(eval $(call Physical,$1,$2,src/sk94HydroWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/sk94HydroWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/sk94HydroWaves/$(fvSchemes),src/sk94HydroWaves/$(fvSolution),$(sk94HydroWavesEndTime),25,3000,$3))
+$(eval $(call PerturbTheta,$1-theta,$2,$1-backgroundTheta/0/theta,src/sk94HydroWaves/constant/perturbFieldDict))
+$(eval $(call InitialTheta,$1-backgroundTheta,$2,src/sk94HydroWaves/$(thetaInit),src/sk94HydroWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/sk94HydroWaves/$(fvSchemes),src/sk94HydroWaves/$(fvSolution),src/sk94HydroWaves/$(thetafInit)))
+$(eval $(call $4,$1-exner,$2,src/sk94HydroWaves/$(exnerInit),$1-theta/0/theta,src/sk94HydroWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/sk94HydroWaves/$(fvSchemes),src/sk94HydroWaves/$(fvSolution)))
+
+endef
+
+
