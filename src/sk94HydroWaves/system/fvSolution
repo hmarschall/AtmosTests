@@ -27,14 +27,14 @@ solvers
     {
         solver PCG;
         preconditioner DIC;
-        tolerance        1e-14;
+        tolerance        1e-12;
         relTol           0.01;
     }
 
     ExnerFinal
     {
         $Exner;
-        tolerance        1e-14;
+        tolerance        1e-12;
         relTol           0;
     }
     
