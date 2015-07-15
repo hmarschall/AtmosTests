@@ -26,11 +26,8 @@ convertToMeters 1000;
 
 a 3000;
 ma -3000;
-//am -100;
-//ap 100;
-//hz 5;
-pz 5.1;
-mz 4.9;
+pz 5.5;
+mz 4.5;
 top 10;
 
 vertices
@@ -81,14 +78,12 @@ boundary
     }
     inlet
     {
-        type            cyclic;
-        neighbourPatch  outlet;
+        type            inlet;
         faces           ((9 12 3 0) (12 15 6 3));
     }
     outlet
     {
-        type            cyclic;
-        neighbourPatch  inlet;
+        type		outlet;
         faces           ((2 5 14 11) (5 8 17 14));
     }
     front

@@ -33,13 +33,13 @@ boundaryField
     }
     inlet
     {
-        type            cyclic;
-	value           uniform 315;
+        type            fixedValue;
+        value           uniform 300;
     }
     outlet
     {
-        type            cyclic;
-	value           uniform 315;
+        type            fixedValue;
+        value           uniform 300;
     }
     front
     {

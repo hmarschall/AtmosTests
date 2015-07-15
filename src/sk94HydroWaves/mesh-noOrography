@@ -26,16 +26,14 @@ blocks (
 
 boundary (
 	inlet {
-		type cyclic;
-        neighbourPatch  outlet;
+		type inlet;
 		faces (
 			(0 3 7 4)
 		);
 	}
 
 	outlet {
-		type cyclic;
-        neighbourPatch  inlet;
+		type outlet;
 		faces (
 			(1 2 6 5)
 		);
