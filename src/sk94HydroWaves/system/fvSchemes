@@ -36,6 +36,7 @@ gradSchemes
     grad(theta)     Gauss midPoint;
     grad(u)         Gauss midPoint;
     grad(U)         Gauss midPoint;
+    grad((volIntegrate((bf*magSf))&(g|mag(g)))) Gauss midPoint;
 }
 
 divSchemes
@@ -61,6 +62,9 @@ interpolationSchemes
     interpolate(convection(U,u)) midPoint;
     interpolate(u)         midPoint;
     H                      midPoint;
+    interpolate(grad((volIntegrate((bf*magSf))&(g|mag(g))))) midPoint;
+    interpolate((volIntegrate((bf*magSf))&(g|mag(g)))) midPoint;
+    interpolate((volIntegrate((bf*magSf))_0&(g|mag(g)))) midPoint;
 }
 
 snGradSchemes
@@ -68,6 +72,7 @@ snGradSchemes
     default         none;
     snGrad(Exner)   uncorrected;
     snGrad(theta)   uncorrected;
+    snGrad((volIntegrate((bf*magSf))&(g|mag(g)))) uncorrected;
 }
 
 fluxRequired
