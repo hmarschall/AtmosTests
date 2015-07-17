@@ -1,4 +1,4 @@
-sk94HydroWavesEndTime := 600
+sk94HydroWavesEndTime := 60000
 
 # $1 -- case
 # $2 -- mesh
@@ -35,7 +35,7 @@ define sk94HydroWaves
 
 $(eval $(call MakeDir,$1/$(sk94HydroWavesEndTime)))
 
-$(eval $(call Physical,$1,$2,src/sk94HydroWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/sk94HydroWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/sk94HydroWaves/$(fvSchemes),src/sk94HydroWaves/$(fvSolution),$(sk94HydroWavesEndTime),30,30,$3))
+$(eval $(call Physical,$1,$2,src/sk94HydroWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/sk94HydroWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/sk94HydroWaves/$(fvSchemes),src/sk94HydroWaves/$(fvSolution),$(sk94HydroWavesEndTime),60,60,$3))
 $(eval $(call PerturbTheta,$1-theta,$2,$1-backgroundTheta/0/theta,src/sk94HydroWaves/constant/perturbFieldDict))
 $(eval $(call InitialTheta,$1-backgroundTheta,$2,src/sk94HydroWaves/$(thetaInit),src/sk94HydroWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/sk94HydroWaves/$(fvSchemes),src/sk94HydroWaves/$(fvSolution),src/sk94HydroWaves/$(thetafInit)))
 $(eval $(call $4,$1-exner,$2,src/sk94HydroWaves/$(exnerInit),$1-theta/0/theta,src/sk94HydroWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/sk94HydroWaves/$(fvSchemes),src/sk94HydroWaves/$(fvSolution)))
