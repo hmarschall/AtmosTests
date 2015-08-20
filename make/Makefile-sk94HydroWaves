@@ -1,6 +1,0 @@
-$(eval $(call BlockMesh,build/sk94HydroWaves-mesh-noOrography,src/sk94HydroWaves/mesh-noOrography))
-$(eval $(call BlockMesh,build/sk94HydroWaves-mesh-noOrography-distorted,src/sk94HydroWaves/mesh-noOrography-distorted))
-
-$(eval $(call sk94HydroWavesLorenz,build/sk94HydroWaves-noOrography-lorenz,build/sk94HydroWaves-mesh-noOrography))
-$(eval $(call sk94HydroWavesLorenz,build/sk94HydroWaves-noOrography-distorted-lorenz,build/sk94HydroWaves-mesh-noOrography-distorted))
-$(eval $(call sk94HydroWavesCharneyPhillips,build/sk94HydroWaves-noOrography-charneyPhillips,build/sk94HydroWaves-mesh-noOrography))

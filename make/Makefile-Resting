@@ -8,7 +8,3 @@ $(eval $(call RestingLorenz,build/resting-btf-lorenz,build/resting-mesh-btf))
 $(eval $(call RestingLorenz,build/resting-sleve-lorenz,build/resting-mesh-sleve))
 $(eval $(call RestingLorenz,build/resting-cutCell-lorenz,build/resting-mesh-cutCell))
 
-$(eval $(call RestingCharneyPhillips,build/resting-noOrography-charneyPhillips,build/resting-mesh-noOrography))
-$(eval $(call RestingCharneyPhillips,build/resting-btf-charneyPhillips,build/resting-mesh-btf))
-$(eval $(call RestingCharneyPhillips,build/resting-sleve-charneyPhillips,build/resting-mesh-sleve))
-$(eval $(call RestingCharneyPhillips,build/resting-cutCell-charneyPhillips,build/resting-mesh-cutCell))
