@@ -1,6 +1,6 @@
 $(eval $(call BlockMesh,build/gravityWaves-mesh-noOrography,src/gravityWaves/mesh-noOrography))
 $(eval $(call BlockMesh,build/gravityWaves-mesh-noOrography-graded,src/gravityWaves/mesh-noOrography-graded))
-$(eval $(call TerrainFollowingMesh,build/gravityWaves-mesh-btf-250m,build/gravityWaves-mesh-noOrography,src/gravityWaves/mesh-btf-250m))
+$(eval $(call TerrainFollowingMesh,build/gravityWaves-mesh-btf-250m-300dz,build/gravityWaves-mesh-noOrography,src/gravityWaves/mesh-btf-250m))
 $(eval $(call TerrainFollowingMesh,build/gravityWaves-mesh-btf-500m,build/gravityWaves-mesh-noOrography,src/gravityWaves/mesh-btf-500m))
 $(eval $(call TerrainFollowingMesh,build/gravityWaves-mesh-btf-1000m,build/gravityWaves-mesh-noOrography,src/gravityWaves/mesh-btf-1000m))
 $(eval $(call TerrainFollowingMesh,build/gravityWaves-mesh-btf-4000m,build/gravityWaves-mesh-noOrography,src/gravityWaves/mesh-btf-4000m))
@@ -10,7 +10,7 @@ $(eval $(call CutCellMesh,build/gravityWaves-mesh-cutCell-250m,build/gravityWave
 $(eval $(call CutCellMesh,build/gravityWaves-mesh-cutCell-250m-graded,build/gravityWaves-mesh-noOrography-graded,src/gravityWaves/mesh-btf-250m,src/gravityWaves/mesh-cutCell-baseMesh-250m))
 $(eval $(call CutCellMesh,build/gravityWaves-mesh-cutCell-500m,build/gravityWaves-mesh-noOrography,src/gravityWaves/mesh-btf-500m,src/gravityWaves/mesh-cutCell-baseMesh-500m))
 
-$(eval $(call GravityWaves,build/gravityWaves-btf-250m,build/gravityWaves-mesh-btf-250m))
+$(eval $(call GravityWaves,build/gravityWaves-btf-250m-300dz,build/gravityWaves-mesh-btf-250m))
 $(eval $(call GravityWaves,build/gravityWaves-btf-500m,build/gravityWaves-mesh-btf-500m))
 $(eval $(call GravityWaves,build/gravityWaves-sleve-250m,build/gravityWaves-mesh-sleve-250m))
 $(eval $(call GravityWaves,build/gravityWaves-sleve-500m,build/gravityWaves-mesh-sleve-500m))
