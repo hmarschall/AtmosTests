@@ -20,4 +20,4 @@ $(eval $(call LinearTerrainFollowingAdvection,build/advection-terrainFollowing-l
 $(eval $(call CubicUpwindTerrainFollowingAdvection,build/advection-terrainFollowing-cubicUpwind-btf,build/advection-btf))
 $(eval $(call CubicUpwindTerrainFollowingAdvection,build/advection-terrainFollowing-cubicUpwind-sleve,build/advection-sleve))
 $(eval $(call CubicUpwindTerrainFollowingAdvection,build/advection-terrainFollowing-cubicUpwind-cutCell,build/advection-cutCell))
-$(eval $(call CubicUpwindTerrainFollowingAdvection,build/advection-terrainFollowing-cubicUpwind-cutCell-gravityWaves,build/gravityWaves-mesh-btf-250m-125dz))
+$(eval $(call CubicUpwindTerrainFollowingAdvection,build/advection-terrainFollowing-cubicUpwind-cutCell-gravityWaves,build/gravityWaves-mesh-cutCell-250m-125dz))
