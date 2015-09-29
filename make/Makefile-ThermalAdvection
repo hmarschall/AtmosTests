@@ -1,0 +1,1 @@
+$(eval $(call ThermalAdvection,build/thermalAdvection-btf-250m-300dz,build/gravityWaves-mesh-btf-250m,build/gravityWaves-btf-250m-300dz/0/theta,8))

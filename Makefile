@@ -29,6 +29,8 @@ include make/templates/Makefile-Advection
 include make/templates/Makefile-Physical
 include make/templates/Makefile-Resting
 include make/templates/Makefile-GravityWaves
+include make/templates/Makefile-ThermalAdvection
 include make/Makefile-Advection
 include make/Makefile-Resting
 include make/Makefile-GravityWaves
+include make/Makefile-ThermalAdvection
