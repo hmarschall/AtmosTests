@@ -10,8 +10,7 @@ setFormat raw;
 interpolationScheme cell;
 
 fields (
-    theta
-    Exner
+    theta_diff
 );
 
 sets (

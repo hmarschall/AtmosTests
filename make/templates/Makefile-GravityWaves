@@ -27,11 +27,10 @@ endef
 # $2 -- time
 define GravityWavesSampleLine
 
-$(eval $(call SampleLine,$1,exnerTheta-sampleLine.dat,src/gravityWaves/system/exnerThetaSampleLine,$2,line_Exner_theta.xy))
+$(eval $(call SampleLine,$1,sampleLine.dat,src/gravityWaves/system/sampleLine,$2,line_theta_diff.xy))
 
-$1/postProcessing/sets/$2/line_Exner_theta.xy: \
-  $1/$2/Exner \
-  $1/$2/theta
+#$1/postProcessing/sets/$2/line_theta_diff.xy: \
+#  $1/$2/theta_diff
 
 endef
 
