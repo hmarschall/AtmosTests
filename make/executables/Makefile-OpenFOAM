@@ -10,6 +10,7 @@ globalSum := $(FOAM_USER_APPBIN)/globalSum
 perturbField := $(FOAM_USER_APPBIN)/perturbField
 reconstructPar := reconstructPar
 sample := sample
+setAdvectedTheta := $(FOAM_USER_APPBIN)/setAdvectedTheta
 setDivFreeVelocityField := $(FOAM_USER_APPBIN)/setDivFreeVelocityField
 setExnerBalancedH := $(FOAM_USER_APPBIN)/setExnerBalancedH
 setScalarOverOrography := $(FOAM_USER_APPBIN)/setScalarOverOrography
