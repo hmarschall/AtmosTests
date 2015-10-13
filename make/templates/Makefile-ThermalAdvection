@@ -6,7 +6,7 @@ define ThermalAdvection
 
 all:: $1/18000/T
 
-$(eval $(call FieldDiff,$1,18000,T,$1-analyticTracer/0/T_analytic))
+$(eval $(call FieldDiff,$1,18000,T,$1-analyticTracer/18000/T_analytic))
 
 $(eval $(call AnalyticThetaField,$1-analyticTracer,$2,src/thermalAdvection/velocityField-250m,src/gravityWaves/constant/environmentalProperties,src/physical/constant/thermophysicalProperties))
 
@@ -23,8 +23,26 @@ endef
 # $5 -- thermophysicalProperties
 define AnalyticThetaField
 
-$1/0/T_analytic: \
-  $(setAdvectedTheta)
+$1/18000/T_analytic: \
+  $(addprefix $1/,$(meshFiles)) \
+  $(addprefix $1/,$(systemFiles)) \
+  $1/$(environmentalProperties) \
+  $1/$(thermophysicalProperties) \
+  $1/$(velocityFieldDict) \
+  $(setAdvectedTheta) \
+| $1/constant $1/system $1/18000
 	$(setAdvectedTheta) -case $1
+	mv $1/0/theta $1/18000/T_analytic
+
+$(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
+$(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
+$(eval $(call CopyFile,$3,$1/$(velocityFieldDict)))
+$(eval $(call CopyFile,$4,$1/$(environmentalProperties)))
+$(eval $(call CopyFile,$5,$1/$(thermophysicalProperties)))
+
+$(eval $(call MakeDir,$1/18000))
+$(eval $(call MakeDir,$1/constant))
+$(eval $(call MakeDir,$1/system))
+$(eval $(call MakeDir,$1/$(polyMesh)))
 
 endef
