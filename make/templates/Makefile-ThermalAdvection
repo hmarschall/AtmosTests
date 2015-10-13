@@ -6,6 +6,8 @@ define ThermalAdvection
 
 all:: $1/18000/T
 
+$(eval $(call FieldDiff,$1,$(schaerWavesEndTime),T,$1/0/T))
+
 $(eval $(call VelocityField,$1-velocity,$2,src/thermalAdvection/velocityField-250m))
 
 $(eval $(call AdvectTracer,$1,$2,$3,$1-velocity/0/phi,18000,$4,3600,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
