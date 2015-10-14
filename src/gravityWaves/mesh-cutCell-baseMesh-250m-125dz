@@ -17,4 +17,4 @@ a 5e3;
 hm 250;
 // horizontal scale for fine scale mountains (for Schar test case)
 lambda 4e3;
-SNAP_dz 115;
+SNAP_dz 60;
