@@ -8,6 +8,7 @@ define GravityWaves
 $(eval $(call GravityWavesSampleLine,$1,$(schaerWavesEndTime)))
 $(eval $(call GravityWavesWContour,$1,$(schaerWavesEndTime)))
 $(eval $(call FieldDiff,$1,$(schaerWavesEndTime),theta,$1/0/theta))
+$(eval $(call MeshExtrema,$1))
 
 $(eval $(call Physical,$1,$2,src/gravityWaves/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution),$(schaerWavesEndTime),$3,3600,$(exnerFoamH)))
 $(eval $(call InitialTheta,$1-theta,$2,src/gravityWaves/$(thetaInit),src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))

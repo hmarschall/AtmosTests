@@ -77,3 +77,21 @@ define ExtractStat
 	tail -n1 $2 | cut -d' ' -f$3 > $1
 endef
 
+# $1 -- case
+define MeshExtrema
+
+$1/meshMinVol.dat \
+$1/meshMaxVol.dat: \
+  $(addprefix $1/,$(meshFiles)) \
+  $(addprefix $1/,$(systemFiles))
+
+$1/meshMinVol.dat:
+	$(checkMesh) -case $1 | grep "Min volume" | tr -s ' ' | cut -d' ' -f5 | sed 's/.$$$$//' > $$@
+
+$1/meshMaxVol.dat:
+	$(checkMesh) -case $1 | grep "Max volume" | tr -s ' ' | cut -d' ' -f9 | sed 's/.$$$$//' > $$@
+
+$1/meshVolRatio.dat: $1/meshMinVol.dat $1/meshMaxVol.dat
+	python -c "print $$$$(cat $1/meshMaxVol.dat)/$$$$(cat $1/meshMinVol.dat)" > $$@
+
+endef
