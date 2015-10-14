@@ -27,15 +27,15 @@ solvers
     {
         solver PCG;
         preconditioner DIC;
-        tolerance        1e-14;
-        relTol           0;
+        tolerance        1e-10;
+        relTol           1e-4;
     }
 
     ExnerFinal
     {
         $Exner;
-        tolerance        1e-14;
-        relTol           0;
+        tolerance        1e-10;
+        relTol           1e-4;
     }
     
     theta
