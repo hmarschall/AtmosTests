@@ -30,8 +30,8 @@ define GravityWavesSampleLine
 
 $(eval $(call SampleLine,$1,sampleLine.dat,src/gravityWaves/system/sampleLine,$2,line_theta_diff.xy))
 
-#$1/postProcessing/sets/$2/line_theta_diff.xy: \
-#  $1/$2/theta_diff
+$1/postProcessing/sets/$2/line_theta_diff.xy: \
+  $1/$2/theta_diff
 
 endef
 

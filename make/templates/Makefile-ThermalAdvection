@@ -6,6 +6,7 @@ define ThermalAdvection
 
 all:: $1/18000/T
 
+$(eval $(call ThermalAdvectionSampleLine,$1,18000))
 $(eval $(call FieldDiff,$1,18000,T,$1-analyticTracer/18000/T_analytic))
 $(eval $(call L2Error,$1,18000,T))
 
@@ -14,6 +15,17 @@ $(eval $(call AnalyticThetaField,$1-analyticTracer,$2,src/thermalAdvection/veloc
 $(eval $(call VelocityField,$1-velocity,$2,src/thermalAdvection/velocityField-250m))
 
 $(eval $(call AdvectTracer,$1,$2,$3,$1-velocity/0/phi,18000,$4,3600,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+
+endef
+#
+# $1 -- case
+# $2 -- time
+define ThermalAdvectionSampleLine
+
+$(eval $(call SampleLine,$1,sampleLine.dat,src/thermalAdvection/system/sampleLine,$2,line_T_diff.xy))
+
+$1/postProcessing/sets/$2/line_T_diff.xy: \
+  $1/$2/T_diff
 
 endef
 
