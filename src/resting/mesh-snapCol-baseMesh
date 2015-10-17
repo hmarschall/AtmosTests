@@ -14,7 +14,7 @@ zt 20e3;
 // horizontal scale of large scale mountains
 a 5e3;
 // mountain height
-hm 1000;
+hm 990;
 // horizontal scale for fine scale mountains (for Schar test case)
 lambda 4e3;
 SNAP_dz 290;
