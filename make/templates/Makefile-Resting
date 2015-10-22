@@ -17,6 +17,7 @@ endef
 # $5 -- InitialExner template
 define Resting
 
+$(eval $(call MeshDiagnostics,$1))
 $(eval $(call Physical,$1,$2,src/resting/0/Uf,$1-theta/0/theta,$1-exner/0/Exner,src/resting/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/resting/$(fvSchemes),src/resting/$(fvSolution),21600,$3,3600,$4))
 $(eval $(call InitialTheta,$1-theta,$2,src/resting/$(thetaInit),src/resting/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/resting/$(fvSchemes),src/resting/$(fvSolution)))
 $(eval $(call $5,$1-exner,$2,src/resting/$(exnerInit),$1-theta/0/theta,src/resting/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/resting/$(fvSchemes),src/resting/$(fvSolution)))
