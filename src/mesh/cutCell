@@ -6,7 +6,7 @@ FoamFile {
 }
 
 castellatedMesh true;
-snap            false;
+snap            true;
 addLayers       false;
 
 mergeTolerance	1e-06;
@@ -24,7 +24,7 @@ castellatedMeshControls {
 	maxLocalCells			100000;
 	maxGlobalCells			2000000;
 	minRefinementCells		0;
-	resolveFeatureAngle		90;
+	resolveFeatureAngle		30;
 	nCellsBetweenLevels		1;
 	allowFreeStandingZoneFaces	false;
 
