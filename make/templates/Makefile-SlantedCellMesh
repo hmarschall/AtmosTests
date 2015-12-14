@@ -1,0 +1,37 @@
+# $1 -- case
+# $2 -- noOrography mesh
+# $3 -- mountainDict
+define SlantedCellMesh
+
+.INTERMEDIATE: $1.intermediate
+
+$(addprefix $1/,$(meshFiles)): $1.intermediate
+
+$1.intermediate: \
+  $1/$(mountainDict) \
+  $(addprefix $1/,$(systemFiles)) \
+  $1/$(collapseDict) \
+  $1/$(meshQualityDict) \
+  $(addprefix $2/,$(meshFiles)) \
+  $(slantMesh) \
+  $(checkCellVolumes) \
+| $1/constant
+	$(rsync) -ru -delete $2/$(polyMesh) $1/constant
+	$(slantMesh) -case $1
+	$(checkCellVolumes) -case $1
+	$(setSet) -case $1 -constant -noVTK -batch src/mesh/removeTinyCells
+	$(subsetMesh) -case $1 -patch ground -overwrite bigCells
+	$(checkMesh) -case $1 -constant
+	if [ -e $1/constant/polyMesh/sets/zeroAreaFaces ] ; \
+	then \
+	  $(collapseEdges) -case $1 -constant -overwrite -collapseFaceSet zeroAreaFaces ; \
+	fi;
+
+$(eval $(call CopyFile,$3,$1/$(mountainDict)))
+$(eval $(call CopyFile,src/mesh/collapseDict,$1/$(collapseDict)))
+$(eval $(call CopyFile,src/mesh/meshQualityDict,$1/$(meshQualityDict)))
+$(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
+$(eval $(call MakeDir,$1/constant))
+$(eval $(call MakeDir,$1/system))
+
+endef

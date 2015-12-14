@@ -1,9 +1,12 @@
 add2dMountainDict := constant/add2dMountainDict
 blockMeshDict := $(polyMesh)/blockMeshDict
+collapseDict := system/collapseDict
 decomposeParDict := system/decomposeParDict
 setScalarOverOrographyDict := constant/setScalarOverOrographyDict
 velocityFieldDict := constant/velocityFieldDict
 environmentalProperties := constant/environmentalProperties
+meshQualityDict := system/meshQualityDict
+mountainDict := constant/mountainDict
 thermophysicalProperties := constant/thermophysicalProperties
 thetaInit := constant/theta_init
 thetafInit := constant/thetaf_init
