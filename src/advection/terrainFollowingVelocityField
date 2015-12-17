@@ -6,8 +6,10 @@ FoamFile {
     object      velocityFieldDict;
 }
     
-velocityProfile		SCHAER_COS;
+velocityProfileType	BtfVelocityProfile;
 maxVelocity		10;
+
+mountainType		SchaerCosMountain;
 domainHeight		25e3;
 mountainHalfWidth	25e3;
 mountainPeakHeight	3e3;

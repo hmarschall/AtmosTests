@@ -6,7 +6,7 @@ FoamFile {
     object      velocityFieldDict;
 }
 
-velocityProfile		HORIZONTAL;
+velocityProfileType     HorizontalVelocityProfile;
 maxVelocity		10;
 zeroVelocityHeight	4000;
 maxVelocityHeight	5000;
