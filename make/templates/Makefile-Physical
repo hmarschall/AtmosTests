@@ -167,11 +167,7 @@ $1.fields.intermediate: \
   $1/$(decomposeParDict) \
   $(13) \
 | $1/constant $1/system
-	$(decomposePar) -case $1 -force -constant
-	bin/correctMPIinitialUf.sh $1
-	$(mpirun) --hostfile machines -np 4 $(13) -case $1 -parallel
-	$(reconstructPar) -case $1 -constant
-	cp $(addprefix $1/processor0/,energy.dat courant.dat) $1/
+	$(13) -case $1
 
 $(eval $(call CopyFile,$3,$1/0/Uf))
 $(eval $(call CopyFile,$4,$1/0/theta))

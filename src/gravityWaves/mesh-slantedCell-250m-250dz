@@ -3,14 +3,12 @@ FoamFile {
     format      ascii;
     class       dictionary;
     location    "constant";
-    object      velocityFieldDict;
+    object      mountainDict;
 }
-    
-velocityProfileType	BtfVelocityProfile;
-maxVelocity	        10;
 
-mountainType		SchaerCosMountain;
 domainHeight		20e3;
+mountainType            SchaerExpMountain;
 mountainHalfWidth	5e3;
 mountainPeakHeight	250;
 mountainWavelength	4e3;
+tolerance		50;
