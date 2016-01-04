@@ -11,3 +11,4 @@ mountainType            SchaerCosMountain;
 mountainHalfWidth	25e3;
 mountainPeakHeight	3e3;
 mountainWavelength	8e3;
+tolerance		100;
