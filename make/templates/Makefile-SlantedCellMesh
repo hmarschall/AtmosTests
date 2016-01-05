@@ -22,6 +22,11 @@ $1.intermediate: \
 	$(setSet) -case $1 -constant -noVTK -batch src/mesh/removeTinyCells
 	$(subsetMesh) -case $1 -patch ground -overwrite bigCells
 	$(checkMesh) -case $1 -constant
+	if [ -e $1/constant/polyMesh/sets/wrongOrientedFaces ] ; \
+	then \
+	  $(collapseEdges) -case $1 -constant -overwrite ; \
+	fi;
+	$(checkMesh) -case $1 -constant
 	if [ -e $1/constant/polyMesh/sets/zeroAreaFaces ] ; \
 	then \
 	  $(collapseEdges) -case $1 -constant -overwrite -collapseFaceSet zeroAreaFaces ; \
