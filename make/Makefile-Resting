@@ -3,8 +3,12 @@ $(eval $(call TerrainFollowingMesh,build/resting-mesh-btf,build/resting-mesh-noO
 $(eval $(call TerrainFollowingMesh,build/resting-mesh-sleve,build/resting-mesh-noOrography,src/resting/mesh-sleve))
 $(eval $(call SlantedCellMesh,build/resting-mesh-cutCell,build/resting-mesh-noOrography,src/resting/mesh-slantedCell))
 
-$(eval $(call RestingLorenz,build/resting-noOrography-lorenz,build/resting-mesh-noOrography))
-$(eval $(call RestingLorenz,build/resting-btf-lorenz,build/resting-mesh-btf))
-$(eval $(call RestingLorenz,build/resting-sleve-lorenz,build/resting-mesh-sleve))
-$(eval $(call RestingLorenz,build/resting-cutCell-lorenz,build/resting-mesh-cutCell))
+$(eval $(call Resting,build/resting-noOrography-high,build/resting-mesh-noOrography,src/resting/constant/highInversion))
+$(eval $(call Resting,build/resting-btf-high,build/resting-mesh-btf,src/resting/constant/highInversion))
+$(eval $(call Resting,build/resting-sleve-high,build/resting-mesh-sleve,src/resting/constant/highInversion))
+$(eval $(call Resting,build/resting-cutCell-high,build/resting-mesh-cutCell,src/resting/constant/highInversion))
+$(eval $(call Resting,build/resting-noOrography-low,build/resting-mesh-noOrography,src/resting/constant/lowInversion))
+$(eval $(call Resting,build/resting-btf-low,build/resting-mesh-btf,src/resting/constant/lowInversion))
+$(eval $(call Resting,build/resting-sleve-low,build/resting-mesh-sleve,src/resting/constant/lowInversion))
+$(eval $(call Resting,build/resting-cutCell-low,build/resting-mesh-cutCell,src/resting/constant/lowInversion))
 
