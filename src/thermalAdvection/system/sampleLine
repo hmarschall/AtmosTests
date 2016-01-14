@@ -18,8 +18,8 @@ sets (
         type        midPoint;
         axis        z;
 
-        start       (50e3 0.5e3 0);
-        end         (50e3 0.5e3 30e3);
+        start       (9e3 0.5e3 0);
+        end         (9e3 0.5e3 7.5e3);
     }
 
 );
