@@ -11,4 +11,4 @@ mountainType            SchaerExpMountain;
 mountainHalfWidth	5e3;
 mountainPeakHeight	250;
 mountainWavelength	4e3;
-tolerance		10;
+tolerance		20;
