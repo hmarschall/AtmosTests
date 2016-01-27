@@ -5,6 +5,8 @@ decomposeParDict := system/decomposeParDict
 setScalarOverOrographyDict := constant/setScalarOverOrographyDict
 velocityFieldDict := constant/velocityFieldDict
 environmentalProperties := constant/environmentalProperties
+extrudeMeshDict := system/extrudeMeshDict
+createPatchDict := system/createPatchDict
 meshQualityDict := system/meshQualityDict
 mountainDict := constant/mountainDict
 thermophysicalProperties := constant/thermophysicalProperties
@@ -12,4 +14,3 @@ thetaInit := constant/theta_init
 thetafInit := constant/thetaf_init
 exnerInit := constant/Exner_init
 spongeLayer := constant/muSponge
-

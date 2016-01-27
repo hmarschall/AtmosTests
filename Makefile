@@ -16,7 +16,9 @@ include $(MAKE_COMMON)/templates/Makefile-FileSystem
 include make/globals/Makefile
 include make/globals/Makefile-OpenFOAM
 include make/executables/Makefile
+include make/executables/Makefile-ASAM
 include make/executables/Makefile-GMT
+include make/executables/Makefile-GMV2OpenFOAM
 include make/executables/Makefile-OpenFOAM
 include make/templates/Makefile-FileSystem
 include make/templates/Makefile-OpenFOAM

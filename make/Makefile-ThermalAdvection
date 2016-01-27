@@ -16,3 +16,5 @@ $(eval $(call ThermalAdvection,build/thermalAdvection-cutCell-250m-125dz,build/g
 $(eval $(call ThermalAdvection,build/thermalAdvection-cutCell-250m-100dz,build/gravityWaves-mesh-cutCell-250m-100dz,build/gravityWaves-cutCell-250m-100dz/0/theta,2.666666667))
 $(eval $(call ThermalAdvection,build/thermalAdvection-cutCell-250m-75dz,build/gravityWaves-mesh-cutCell-250m-75dz,build/gravityWaves-cutCell-250m-75dz/0/theta,2))
 $(eval $(call ThermalAdvection,build/thermalAdvection-cutCell-250m-50dz,build/gravityWaves-mesh-cutCell-250m-50dz,build/gravityWaves-cutCell-250m-50dz/0/theta,1.333333))
+
+$(eval $(call CutCellMesh,build/thermalAdvection-mesh-cutCell-250m-250dz,src/thermalAdvection/mesh-cutCell-250m-250dz))

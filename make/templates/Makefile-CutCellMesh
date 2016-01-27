@@ -1,49 +1,37 @@
-groundPatch := patchFaces_ground_constant.obj
-
-snappyHexMeshFiles := \
-  $(polyMesh)/level0Edge \
-  $(polyMesh)/refinementHistory \
-  $(polyMesh)/cellLevel \
-  $(polyMesh)/pointLevel \
-  $(polyMesh)/surfaceIndex \
-  $(polyMesh)/pointZones \
-  $(polyMesh)/cellZones \
-  $(polyMesh)/faceZones
-
 # $1 -- case
-# $2 -- noOrography case
-# $3 -- add2dMountainDict for ground patch
-# $4 -- add2dMountainDict for base mesh
+# $2 -- ASAM grid definition
 define CutCellMesh
-
-$(eval $(call __TerrainFollowingMesh,$1-groundPatch,$2,$3,$(dummy)/$(controlDict)))
-$(eval $(call __TerrainFollowingMesh,$1-baseMesh,$2,$4,$(dummy)/$(controlDict)Ascii))
 
 .INTERMEDIATE: $1.intermediate
 
 $(addprefix $1/,$(meshFiles)): $1.intermediate
 
 $1.intermediate: \
-  src/mesh/cutCell \
-  $1/$(triSurface)/$(groundPatch) \
+  $1/vertical_slice.obj \
+  $1/$(extrudeMeshDict) \
+  $1/$(createPatchDict) \
+  $1/$(meshQualityDict) \
   $(addprefix $1/,$(systemFiles)) \
-  $(addprefix $1-baseMesh/,$(meshFiles)) \
-| $1/$(polyMesh)
-	cp $(addprefix $1-baseMesh/,$(meshFiles)) $1/$(polyMesh)
-	$(RM) $(addprefix $1/,$(snappyHexMeshFiles))
-	$(snappyHexMesh) -overwrite -case $1 -dict $(abspath src/mesh/cutCell)
-	mv $1/$(boundary) $1/$(boundary).snappyHexMeshGenerated
-	perl -ne 'print if !( m/^\s*ground/ .. m/}/ or /^\d*$$$$/ )' < $1/$(boundary).snappyHexMeshGenerated | sed -e 's/patchFaces_ground_constant.obj/ground/' > $1/$(boundary)
+| $1/constant
+	( cd $1 && $(extrudeMesh) ) # workaround for http://www.openfoam.org/mantisbt/view.php?id=1981
+	$(setSet) -case $1 -constant -noVTK -batch src/mesh/cutCellPatchSets
+	$(createPatch) -case $1 -overwrite
 
-$1-groundPatch/$(groundPatch): \
-  $(addprefix $1-groundPatch/,$(meshFiles)) \
-  $(addprefix $1-groundPatch/,$(systemFiles))
-	$(writeMeshObj) -case $1-groundPatch -patchFaces -time -1 -constant
+$1/vertical_slice.obj: \
+  $1-asam/asam.grid \
+| $1-asam
+	( cd $1-asam && $(asamgrid) asam.grid )
+	$(gmvread) $1-asam/asam.out.gmvG $1-asam
+	$(gmv2obj) $1-asam $$@
 
+$(eval $(call CopyFile,src/mesh/meshQualityDict,$1/$(meshQualityDict)))
+$(eval $(call CopyFile,src/mesh/extrudeMeshDict,$1/$(extrudeMeshDict)))
+$(eval $(call CopyFile,src/mesh/createPatchDict,$1/$(createPatchDict)))
+$(eval $(call CopyFile,$2,$1-asam/asam.grid))
 $(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
-$(eval $(call CopyNamedFile,$1-groundPatch,$(groundPatch),$1/$(triSurface)))
-$(eval $(call MakeDir,$1/$(triSurface)))
-$(eval $(call MakeDir,$1/$(polyMesh)))
+$(eval $(call MakeDir,$1/constant))
 $(eval $(call MakeDir,$1/system))
+$(eval $(call MakeDir,$1-asam))
 
 endef
+
