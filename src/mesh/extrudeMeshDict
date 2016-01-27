@@ -22,7 +22,7 @@ FoamFile
 constructFrom surface;
 
 // If construct from surface:
-surface "vertical_slice.obj";
+surface "$FOAM_CASE/vertical_slice.obj";
 
 // Flip surface normals before usage. Valid only for extrude from surface or
 // patch.
