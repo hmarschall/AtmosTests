@@ -1,1 +1,1 @@
-asamgrid := $(HOME)/bin/Grid.Mac
+asamgrid := GridGen

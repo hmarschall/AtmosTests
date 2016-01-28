@@ -1,2 +1,2 @@
-gmvread=$(GMV2OPENFOAM_ROOT)/gmvread
-gmv2obj=$(GMV2OPENFOAM_ROOT)/gmv2obj.py
+gmvread := gmvread
+gmv2obj := gmv2obj
