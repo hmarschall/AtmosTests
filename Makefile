@@ -11,8 +11,10 @@ clean:
 
 include make/gmsl
 include $(MAKE_COMMON)/executables/Makefile
+include $(MAKE_COMMON)/executables/Makefile-OpenFOAM
 include $(MAKE_COMMON)/globals/Makefile-OpenFOAM
 include $(MAKE_COMMON)/templates/Makefile-FileSystem
+include $(MAKE_COMMON)/templates/Makefile-Diagnostics
 include make/globals/Makefile
 include make/globals/Makefile-OpenFOAM
 include make/executables/Makefile
