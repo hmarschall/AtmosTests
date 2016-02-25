@@ -1,5 +1,4 @@
 add2dMountain := $(FOAM_USER_APPBIN)/add2dMountain
-advectionFoam := $(FOAM_USER_APPBIN)/advectionFoam
 blockMesh := blockMesh
 checkMesh := checkMesh
 checkCellVolumes := $(FOAM_USER_APPBIN)/checkCellVolumes
