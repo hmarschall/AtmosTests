@@ -1,5 +1,6 @@
 # $1 -- case
 # $2 -- ASAM grid definition
+# $3 -- createPatchDict
 define CutCellMesh
 
 .INTERMEDIATE: $1.intermediate
@@ -27,7 +28,7 @@ $1/vertical_slice.obj: \
 
 $(eval $(call CopyFile,src/mesh/meshQualityDict,$1/$(meshQualityDict)))
 $(eval $(call CopyFile,src/mesh/extrudeMeshDict,$1/$(extrudeMeshDict)))
-$(eval $(call CopyFile,src/mesh/createPatchDict,$1/$(createPatchDict)))
+$(eval $(call CopyFile,$3,$1/$(createPatchDict)))
 $(eval $(call CopyFile,$2,$1-asam/asam.grid))
 $(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
 $(eval $(call MakeDir,$1))
