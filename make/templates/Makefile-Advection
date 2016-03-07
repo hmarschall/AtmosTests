@@ -81,7 +81,6 @@ $1.intermediate: \
   $1/0/phi \
   $1/$(decomposeParDict)
 	$(decomposePar) -case $1 -force -constant
-	bin/correctMPIinitialUf.sh $1		
 	$(mpirun) --hostfile machines -np 4 $(advectionFoam) -case $1 -parallel		
 	$(reconstructPar) -case $1 -constant		
 

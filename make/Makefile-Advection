@@ -1,22 +1,22 @@
 $(eval $(call BlockMesh,build/advection-noOrography,src/advection/mesh-noOrography))
 $(eval $(call TerrainFollowingMesh,build/advection-btf,build/advection-noOrography,src/advection/mesh-btf))
 $(eval $(call TerrainFollowingMesh,build/advection-sleve,build/advection-noOrography,src/advection/mesh-sleve))
-$(eval $(call SlantedCellMesh,build/advection-cutCell,build/advection-noOrography,src/advection/mesh-slantedCell))
+$(eval $(call SlantedCellMesh,build/advection-slantedCell,build/advection-noOrography,src/advection/mesh-slantedCell))
 
 $(eval $(call LinearHorizontalAdvection,build/advection-horizontal-linear-noOrography,build/advection-noOrography))
 $(eval $(call LinearHorizontalAdvection,build/advection-horizontal-linear-btf,build/advection-btf))
 $(eval $(call LinearHorizontalAdvection,build/advection-horizontal-linear-sleve,build/advection-sleve))
-$(eval $(call LinearHorizontalAdvection,build/advection-horizontal-linear-cutCell,build/advection-cutCell))
+$(eval $(call LinearHorizontalAdvection,build/advection-horizontal-linear-slantedCell,build/advection-slantedCell))
 
 $(eval $(call CubicUpwindHorizontalAdvection,build/advection-horizontal-cubicUpwind-noOrography,build/advection-noOrography))
 $(eval $(call CubicUpwindHorizontalAdvection,build/advection-horizontal-cubicUpwind-btf,build/advection-btf))
 $(eval $(call CubicUpwindHorizontalAdvection,build/advection-horizontal-cubicUpwind-sleve,build/advection-sleve))
-$(eval $(call CubicUpwindHorizontalAdvection,build/advection-horizontal-cubicUpwind-cutCell,build/advection-cutCell))
+$(eval $(call CubicUpwindHorizontalAdvection,build/advection-horizontal-cubicUpwind-slantedCell,build/advection-slantedCell))
 
 $(eval $(call LinearTerrainFollowingAdvection,build/advection-terrainFollowing-linear-btf,build/advection-btf))
 $(eval $(call LinearTerrainFollowingAdvection,build/advection-terrainFollowing-linear-sleve,build/advection-sleve))
-$(eval $(call LinearTerrainFollowingAdvection,build/advection-terrainFollowing-linear-cutCell,build/advection-cutCell))
+$(eval $(call LinearTerrainFollowingAdvection,build/advection-terrainFollowing-linear-slantedCell,build/advection-slantedCell))
 
 $(eval $(call CubicUpwindTerrainFollowingAdvection,build/advection-terrainFollowing-cubicUpwind-btf,build/advection-btf))
 $(eval $(call CubicUpwindTerrainFollowingAdvection,build/advection-terrainFollowing-cubicUpwind-sleve,build/advection-sleve))
-$(eval $(call CubicUpwindTerrainFollowingAdvection,build/advection-terrainFollowing-cubicUpwind-cutCell,build/advection-cutCell))
+$(eval $(call CubicUpwindTerrainFollowingAdvection,build/advection-terrainFollowing-cubicUpwind-slantedCell,build/advection-slantedCell))
