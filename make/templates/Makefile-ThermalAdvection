@@ -1,5 +1,15 @@
 # $1 -- case directory
 # $2 -- mesh case
+# $3 -- timestep
+define StandaloneThermalAdvection
+
+$(eval $(call InitialTheta,$1-theta,$2,src/gravityWaves/$(thetaInit),src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
+$(eval $(call ThermalAdvection,$1,$2,$1-theta/0/theta,$3))
+
+endef
+
+# $1 -- case directory
+# $2 -- mesh case
 # $3 -- theta profile (from the gravityWaves test)
 # $4 -- timestep
 define ThermalAdvection
