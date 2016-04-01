@@ -19,7 +19,7 @@ $(eval $(call ThermalAdvection,build/thermalAdvection-slantedCell-250m-50dz,buil
 
 $(eval $(call TerrainFollowingMesh,build/thermalAdvection-mesh-btf-1000m-250dz,build/gravityWaves-mesh-noOrography-250dz,src/thermalAdvection/mesh-btf-1000m))
 $(eval $(call SlantedCellMesh,build/thermalAdvection-mesh-slantedCell-1000m-250dz,build/gravityWaves-mesh-noOrography-250dz,src/thermalAdvection/mesh-slantedCell-1000m-250dz))
-$(eval $(call CutCellMesh,build/thermalAdvection-mesh-cutCell-1000m-250dz,src/thermalAdvection/mesh-cutCell-1000m-250dz))
+$(eval $(call CutCellMesh,build/thermalAdvection-mesh-cutCell-1000m-250dz,src/thermalAdvection/mesh-cutCell-1000m-250dz,src/mesh/defaultCreatePatchDict))
 
 $(eval $(call StandaloneThermalAdvection,build/thermalAdvection-btf-1000m-250dz,build/thermalAdvection-mesh-btf-1000m-250dz,src/thermalAdvection/velocityField-1000m,36,144))
 #$(eval $(call StandaloneThermalAdvection,build/thermalAdvection-slantedCell-1000m-250dz,build/thermalAdvection-mesh-slantedCell-1000m-250dz,src/thermalAdvection/velocityField-1000m,10,100))

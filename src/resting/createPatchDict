@@ -1,0 +1,58 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      createPatchDict;
+}
+
+pointSync false;
+
+patches
+(
+    {
+        name inlet;
+        patchInfo
+        {
+		    type symmetryPlane;
+        }
+        constructFrom set;
+        set inlet;
+    }
+    {
+        name outlet;
+        patchInfo
+        {
+		    type symmetryPlane;
+        }
+        constructFrom set;
+        set outlet;
+    }
+    {
+        name ground;
+        patchInfo
+        {
+            type wall;
+        }
+        constructFrom set;
+        set ground;
+    }
+    {
+        name top;
+        patchInfo
+        {
+            type wall;
+        }
+        constructFrom set;
+        set top;
+    }
+    {
+        name frontAndBack;
+        patchInfo
+        {
+            type empty;
+        }
+        constructFrom set;
+        set frontAndBack;
+    }
+);
