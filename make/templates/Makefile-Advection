@@ -10,7 +10,7 @@ endef
 # $2 -- mesh case
 define CubicUpwindHorizontalAdvection
 
-$(eval $(call Advection,$1,$2,src/advection/horizontalVelocityField,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes,25))
+$(eval $(call Advection,$1,$2,src/advection/horizontalVelocityField,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes,20))
 
 endef
 

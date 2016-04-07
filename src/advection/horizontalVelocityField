@@ -8,5 +8,5 @@ FoamFile {
 
 velocityProfileType     HorizontalVelocityProfile;
 maxVelocity		10;
-zeroVelocityHeight	4000;
-maxVelocityHeight	5000;
+zeroVelocityHeight	7000;
+maxVelocityHeight	8000;
