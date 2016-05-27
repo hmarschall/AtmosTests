@@ -18,17 +18,17 @@ endef
 # $6 -- writeInterval
 define ThermalAdvection
 
-all:: $1/18000/T
+all:: $1/4000/T
 
-$(eval $(call ThermalAdvectionSampleLine,$1,18000))
-$(eval $(call FieldDiff,$1,18000,T,$1-analyticTracer/18000/T_analytic))
-$(eval $(call L2Error,$1,18000,T))
+$(eval $(call ThermalAdvectionSampleLine,$1,4000))
+$(eval $(call FieldDiff,$1,4000,T,$1-analyticTracer/4000/T_analytic))
+$(eval $(call Errors,$1,4000,T))
 
 $(eval $(call AnalyticThetaField,$1-analyticTracer,$2,$4,src/gravityWaves/constant/environmentalProperties,src/physical/constant/thermophysicalProperties))
 
 $(eval $(call VelocityField,$1-velocity,$2,$4))
 
-$(eval $(call AdvectTracer,$1,$2,$3,$1-velocity/0/phi,18000,$5,$6,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+$(eval $(call AdvectTracer,$1,$2,$3,$1-velocity/0/phi,4000,$5,$6,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
 
 endef
 #
@@ -50,16 +50,16 @@ endef
 # $5 -- thermophysicalProperties
 define AnalyticThetaField
 
-$1/18000/T_analytic: \
+$1/4000/T_analytic: \
   $(addprefix $1/,$(meshFiles)) \
   $(addprefix $1/,$(systemFiles)) \
   $1/$(environmentalProperties) \
   $1/$(thermophysicalProperties) \
   $1/$(velocityFieldDict) \
   $(setAdvectedTheta) \
-| $1/constant $1/system $1/18000
+| $1/constant $1/system $1/4000
 	$(setAdvectedTheta) -case $1
-	mv $1/0/theta $1/18000/T_analytic
+	mv $1/0/theta $1/4000/T_analytic
 
 $(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
 $(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
@@ -67,7 +67,7 @@ $(eval $(call CopyFile,$3,$1/$(velocityFieldDict)))
 $(eval $(call CopyFile,$4,$1/$(environmentalProperties)))
 $(eval $(call CopyFile,$5,$1/$(thermophysicalProperties)))
 
-$(eval $(call MakeDir,$1/18000))
+$(eval $(call MakeDir,$1/4000))
 $(eval $(call MakeDir,$1/constant))
 $(eval $(call MakeDir,$1/system))
 $(eval $(call MakeDir,$1/$(polyMesh)))

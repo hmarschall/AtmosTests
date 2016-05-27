@@ -10,7 +10,7 @@ velocityProfileType	BtfVelocityProfile;
 maxVelocity	        10;
 
 mountainType		SchaerExpMountain;
-domainHeight		20e3;
+domainHeight		5e3;
 mountainHalfWidth	5e3;
 mountainPeakHeight	1000;
 mountainWavelength	4e3;
