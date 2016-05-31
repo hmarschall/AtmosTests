@@ -9,6 +9,18 @@ $(eval $(call InitialTheta,$1-theta,$2,src/gravityWaves/$(thetaInit),src/gravity
 $(eval $(call ThermalAdvection,$1,$2,$1-theta/0/theta,$3,$4,$5,src/advection/system/cubicUpwindCPCFit))
 
 endef
+#
+# $1 -- case directory
+# $2 -- mesh case
+# $3 -- velocityFieldDict
+# $4 -- timestep
+# $5 -- writeInterval
+define StandaloneLinearUpwindThermalAdvection
+
+$(eval $(call InitialTheta,$1-theta,$2,src/gravityWaves/$(thetaInit),src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
+$(eval $(call ThermalAdvection,$1,$2,$1-theta/0/theta,$3,$4,$5,src/advection/system/linearUpwind))
+
+endef
 
 # $1 -- case directory
 # $2 -- mesh case
