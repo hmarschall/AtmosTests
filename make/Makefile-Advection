@@ -1,8 +1,33 @@
+$(eval $(call BlockMesh,build/horizontalAdvection-mesh-noOrography-31x5,src/advection/mesh-noOrography-31x5))
+$(eval $(call TerrainFollowingMesh,build/horizontalAdvection-mesh-btf-31x5,build/horizontalAdvection-mesh-noOrography-31x5,src/advection/mesh-btf))
+
+$(eval $(call BlockMesh,build/horizontalAdvection-mesh-noOrography-91x15,src/advection/mesh-noOrography-91x15))
+$(eval $(call TerrainFollowingMesh,build/horizontalAdvection-mesh-btf-91x15,build/horizontalAdvection-mesh-noOrography-91x15,src/advection/mesh-btf))
+
 $(eval $(call BlockMesh,build/horizontalAdvection-mesh-noOrography-151x25,src/advection/mesh-noOrography-151x25))
 $(eval $(call TerrainFollowingMesh,build/horizontalAdvection-mesh-btf-151x25,build/horizontalAdvection-mesh-noOrography-151x25,src/advection/mesh-btf))
 
 $(eval $(call BlockMesh,build/horizontalAdvection-mesh-noOrography-301x50,src/advection/mesh-noOrography-301x50))
 $(eval $(call TerrainFollowingMesh,build/horizontalAdvection-mesh-btf-301x50,build/horizontalAdvection-mesh-noOrography-301x50,src/advection/mesh-btf))
+
+$(eval $(call BlockMesh,build/horizontalAdvection-mesh-noOrography-601x100,src/advection/mesh-noOrography-601x100))
+$(eval $(call TerrainFollowingMesh,build/horizontalAdvection-mesh-btf-601x100,build/horizontalAdvection-mesh-noOrography-601x100,src/advection/mesh-btf))
+
+$(eval $(call BlockMesh,build/horizontalAdvection-mesh-noOrography-1201x200,src/advection/mesh-noOrography-1201x200))
+$(eval $(call TerrainFollowingMesh,build/horizontalAdvection-mesh-btf-1201x200,build/horizontalAdvection-mesh-noOrography-1201x200,src/advection/mesh-btf))
+
+$(eval $(call BlockMesh,build/horizontalAdvection-mesh-noOrography-2401x400,src/advection/mesh-noOrography-2401x400))
+$(eval $(call TerrainFollowingMesh,build/horizontalAdvection-mesh-btf-2401x400,build/horizontalAdvection-mesh-noOrography-2401x400,src/advection/mesh-btf))
+
+$(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-noOrography-31x5,build/horizontalAdvection-mesh-noOrography-31x5,125))
+$(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-btf-31x5,build/horizontalAdvection-mesh-btf-31x5,125))
+$(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-noOrography-31x5,build/horizontalAdvection-mesh-noOrography-31x5,125))
+$(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-btf-31x5,build/horizontalAdvection-mesh-btf-31x5,125))
+
+$(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-noOrography-91x15,build/horizontalAdvection-mesh-noOrography-91x15,80))
+$(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-btf-91x15,build/horizontalAdvection-mesh-btf-91x15,80))
+$(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-noOrography-91x15,build/horizontalAdvection-mesh-noOrography-91x15,80))
+$(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-btf-91x15,build/horizontalAdvection-mesh-btf-91x15,80))
 
 $(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-noOrography-151x25,build/horizontalAdvection-mesh-noOrography-151x25,25))
 $(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-btf-151x25,build/horizontalAdvection-mesh-btf-151x25,25))
@@ -13,4 +38,19 @@ $(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUp
 $(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-btf-301x50,build/horizontalAdvection-mesh-btf-301x50,16))
 $(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-noOrography-301x50,build/horizontalAdvection-mesh-noOrography-301x50,16))
 $(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-btf-301x50,build/horizontalAdvection-mesh-btf-301x50,16))
+
+$(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-noOrography-601x100,build/horizontalAdvection-mesh-noOrography-601x100,8))
+$(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-btf-601x100,build/horizontalAdvection-mesh-btf-601x100,8))
+$(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-noOrography-601x100,build/horizontalAdvection-mesh-noOrography-601x100,8))
+$(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-btf-601x100,build/horizontalAdvection-mesh-btf-601x100,8))
+
+$(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-noOrography-1201x200,build/horizontalAdvection-mesh-noOrography-1201x200,4))
+$(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-btf-1201x200,build/horizontalAdvection-mesh-btf-1201x200,4))
+$(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-noOrography-1201x200,build/horizontalAdvection-mesh-noOrography-1201x200,4))
+$(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-btf-1201x200,build/horizontalAdvection-mesh-btf-1201x200,4))
+
+$(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-noOrography-2401x400,build/horizontalAdvection-mesh-noOrography-2401x400,2))
+$(eval $(call LinearUpwindHorizontalAdvection,build/horizontalAdvection-linearUpwind-btf-2401x400,build/horizontalAdvection-mesh-btf-2401x400,2))
+$(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-noOrography-2401x400,build/horizontalAdvection-mesh-noOrography-2401x400,2))
+$(eval $(call CubicUpwindHorizontalAdvection,build/horizontalAdvection-cubicUpwind-btf-2401x400,build/horizontalAdvection-mesh-btf-2401x400,2))
 
