@@ -1,8 +1,9 @@
 # $1 -- case directory
 # $2 -- mesh case
-define LinearHorizontalAdvection
+# $3 -- timestep
+define LinearUpwindHorizontalAdvection
 
-$(eval $(call Advection,$1,$2,src/advection/horizontalVelocityField,src/advection/system/linear src/advection/system/commonFvSchemes,25))
+$(eval $(call Advection,$1,$2,src/advection/horizontalVelocityField,src/advection/system/linearUpwind src/advection/system/commonFvSchemes,$3))
 
 endef
 
@@ -50,7 +51,7 @@ $(eval $(call Tracer,$1-analyticTracer,$2,10000,$3,T_analytic))
 $(eval $(call FieldDiff,$1,10000,T,$1-analyticTracer/10000/T_analytic))
 
 $(eval $(call Extrema,$1,10000,T))
-$(eval $(call L2Error,$1,10000,T))
+$(eval $(call Errors,$1,10000,T))
 $(eval $(call Contour,$1,0,T,$1/0/T.samplePlane,0.1))
 $(eval $(call Contour,$1,5000,T,$1/5000/T.samplePlane,0.1))
 $(eval $(call Contour,$1,10000,T,$1/10000/T.samplePlane,0.1))
