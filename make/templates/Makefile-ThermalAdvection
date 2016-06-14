@@ -35,7 +35,13 @@ all:: $1/4000/T
 
 $(eval $(call ThermalAdvectionSampleLine,$1,4000))
 $(eval $(call FieldDiff,$1,4000,T,$1-analyticTracer/4000/T_analytic))
-$(eval $(call Errors,$1,4000,T))
+$(eval $(call Errors,$1,4000,T,-cellSet aboveMountain))
+
+$1/4000/globalSumT_diff.dat \
+$1/4000/globalSumT_analytic.dat: \
+  $1/$(polyMesh)/sets/aboveMountain
+
+$(eval $(call SetSet,$1,src/thermalAdvection/aboveMountainSet,aboveMountain))
 
 $(eval $(call AnalyticThetaField,$1-analyticTracer,$2,$4,src/gravityWaves/constant/environmentalProperties,src/physical/constant/thermophysicalProperties))
 
