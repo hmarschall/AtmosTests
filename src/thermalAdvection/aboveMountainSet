@@ -1,1 +1,1 @@
-cellSet aboveMountain new boxToCell (-10e3 0 300) (10000 1000 5000)
+cellSet aboveMountain new boxToCell (-10e3 0 0) (10e3 1000 5e3)
