@@ -22,7 +22,7 @@ all:: $1/18000/T
 
 $(eval $(call ThermalAdvectionSampleLine,$1,18000))
 $(eval $(call FieldDiff,$1,18000,T,$1-analyticTracer/18000/T_analytic))
-$(eval $(call L2Error,$1,18000,T))
+$(eval $(call Errors,$1,18000,T))
 
 $(eval $(call AnalyticThetaField,$1-analyticTracer,$2,$4,src/gravityWaves/constant/environmentalProperties,src/physical/constant/thermophysicalProperties))
 
