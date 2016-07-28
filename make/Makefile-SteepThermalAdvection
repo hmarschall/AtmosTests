@@ -1,0 +1,4 @@
+$(eval $(call BlockMesh,build/steepThermalAdvection-mesh-noOrography-301x50,src/steepThermalAdvection/mesh-noOrography-301x50))
+$(eval $(call TerrainFollowingMesh,build/steepThermalAdvection-mesh-btf-301x50,build/steepThermalAdvection-mesh-noOrography-301x50,src/steepThermalAdvection/mesh-btf))
+$(eval $(call SlantedCellMesh,build/steepThermalAdvection-mesh-slantedCell-301x50,build/steepThermalAdvection-mesh-noOrography-301x50,src/steepThermalAdvection/mesh-slantedCell))
+$(eval $(call CutCellMesh,build/steepThermalAdvection-mesh-cutCell-301x50,src/steepThermalAdvection/mesh-cutCell-301x50,src/steepThermalAdvection/createPatchDict))

@@ -39,3 +39,4 @@ include make/Makefile-Advection
 include make/Makefile-Resting
 include make/Makefile-GravityWaves
 include make/Makefile-ThermalAdvection
+include make/Makefile-SteepThermalAdvection
