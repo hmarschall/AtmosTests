@@ -1,22 +1,39 @@
 # $1 -- case directory
 # $2 -- mesh case
-# $3 -- velocityFieldDict
-# $4 -- timestep
-# $5 -- writeInterval
+# $3 -- theta_init dictionary
+# $4 -- velocityFieldDict
+# $5 -- timestep
+# $6 -- writeInterval
+# $7 -- environmentalProperties
+# $8 -- fvSchemes
 define StandaloneThermalAdvection
 
-$(eval $(call InitialTheta,$1-theta,$2,src/gravityWaves/$(thetaInit),src/gravityWaves/$(environmentalProperties),src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
-$(eval $(call ThermalAdvection,$1,$2,$1-theta/0/theta,$3,$4,$5))
+$(eval $(call InitialTheta,$1-theta,$2,$3,$7,src/physical/$(thermophysicalProperties),src/gravityWaves/$(fvSchemes),src/gravityWaves/$(fvSolution)))
+$(eval $(call _ThermalAdvection,$1,$2,$1-theta/0/theta,$4,$5,$6,$7,$8))
 
 endef
 
 # $1 -- case directory
 # $2 -- mesh case
-# $3 -- theta profile (from the gravityWaves test)
+# $3 -- theta profile
 # $4 -- velocityFieldDict
 # $5 -- timestep
 # $6 -- writeInterval
 define ThermalAdvection
+
+$(eval $(call _ThermalAdvection,$1,$2,$3,$4,$5,$6,src/gravityWaves/constant/environmentalProperties,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+
+endef
+
+# $1 -- case directory
+# $2 -- mesh case
+# $3 -- theta profile
+# $4 -- velocityFieldDict
+# $5 -- timestep
+# $6 -- writeInterval
+# $7 -- environmentalProperties
+# $8 -- fvSchemes
+define _ThermalAdvection
 
 all:: $1/18000/T
 
@@ -24,13 +41,14 @@ $(eval $(call ThermalAdvectionSampleLine,$1,18000))
 $(eval $(call FieldDiff,$1,18000,T,$1-analyticTracer/18000/T_analytic))
 $(eval $(call Errors,$1,18000,T))
 
-$(eval $(call AnalyticThetaField,$1-analyticTracer,$2,$4,src/gravityWaves/constant/environmentalProperties,src/physical/constant/thermophysicalProperties))
+$(eval $(call AnalyticThetaField,$1-analyticTracer,$2,$4,$7,src/physical/constant/thermophysicalProperties))
 
 $(eval $(call VelocityField,$1-velocity,$2,$4))
 
-$(eval $(call AdvectTracer,$1,$2,$3,$1-velocity/0/phi,18000,$5,$6,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+$(eval $(call AdvectTracer,$1,$2,$3,$1-velocity/0/phi,18000,$5,$6,$8))
 
 endef
+
 #
 # $1 -- case
 # $2 -- time
