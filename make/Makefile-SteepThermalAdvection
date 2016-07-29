@@ -21,6 +21,19 @@ $(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-cutCell-cub
 
 endef
 
+# $1 -- error filename
+# $2 -- resolutions
+define SteepTerrainCollation
+
+$(eval $(call CollateErrors,build/steepThermalAdvection-btf-linearUpwind-,$1,$2))
+$(eval $(call CollateErrors,build/steepThermalAdvection-btf-cubicUpwind-,$1,$2))
+$(eval $(call CollateErrors,build/steepThermalAdvection-slantedCell-linearUpwind-,$1,$2))
+$(eval $(call CollateErrors,build/steepThermalAdvection-slantedCell-cubicUpwind-,$1,$2))
+$(eval $(call CollateErrors,build/steepThermalAdvection-cutCell-linearUpwind-,$1,$2))
+$(eval $(call CollateErrors,build/steepThermalAdvection-cutCell-cubicUpwind-,$1,$2))
+
+endef
+
 $(eval $(call SteepTerrainMeshes,5000))
 $(eval $(call SteepTerrainMeshes,2500))
 $(eval $(call SteepTerrainMeshes,2000))
@@ -33,12 +46,15 @@ $(eval $(call SteepTerrainTests,2000,2))
 $(eval $(call SteepTerrainTests,1250,1))
 $(eval $(call SteepTerrainTests,1000,1))
 
-$(eval $(call CollateErrors,build/steepThermalAdvection-btf-linearUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
-$(eval $(call CollateErrors,build/steepThermalAdvection-btf-cubicUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
-$(eval $(call CollateErrors,build/steepThermalAdvection-slantedCell-linearUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
-$(eval $(call CollateErrors,build/steepThermalAdvection-slantedCell-cubicUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
-$(eval $(call CollateErrors,build/steepThermalAdvection-cutCell-linearUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
-$(eval $(call CollateErrors,build/steepThermalAdvection-cutCell-cubicUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-btf-linearUpwind-collated/18000)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-btf-cubicUpwind-collated/18000)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-slantedCell-linearUpwind-collated/18000)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-slantedCell-cubicUpwind-collated/18000)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-cutCell-linearUpwind-collated/18000)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-cutCell-cubicUpwind-collated/18000)))
+
+$(eval $(call SteepTerrainCollation,18000/l2errorT.txt,5000 2500 2000 1250 1000))
+$(eval $(call SteepTerrainCollation,18000/linferrorT.txt,5000 2500 2000 1250 1000))
 
 .PHONY: all-steepThermalAdvection
 
@@ -48,4 +64,10 @@ all-steepThermalAdvection: \
   build/steepThermalAdvection-slantedCell-linearUpwind-collated/18000/l2errorT.txt \
   build/steepThermalAdvection-slantedCell-cubicUpwind-collated/18000/l2errorT.txt \
   build/steepThermalAdvection-cutCell-linearUpwind-collated/18000/l2errorT.txt \
-  build/steepThermalAdvection-cutCell-cubicUpwind-collated/18000/l2errorT.txt
+  build/steepThermalAdvection-cutCell-cubicUpwind-collated/18000/l2errorT.txt \
+  build/steepThermalAdvection-btf-linearUpwind-collated/18000/linferrorT.txt \
+  build/steepThermalAdvection-btf-cubicUpwind-collated/18000/linferrorT.txt \
+  build/steepThermalAdvection-slantedCell-linearUpwind-collated/18000/linferrorT.txt \
+  build/steepThermalAdvection-slantedCell-cubicUpwind-collated/18000/linferrorT.txt \
+  build/steepThermalAdvection-cutCell-linearUpwind-collated/18000/linferrorT.txt \
+  build/steepThermalAdvection-cutCell-cubicUpwind-collated/18000/linferrorT.txt

@@ -12,8 +12,6 @@ $1collated/$2: \
 | $(dir $1collated/$2)
 	$(collate) $1 $2 $3 > $$@
 
-$(eval $(call MakeDir,$(dir $1collated/$2)))
-
 endef
 
 # $1 -- case
