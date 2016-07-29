@@ -4,6 +4,7 @@ checkMesh := checkMesh
 checkCellVolumes := $(FOAM_USER_APPBIN)/checkCellVolumes
 collapseEdges := collapseEdges
 computeTheta := $(FOAM_USER_APPBIN)/computeTheta
+courantNumber := $(FOAM_USER_APPBIN)/courantNumber
 createPatch := createPatch
 createSpongeLayer := $(FOAM_USER_APPBIN)/createSpongeLayer
 decomposePar := decomposePar

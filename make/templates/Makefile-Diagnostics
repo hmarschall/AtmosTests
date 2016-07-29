@@ -14,6 +14,19 @@ $1collated/$2: \
 
 endef
 
+
+# $1 -- case
+define MaxCourantNumber
+
+$1/maxCo.txt: \
+  $1/0/phi \
+  $(addprefix $1/,$(meshFiles)) \
+  $(addprefix $1/,$(systemFiles)) \
+  $(courantNumber)
+	$(courantNumber) -case $1 | tail -n1 | cut -d' ' -f6 > $$@
+
+endef
+
 # $1 -- case
 # $2 -- time
 # $3 -- field

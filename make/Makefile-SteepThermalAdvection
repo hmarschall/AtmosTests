@@ -8,16 +8,28 @@ $(eval $(call CutCellMesh,build/steepThermalAdvection-mesh-cutCell-$1,src/steepT
 
 endef
 
+# $1 -- case
+# $2 -- mesh
+# $3 -- timestep
+# $4 -- advection scheme
+define SteepTerrainTest
+
+$(eval $(call StandaloneThermalAdvection,$1,$2,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$3,6000,src/steepThermalAdvection/environmentalProperties,$4 src/advection/system/commonFvSchemes))
+
+all-steepThermalAdvection-maxCourantNumbers: $1/maxCo.txt
+
+endef
+
 # $1 -- resolution
 # $2 -- timestep
 define SteepTerrainTests
 
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-btf-linearUpwind-$1,build/steepThermalAdvection-mesh-btf-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/linearUpwind src/advection/system/commonFvSchemes))
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-btf-cubicUpwind-$1,build/steepThermalAdvection-mesh-btf-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-slantedCell-linearUpwind-$1,build/steepThermalAdvection-mesh-slantedCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/linearUpwind src/advection/system/commonFvSchemes))
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-slantedCell-cubicUpwind-$1,build/steepThermalAdvection-mesh-slantedCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-cutCell-linearUpwind-$1,build/steepThermalAdvection-mesh-cutCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/linearUpwind src/advection/system/commonFvSchemes))
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-cutCell-cubicUpwind-$1,build/steepThermalAdvection-mesh-cutCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+$(eval $(call SteepTerrainTest,build/steepThermalAdvection-btf-linearUpwind-$1,build/steepThermalAdvection-mesh-btf-$1,$2,src/advection/system/linearUpwind))
+$(eval $(call SteepTerrainTest,build/steepThermalAdvection-btf-cubicUpwind-$1,build/steepThermalAdvection-mesh-btf-$1,$2,src/advection/system/cubicUpwindCPCFit))
+$(eval $(call SteepTerrainTest,build/steepThermalAdvection-slantedCell-linearUpwind-$1,build/steepThermalAdvection-mesh-slantedCell-$1,$2,src/advection/system/linearUpwind))
+$(eval $(call SteepTerrainTest,build/steepThermalAdvection-slantedCell-cubicUpwind-$1,build/steepThermalAdvection-mesh-slantedCell-$1,$2,src/advection/system/cubicUpwindCPCFit))
+$(eval $(call SteepTerrainTest,build/steepThermalAdvection-cutCell-linearUpwind-$1,build/steepThermalAdvection-mesh-cutCell-$1,$2,src/advection/system/linearUpwind))
+$(eval $(call SteepTerrainTest,build/steepThermalAdvection-cutCell-cubicUpwind-$1,build/steepThermalAdvection-mesh-cutCell-$1,$2,src/advection/system/cubicUpwindCPCFit))
 
 endef
 
@@ -31,6 +43,14 @@ $(eval $(call CollateErrors,build/steepThermalAdvection-slantedCell-linearUpwind
 $(eval $(call CollateErrors,build/steepThermalAdvection-slantedCell-cubicUpwind-,$1,$2))
 $(eval $(call CollateErrors,build/steepThermalAdvection-cutCell-linearUpwind-,$1,$2))
 $(eval $(call CollateErrors,build/steepThermalAdvection-cutCell-cubicUpwind-,$1,$2))
+
+all-steepThermalAdvection-convergence: \
+  build/steepThermalAdvection-btf-linearUpwind-collated/$1 \
+  build/steepThermalAdvection-btf-cubicUpwind-collated/$1 \
+  build/steepThermalAdvection-slantedCell-linearUpwind-collated/$1 \
+  build/steepThermalAdvection-slantedCell-cubicUpwind-collated/$1 \
+  build/steepThermalAdvection-cutCell-linearUpwind-collated/$1 \
+  build/steepThermalAdvection-cutCell-cubicUpwind-collated/$1
 
 endef
 
@@ -56,18 +76,4 @@ $(eval $(call MakeDir,$(dir build/steepThermalAdvection-cutCell-cubicUpwind-coll
 $(eval $(call SteepTerrainCollation,18000/l2errorT.txt,5000 2500 2000 1250 1000))
 $(eval $(call SteepTerrainCollation,18000/linferrorT.txt,5000 2500 2000 1250 1000))
 
-.PHONY: all-steepThermalAdvection
-
-all-steepThermalAdvection: \
-  build/steepThermalAdvection-btf-linearUpwind-collated/18000/l2errorT.txt \
-  build/steepThermalAdvection-btf-cubicUpwind-collated/18000/l2errorT.txt \
-  build/steepThermalAdvection-slantedCell-linearUpwind-collated/18000/l2errorT.txt \
-  build/steepThermalAdvection-slantedCell-cubicUpwind-collated/18000/l2errorT.txt \
-  build/steepThermalAdvection-cutCell-linearUpwind-collated/18000/l2errorT.txt \
-  build/steepThermalAdvection-cutCell-cubicUpwind-collated/18000/l2errorT.txt \
-  build/steepThermalAdvection-btf-linearUpwind-collated/18000/linferrorT.txt \
-  build/steepThermalAdvection-btf-cubicUpwind-collated/18000/linferrorT.txt \
-  build/steepThermalAdvection-slantedCell-linearUpwind-collated/18000/linferrorT.txt \
-  build/steepThermalAdvection-slantedCell-cubicUpwind-collated/18000/linferrorT.txt \
-  build/steepThermalAdvection-cutCell-linearUpwind-collated/18000/linferrorT.txt \
-  build/steepThermalAdvection-cutCell-cubicUpwind-collated/18000/linferrorT.txt
+.PHONY: all-steepThermalAdvection-convergence all-steepThermalAdvection-maxCourantNumbers
