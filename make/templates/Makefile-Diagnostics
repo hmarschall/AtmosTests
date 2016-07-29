@@ -1,3 +1,21 @@
+# collate errors into a single text file, suitable for convergence plots
+# outputs a file named $1collated/$2
+#
+# $1 -- case prefix
+# $2 -- error filename (e.g. 18000/l2errorT.txt)
+# $3 -- resolutions
+define CollateErrors
+
+$1collated/$2: \
+  $(foreach R,$3,$(addprefix $1,$R/$2)) \
+  $(collate) \
+| $(dir $1collated/$2)
+	$(collate) $1 $2 $3 > $$@
+
+$(eval $(call MakeDir,$(dir $1collated/$2)))
+
+endef
+
 # $1 -- case
 # $2 -- time
 # $3 -- field

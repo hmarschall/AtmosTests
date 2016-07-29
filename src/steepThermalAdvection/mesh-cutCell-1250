@@ -1,8 +1,8 @@
 #Gitter
 cart 
--150000.0d0  150000.0d0 151
+-150625.0d0  150625.0d0 241
 0.0d0  200.0d0  1  
-      0.0d0   25000.0d0   25
+      0.0d0   25000.0d0   40
 
 &GridFileOut
 WNull=.FALSE.     ! -> *.WNull
@@ -46,19 +46,19 @@ Ptropo=.FALSE.    ! -> *.pva.tropo
 
 #OutputDomain
 XYZ_Number
-0 151
+0 241
 0 1  
-0 25
+0 40
 
 
 #Multiblock
-           0         151 ! X ... nxa, nxe
+           0         241 ! X ... nxa, nxe
            0           1      ! Y ... nya, nye
-           0          25 ! Z ... nza, nze
+           0          40 ! Z ... nza, nze
  
            1        !Number of blocks ... nb
                               !Block           1
-           0          151 ! ixa, ixe
+           0          241 ! ixa, ixe
            0           1      ! iya, iye
-           0          25 ! iza, ize
+           0          40 ! iza, ize
  0 0 0 0 4 T T

@@ -12,19 +12,40 @@ endef
 # $2 -- timestep
 define SteepTerrainTests
 
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-btf-$1-linearUpwind,build/steepThermalAdvection-mesh-btf-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/linearUpwind src/advection/system/commonFvSchemes))
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-btf-$1-cubicUpwind,build/steepThermalAdvection-mesh-btf-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-slantedCell-$1-linearUpwind,build/steepThermalAdvection-mesh-slantedCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/linearUpwind src/advection/system/commonFvSchemes))
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-slantedCell-$1-cubicUpwind,build/steepThermalAdvection-mesh-slantedCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-cutCell-$1-linearUpwind,build/steepThermalAdvection-mesh-cutCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/linearUpwind src/advection/system/commonFvSchemes))
-$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-cutCell-$1-cubicUpwind,build/steepThermalAdvection-mesh-cutCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-btf-linearUpwind-$1,build/steepThermalAdvection-mesh-btf-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/linearUpwind src/advection/system/commonFvSchemes))
+$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-btf-cubicUpwind-$1,build/steepThermalAdvection-mesh-btf-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-slantedCell-linearUpwind-$1,build/steepThermalAdvection-mesh-slantedCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/linearUpwind src/advection/system/commonFvSchemes))
+$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-slantedCell-cubicUpwind-$1,build/steepThermalAdvection-mesh-slantedCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
+$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-cutCell-linearUpwind-$1,build/steepThermalAdvection-mesh-cutCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/linearUpwind src/advection/system/commonFvSchemes))
+$(eval $(call StandaloneThermalAdvection,build/steepThermalAdvection-cutCell-cubicUpwind-$1,build/steepThermalAdvection-mesh-cutCell-$1,src/gravityWaves/$(thetaInit),src/steepThermalAdvection/velocityField,$2,6000,src/steepThermalAdvection/environmentalProperties,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes))
 
 endef
 
-$(eval $(call SteepTerrainMeshes,61x10))
-$(eval $(call SteepTerrainMeshes,151x25))
-$(eval $(call SteepTerrainMeshes,301x50))
+$(eval $(call SteepTerrainMeshes,5000))
+$(eval $(call SteepTerrainMeshes,2500))
+$(eval $(call SteepTerrainMeshes,2000))
+$(eval $(call SteepTerrainMeshes,1250))
+$(eval $(call SteepTerrainMeshes,1000))
 
-$(eval $(call SteepTerrainTests,61x10,2))
-$(eval $(call SteepTerrainTests,151x25,2))
-$(eval $(call SteepTerrainTests,301x50,1))
+$(eval $(call SteepTerrainTests,5000,8))
+$(eval $(call SteepTerrainTests,2500,4))
+$(eval $(call SteepTerrainTests,2000,2))
+$(eval $(call SteepTerrainTests,1250,1))
+$(eval $(call SteepTerrainTests,1000,1))
+
+$(eval $(call CollateErrors,build/steepThermalAdvection-btf-linearUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
+$(eval $(call CollateErrors,build/steepThermalAdvection-btf-cubicUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
+$(eval $(call CollateErrors,build/steepThermalAdvection-slantedCell-linearUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
+$(eval $(call CollateErrors,build/steepThermalAdvection-slantedCell-cubicUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
+$(eval $(call CollateErrors,build/steepThermalAdvection-cutCell-linearUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
+$(eval $(call CollateErrors,build/steepThermalAdvection-cutCell-cubicUpwind-,18000/l2errorT.txt,5000 2500 2000 1250 1000))
+
+.PHONY: all-steepThermalAdvection
+
+all-steepThermalAdvection: \
+  build/steepThermalAdvection-btf-linearUpwind-collated/18000/l2errorT.txt \
+  build/steepThermalAdvection-btf-cubicUpwind-collated/18000/l2errorT.txt \
+  build/steepThermalAdvection-slantedCell-linearUpwind-collated/18000/l2errorT.txt \
+  build/steepThermalAdvection-slantedCell-cubicUpwind-collated/18000/l2errorT.txt \
+  build/steepThermalAdvection-cutCell-linearUpwind-collated/18000/l2errorT.txt \
+  build/steepThermalAdvection-cutCell-cubicUpwind-collated/18000/l2errorT.txt
