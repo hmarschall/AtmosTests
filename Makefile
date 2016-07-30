@@ -30,6 +30,7 @@ include make/templates/Makefile-BlockMesh
 include make/templates/Makefile-TerrainFollowingMesh
 include make/templates/Makefile-CutCellMesh
 include make/templates/Makefile-SlantedCellMesh
+include make/templates/Makefile-HexGeodesicMesh
 include make/templates/Makefile-Advection
 include make/templates/Makefile-Physical
 include make/templates/Makefile-Resting
@@ -40,3 +41,4 @@ include make/Makefile-Resting
 include make/Makefile-GravityWaves
 include make/Makefile-ThermalAdvection
 include make/Makefile-SteepThermalAdvection
+include make/Makefile-DeformationSphere

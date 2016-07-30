@@ -1,0 +1,27 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      extrudeMeshDict;
+}
+
+constructFrom surface;
+
+surface "$FOAM_CASE/mesh.obj";
+flipNormals true;
+
+//- Extrudes into sphere around (0 0 0)
+extrudeModel        linearRadial;
+
+nLayers             1;
+expansionRatio      1.0;
+
+linearRadialCoeffs
+{
+    R        6373220;
+    Rsurface 6371220;
+}
+
+mergeFaces false;
+

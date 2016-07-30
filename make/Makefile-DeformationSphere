@@ -1,0 +1,1 @@
+$(eval $(call HexGeodesicMesh,build/deformationSphere-mesh-hex-4,src/deformationSphere/mesh-4.obj))
