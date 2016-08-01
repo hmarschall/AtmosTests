@@ -5,3 +5,5 @@ scp -rCp conifer:~/data/AtmosTests/build/steepThermalAdvection-btf-linearUpwind-
 scp -rCp conifer:~/data/AtmosTests/build/steepThermalAdvection-btf-cubicUpwind-collated build/
 scp -rCp conifer:~/data/AtmosTests/build/steepThermalAdvection-slantedCell-linearUpwind-collated build/
 scp -rCp conifer:~/data/AtmosTests/build/steepThermalAdvection-slantedCell-cubicUpwind-collated build/
+scp -rCp conifer:~/data/AtmosTests/build/steepThermalAdvection-cutCell-linearUpwind-collated build/
+scp -rCp conifer:~/data/AtmosTests/build/steepThermalAdvection-cutCell-cubicUpwind-collated build/
