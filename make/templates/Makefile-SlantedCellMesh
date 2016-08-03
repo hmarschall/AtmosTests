@@ -21,6 +21,7 @@ $1.intermediate: \
 	$(checkCellVolumes) -case $1
 	$(setSet) -case $1 -constant -noVTK -batch src/mesh/removeTinyCells
 	$(subsetMesh) -case $1 -patch ground -overwrite bigCells
+	$(RM) $1/constant/polyMesh/sets/bigCells $1/constant/polyMesh/sets/tinyCells
 	$(checkMesh) -case $1 -constant
 	if [ -e $1/constant/polyMesh/sets/wrongOrientedFaces ] ; \
 	then \

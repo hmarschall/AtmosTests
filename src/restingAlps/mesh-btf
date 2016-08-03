@@ -7,7 +7,10 @@ FoamFile {
 }
 
 mountainType earthMountain;
+dimensions 2;
+yIndex 2700;
 coordSys BTF;
 domainHeight 25e3;
-filename "/home/jshaw/terrain/030363012518617/ASTGTM2_N47E010_dem.tif";
+filename "src/restingAlps/ASTGTM2_N47E010_dem.tif";
 xResolution 100;
+yResolution 1;

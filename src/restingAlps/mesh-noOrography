@@ -20,7 +20,7 @@ vertices (
 
 blocks (
 	hex (0 1 2 3 4 5 6 7)
-	    (450 1 25)
+	    (3600 1 50)
 	    simpleGrading (1 1 1)
 );
 
@@ -53,10 +53,16 @@ boundary (
 		);
 	}
 
-	frontAndBack {
+	front {
 		type empty;
 		faces (
 			(0 1 5 4)
+		);
+	}
+
+	back {
+		type empty;
+		faces (
 			(3 2 6 7)
 		);
 	}
