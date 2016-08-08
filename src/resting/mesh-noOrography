@@ -5,35 +5,35 @@ FoamFile {
     object      blockMeshDict;
 }
 
-convertToMeters 1000; // effective units are km
+convertToMeters 1000;
 
 vertices (
-    (-100 0 0)  // 0
-    (100  0 0)  // 1
-    (100  1 0)  // 2
-    (-100 1 0)  // 3
-    (-100 0 20) // 4
-    (100  0 20) // 5
-    (100  1 20) // 6
-    (-100 1 20) // 7
+    (-150.5 0 0)
+    (150.5  0 0)
+    (150.5  1 0)
+    (-150.5 1 0)
+    (-150.5 0 25)
+    (150.5  0 25)
+    (150.5  1 25)
+    (-150.5 1 25)
 );
 
 blocks (
 	hex (0 1 2 3 4 5 6 7)
-	    (400 1 40)
+	    (301 1 50)
 	    simpleGrading (1 1 1)
 );
 
 boundary (
 	inlet {
-		type symmetryPlane;
+		type inlet;
 		faces (
 			(0 3 7 4)
 		);
 	}
 
 	outlet {
-		type symmetryPlane;
+		type outlet;
 		faces (
 			(1 2 6 5)
 		);

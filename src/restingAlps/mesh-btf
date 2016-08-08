@@ -1,0 +1,16 @@
+FoamFile {
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      add2dMountainDict;
+}
+
+mountainType earthMountain;
+dimensions 2;
+yIndex 2700;
+coordSys BTF;
+domainHeight 25e3;
+filename "src/restingAlps/ASTGTM2_N47E010_dem.tif";
+xResolution 100;
+yResolution 1;
