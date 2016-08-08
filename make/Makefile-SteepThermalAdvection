@@ -49,7 +49,6 @@ all-steepThermalAdvection-convergence: \
   build/steepThermalAdvection-btf-cubicUpwind-collated/$1 \
   build/steepThermalAdvection-slantedCell-linearUpwind-collated/$1 \
   build/steepThermalAdvection-slantedCell-cubicUpwind-collated/$1 \
-  build/steepThermalAdvection-cutCell-linearUpwind-collated/$1 \
   build/steepThermalAdvection-cutCell-cubicUpwind-collated/$1
 
 endef
@@ -78,14 +77,14 @@ $(eval $(call SteepTerrainTests,250,1))
 $(eval $(call SteepTerrainTests,125,1))
 $(eval $(call SteepTerrainTests,100,1))
 
-$(eval $(call MakeDir,$(dir build/steepThermalAdvection-btf-linearUpwind-collated/18000)))
-$(eval $(call MakeDir,$(dir build/steepThermalAdvection-btf-cubicUpwind-collated/18000)))
-$(eval $(call MakeDir,$(dir build/steepThermalAdvection-slantedCell-linearUpwind-collated/18000)))
-$(eval $(call MakeDir,$(dir build/steepThermalAdvection-slantedCell-cubicUpwind-collated/18000)))
-$(eval $(call MakeDir,$(dir build/steepThermalAdvection-cutCell-linearUpwind-collated/18000)))
-$(eval $(call MakeDir,$(dir build/steepThermalAdvection-cutCell-cubicUpwind-collated/18000)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-btf-linearUpwind-collated/18000/)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-btf-cubicUpwind-collated/18000/)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-slantedCell-linearUpwind-collated/18000/)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-slantedCell-cubicUpwind-collated/18000/)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-cutCell-linearUpwind-collated/18000/)))
+$(eval $(call MakeDir,$(dir build/steepThermalAdvection-cutCell-cubicUpwind-collated/18000/)))
 
-$(eval $(call SteepTerrainCollation,18000/l2errorT.txt,5000 2500 2000 1250 1000 667 500 333 250 125 100))
-$(eval $(call SteepTerrainCollation,18000/linferrorT.txt,5000 2500 2000 1250 1000 667 500 333 250 125 100))
+$(eval $(call SteepTerrainCollation,18000/l2errorT.txt,5000 2500 2000 1250 1000 667 500 333))
+$(eval $(call SteepTerrainCollation,18000/linferrorT.txt,5000 2500 2000 1250 1000 667 500 333))
 
 .PHONY: all-steepThermalAdvection-convergence all-steepThermalAdvection-maxCourantNumbers
