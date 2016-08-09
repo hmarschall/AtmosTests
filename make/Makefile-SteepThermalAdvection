@@ -46,6 +46,7 @@ all-steepThermalAdvection-convergence: \
   build/steepThermalAdvection-btf-cubicUpwind-collated/$1 \
   build/steepThermalAdvection-slantedCell-linearUpwind-collated/$1 \
   build/steepThermalAdvection-slantedCell-cubicUpwind-collated/$1 \
+  build/steepThermalAdvection-cutCell-linearUpwind-collated/$1 \
   build/steepThermalAdvection-cutCell-cubicUpwind-collated/$1
 
 endef
