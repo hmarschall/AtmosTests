@@ -6,10 +6,10 @@ FoamFile {
     object      add2dMountainDict;
 }
 
-mountainType ScharCos;
-coordSys BTF;
+mountainType SchaerCosMountain;
 
-zt 25e3;
-a 25e3;
-hm 6e3;
-lambda 8e3;
+domainHeight		25e3;
+mountainHalfWidth	25e3;
+mountainPeakHeight	6e3;
+mountainWavelength	8e3;
+
