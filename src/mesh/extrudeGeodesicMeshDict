@@ -24,4 +24,4 @@ linearRadialCoeffs
 }
 
 mergeFaces false;
-
+mergeTol 0;
