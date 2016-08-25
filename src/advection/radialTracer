@@ -6,9 +6,5 @@ FoamFile {
     object	setScalarOverOrographyDict;
 }
 
-rho0		1;
-x0		-50000;
-z0		9000;
-Ax		25000;
-Az		3000;
+type		schaerRadial;
 

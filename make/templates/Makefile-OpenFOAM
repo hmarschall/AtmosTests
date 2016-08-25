@@ -3,7 +3,7 @@
 # $1 -- case
 # $2 -- duration (must be a multiple of timestep and writeInterval)
 # $3 -- timestep
-# $4 -- writeInterval (must bea multiple of timestep)
+# $4 -- writeInterval (must be a multiple of timestep)
 define ControlDict
 
 $1/$(controlDict): $(template)/$(controlDict) | $1/system
