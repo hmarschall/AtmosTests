@@ -76,12 +76,7 @@ $1.intermediate: \
   $(addprefix $1/,$(systemFiles)) \
   $1/0/T \
   $1/0/phi \
-  $1/$(decomposeParDict)
-	$(decomposePar) -case $1 -force -constant
-	$(mpirun) --hostfile machines -np 4 $(advectionFoam) -case $1 -parallel		
-	$(reconstructPar) -case $1 -constant		
-
-$(eval $(call CopyNamedFile,src/physical,$(decomposeParDict),$1))
+	$(advectionFoam) -case $1
 
 # primary fvSchemes file depends upon any auxiliary fvSchemes files
 $1/$(fvSchemes): $(addprefix $1/system/,$(notdir $(call rest,$8)))
