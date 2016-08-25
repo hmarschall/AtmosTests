@@ -1,3 +1,0 @@
-$(eval $(call BlockMesh,build/restingAlps-mesh-noOrography,src/restingAlps/mesh-noOrography))
-$(eval $(call TerrainFollowingMesh,build/restingAlps-mesh-btf,build/restingAlps-mesh-noOrography,src/restingAlps/mesh-btf))
-$(eval $(call SlantedCellMesh,build/restingAlps-mesh-slantedCell,build/restingAlps-mesh-noOrography,src/restingAlps/mesh-slantedCell))
