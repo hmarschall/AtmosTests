@@ -1,4 +1,3 @@
-add2dMountainDict := constant/add2dMountainDict
 blockMeshDict := $(polyMesh)/blockMeshDict
 collapseDict := system/collapseDict
 decomposeParDict := system/decomposeParDict
