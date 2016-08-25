@@ -1,0 +1,12 @@
+# $1 -- case directory
+# $2 -- mesh case
+# $3 -- velocity case
+# $4 -- tracerFieldDict
+# $5 -- fvSchemes
+# $6 -- timestep
+define DeformationalAdvection
+
+$(eval $(call InitialTracer,$1,$4))
+$(eval $(call AdvectTracerInVaryingWind,$1,$2,$3,1036800,$6,$6,$5))
+
+endef

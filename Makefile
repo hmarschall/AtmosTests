@@ -22,7 +22,6 @@ include make/executables/Makefile-ASAM
 include make/executables/Makefile-GMT
 include make/executables/Makefile-GMV2OpenFOAM
 include make/executables/Makefile-OpenFOAM
-include make/templates/Makefile-FileSystem
 include make/templates/Makefile-OpenFOAM
 include make/templates/Makefile-Diagnostics
 include make/templates/Makefile-Sample
@@ -33,6 +32,7 @@ include make/templates/Makefile-SlantedCellMesh
 include make/templates/Makefile-HexGeodesicMesh
 include make/templates/Makefile-TriGeodesicMesh
 include make/templates/Makefile-Advection
+include make/templates/Makefile-DeformationalAdvection
 include make/templates/Makefile-Physical
 include make/templates/Makefile-Resting
 include make/templates/Makefile-GravityWaves

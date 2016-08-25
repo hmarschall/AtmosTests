@@ -4,5 +4,7 @@ $(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-4,build/deformati
 $(eval $(call HexGeodesicMesh,build/deformationSphere-mesh-hex-6,src/deformationSphere/mesh-6.obj))
 $(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-6,build/deformationSphere-mesh-hex-6))
 
-$(eval $(call HexGeodesicMesh,build/deformationSphere-mesh-hex-8,src/deformationSphere/mesh-8.obj))
-$(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-8,build/deformationSphere-mesh-hex-8))
+$(eval $(call TimeVariantVelocityField,build/deformationSphere-nondiv-hex-4-velocity,build/deformationSphere-mesh-hex-4,src/deformationSphere/nonDivergent,1600,1036800))
+
+$(eval $(call DeformationalAdvection,build/deformationSphere-gaussians-nondiv-linearUpwind-hex-4,build/deformationSphere-mesh-hex-4,build/deformationSphere-nondiv-hex-4-velocity,src/deformationSphere/geodesicGaussians,src/advection/system/linearUpwind src/advection/system/commonFvSchemes,1600))
+$(eval $(call DeformationalAdvection,build/deformationSphere-gaussians-nondiv-cubicUpwind-hex-4,build/deformationSphere-mesh-hex-4,build/deformationSphere-nondiv-hex-4-velocity,src/deformationSphere/geodesicGaussians,src/advection/system/cubicUpwindCPCFit src/advection/system/commonFvSchemes,1600))
