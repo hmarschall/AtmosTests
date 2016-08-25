@@ -6,9 +6,9 @@ FoamFile {
     object      mountainDict;
 }
 
+type            	schaerCos;
 domainHeight		25e3;
-mountainType            SchaerCosMountain;
-mountainHalfWidth	25e3;
-mountainPeakHeight	3e3;
-mountainWavelength	8e3;
+halfWidth		25e3;
+peakHeight		3e3;
+wavelength		8e3;
 tolerance		200;
