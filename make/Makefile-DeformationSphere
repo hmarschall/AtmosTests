@@ -37,6 +37,7 @@ $(eval $(call CollateErrorsOnSphere,build/deformationSphere-gaussians-nondiv-cub
 endef
 
 $(eval $(call DeformationalAdvectionCollation,$(deformationalAdvectionEndTime)/l2errorT.txt,4 5))
+$(eval $(call DeformationalAdvectionCollation,$(deformationalAdvectionEndTime)/linferrorT.txt,4 5))
 
 $(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-linearUpwind-hex-4,build/deformationSphere-mesh-hex-4,build/deformationSphere-nondiv-hex-4-velocity,6400,src/advection/system/linearUpwind))
 $(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-cubicUpwind-hex-4,build/deformationSphere-mesh-hex-4,build/deformationSphere-nondiv-hex-4-velocity,6400,src/advection/system/cubicUpwindCPCFit))
