@@ -1,5 +1,6 @@
 blockMesh := blockMesh
 checkMesh := checkMesh
+cellCentreDistances := $(FOAM_USER_APPBIN)/cellCentreDistances
 checkCellVolumes := $(FOAM_USER_APPBIN)/checkCellVolumes
 collapseEdges := collapseEdges
 computeTheta := $(FOAM_USER_APPBIN)/computeTheta

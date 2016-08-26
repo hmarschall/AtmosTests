@@ -2,6 +2,8 @@
 # $2 -- .obj file
 define HexGeodesicMesh
 
+$(eval $(call MeshDiagnostics,$1))
+
 .INTERMEDIATE: $1.intermediate
 
 $(addprefix $1/,$(meshFiles)): $1.intermediate
