@@ -6,4 +6,9 @@ FoamFile {
     object      velocityFieldDict;
 }
 
-type deformationalNonDivergentGeodesic;
+timeVaryingWind		true;
+
+velocity
+{
+	type		deformationalNonDivergentGeodesic;
+}
