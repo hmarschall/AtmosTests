@@ -15,12 +15,11 @@ $(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-8,build/deformati
 
 # $1 -- case
 # $2 -- mesh
-# $3 -- velocity case
-# $4 -- timestep
-# $5 -- advection scheme
+# $3 -- timestep
+# $4 -- advection scheme
 define DeformationalAdvectionConvergenceTest
 
-$(eval $(call DeformationalAdvection,$1,$2,$3,src/deformationSphere/geodesicGaussians,$5 src/advection/system/commonFvSchemes,$4))
+$(eval $(call DeformationalAdvection,$1,$2,src/deformationSphere/nonDivergent,src/deformationSphere/geodesicGaussians,$4 src/advection/system/commonFvSchemes,$3))
 
 endef
 
@@ -28,8 +27,8 @@ endef
 # $2 -- timestep
 define DeformationalAdvectionConvergenceTestSuite
 
-$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-linearUpwind-$1,build/deformationSphere-mesh-$1,build/deformationSphere-nondiv-$1-velocity,$2,src/advection/system/linearUpwind))
-$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-cubicUpwind-$1,build/deformationSphere-mesh-$1,build/deformationSphere-nondiv-$1-velocity,$2,src/advection/system/cubicUpwindCPCFit))
+$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-linearUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/linearUpwind))
+$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-cubicUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/cubicUpwindCPCFit))
 
 endef
 

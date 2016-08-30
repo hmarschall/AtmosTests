@@ -2,26 +2,17 @@ deformationalAdvectionEndTime := 1.0368e+06
 
 # $1 -- case directory
 # $2 -- mesh case
-# $3 -- velocity case
+# $3 -- advectionDict
 # $4 -- tracerFieldDict
 # $5 -- fvSchemes
 # $6 -- timestep
 define DeformationalAdvection
 
 $(eval $(call InitialTracer,$1,$4))
-$(eval $(call AdvectTracer,$1,$2,$3,$(deformationalAdvectionEndTime),$6,6400,$5))
+$(eval $(call AdvectTracerInVaryingWind,$1,$2,$3,$(deformationalAdvectionEndTime),$6,6400,$5))
 
 $(eval $(call FieldDiff,$1,$(deformationalAdvectionEndTime),T,$1/0/T))
 $(eval $(call Errors,$1,$(deformationalAdvectionEndTime),T))
 $(eval $(call MeshDiagnostics,$1))
-
-endef
-
-# $1 -- case directory
-# $2 -- mesh case
-# $3 -- timestep
-define DeformationalAdvectionNonDivergentVelocityField
-
-$(eval $(call TimeVariantVelocityField,$1,$2,src/deformationSphere/nonDivergent,$3,$(deformationalAdvectionEndTime)))
 
 endef
