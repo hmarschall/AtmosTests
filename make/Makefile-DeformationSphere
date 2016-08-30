@@ -13,13 +13,6 @@ $(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-7,build/deformati
 $(eval $(call HexGeodesicMesh,build/deformationSphere-mesh-hex-8,src/deformationSphere/mesh-8.obj))
 $(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-8,build/deformationSphere-mesh-hex-8))
 
-$(eval $(call DeformationalAdvectionNonDivergentVelocityField,build/deformationSphere-nondiv-hex-4-velocity,build/deformationSphere-mesh-hex-4,6400))
-$(eval $(call DeformationalAdvectionNonDivergentVelocityField,build/deformationSphere-nondiv-hex-5-velocity,build/deformationSphere-mesh-hex-5,3200))
-$(eval $(call DeformationalAdvectionNonDivergentVelocityField,build/deformationSphere-nondiv-hex-6-velocity,build/deformationSphere-mesh-hex-6,1600))
-
-$(eval $(call DeformationalAdvectionNonDivergentVelocityField,build/deformationSphere-nondiv-tri-4-velocity,build/deformationSphere-mesh-tri-4,3200))
-$(eval $(call DeformationalAdvectionNonDivergentVelocityField,build/deformationSphere-nondiv-tri-5-velocity,build/deformationSphere-mesh-tri-5,1600))
-
 # $1 -- case
 # $2 -- mesh
 # $3 -- velocity case
@@ -53,13 +46,17 @@ endef
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-4,6400))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-5,3200))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-6,1600))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-7,800))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-8,400))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,tri-4,3200))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,tri-5,1600))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,tri-6,800))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,tri-7,400))
 
-$(eval $(call DeformationalAdvectionCollation,hex,$(deformationalAdvectionEndTime)/l2errorT.txt,4 5 6))
-$(eval $(call DeformationalAdvectionCollation,hex,$(deformationalAdvectionEndTime)/linferrorT.txt,4 5 6))
-$(eval $(call DeformationalAdvectionCollation,tri,$(deformationalAdvectionEndTime)/l2errorT.txt,4 5))
-$(eval $(call DeformationalAdvectionCollation,tri,$(deformationalAdvectionEndTime)/linferrorT.txt,4 5))
+$(eval $(call DeformationalAdvectionCollation,hex,$(deformationalAdvectionEndTime)/l2errorT.txt,4 5 6 7 8))
+$(eval $(call DeformationalAdvectionCollation,hex,$(deformationalAdvectionEndTime)/linferrorT.txt,4 5 6 7 8))
+$(eval $(call DeformationalAdvectionCollation,tri,$(deformationalAdvectionEndTime)/l2errorT.txt,4 5 6 7))
+$(eval $(call DeformationalAdvectionCollation,tri,$(deformationalAdvectionEndTime)/linferrorT.txt,4 5 6 7))
 
 $(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-linearUpwind-hex-collated/$(deformationalAdvectionEndTime)/))
 $(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-cubicUpwind-hex-collated/$(deformationalAdvectionEndTime)/))
