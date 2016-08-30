@@ -69,7 +69,7 @@ define AdvectTracerInFixedWind
 $1.intermediate: \
   $1/0/phi
 
-$(eval $(call AdvectTracer,$1,$2,$3,$4,$5,$6,$7))
+$(eval $(call AdvectTracer,$1,$2,$4,$5,$6,$7))
 
 $(eval $(call CopyFile,$3,$1/0/phi))
 
@@ -77,7 +77,7 @@ endef
 
 # $1 -- case directory
 # $2 -- mesh case
-# $3 -- velocity case TODO: unused
+# $3 -- advectionDict
 # $4 -- times (e.g. 5000 10000)
 # $5 -- timestep
 # $6 -- writeInterval (must be a multiple of timestep)
@@ -88,24 +88,23 @@ define AdvectTracerInVaryingWind
 $1.intermediate: \
   $1/$(advectionDict)
 
-$(eval $(call AdvectTracer,$1,$2,$3,$4,$5,$6,$7))
+$(eval $(call AdvectTracer,$1,$2,$4,$5,$6,$7))
 
-$(eval $(call CopyFile,$8,$1/$(advectionDict)))
+$(eval $(call CopyFile,$3,$1/$(advectionDict)))
 
 endef
 
 # $1 -- case directory
 # $2 -- mesh case
-# $3 -- velocity case TODO: unused
-# $4 -- times (e.g. 5000 10000)
-# $5 -- timestep
-# $6 -- writeInterval (must be a multiple of timestep)
-# $7 -- fvSchemes file list (the first file must be the fvSchemes file itself, the remainder are copied into $1/system)
+# $3 -- times (e.g. 5000 10000)
+# $4 -- timestep
+# $5 -- writeInterval (must be a multiple of timestep)
+# $6 -- fvSchemes file list (the first file must be the fvSchemes file itself, the remainder are copied into $1/system)
 define AdvectTracer
 
 .INTERMEDIATE: $1.intermediate
 
-$(addprefix $1/,$(addsuffix /T,$4)): $1.intermediate
+$(addprefix $1/,$(addsuffix /T,$3)): $1.intermediate
 
 $1.intermediate: \
   $(addprefix $1/,$(meshFiles)) \
@@ -114,13 +113,13 @@ $1.intermediate: \
 	$(advectionFoam) -case $1
 
 # primary fvSchemes file depends upon any auxiliary fvSchemes files
-$1/$(fvSchemes): $(addprefix $1/system/,$(notdir $(call rest,$7)))
+$1/$(fvSchemes): $(addprefix $1/system/,$(notdir $(call rest,$6)))
 
 $(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
-$(eval $(call ControlDict,$1,$(lastword $4),$5,$6))
+$(eval $(call ControlDict,$1,$(lastword $3),$4,$5))
 $(eval $(call CopyNamedFile,src/advection,$(fvSolution),$1))
-$(eval $(call CopyFile,$(firstword $7),$1/$(fvSchemes)))
-$(foreach F,$(call rest,$7),$(eval $(call CopyNamedFile,$(dir $F),$(notdir $F),$1/system)))
+$(eval $(call CopyFile,$(firstword $6),$1/$(fvSchemes)))
+$(foreach F,$(call rest,$6),$(eval $(call CopyNamedFile,$(dir $F),$(notdir $F),$1/system)))
 
 $(eval $(call MakeDir,$1/$(polyMesh)))
 $(eval $(call MakeDir,$1/system))

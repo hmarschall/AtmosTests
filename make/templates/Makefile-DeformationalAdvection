@@ -2,7 +2,7 @@ deformationalAdvectionEndTime := 1.0368e+06
 
 # $1 -- case directory
 # $2 -- mesh case
-# $3 -- velocity case
+# $3 -- advectionDict
 # $4 -- tracerFieldDict
 # $5 -- fvSchemes
 # $6 -- timestep
