@@ -80,7 +80,7 @@ $1/meshMaxVol.txt:
 	grep "Max volume" $$< | tr -s ' ' | cut -d' ' -f9 | sed 's/.$$$$//' > $$@
 
 $1/meshVolRatio.txt: $1/meshMinVol.txt $1/meshMaxVol.txt
-	python -c "print $$$$(cat $1/meshMaxVol.txt)/$$$$(cat $1/meshMinVol.txt)" > $$@
+	python3 -c "print($$$$(cat $1/meshMaxVol.txt)/$$$$(cat $1/meshMinVol.txt))" > $$@
 
 $1/meshNonOrthogonality.txt: $1/meshDiagnostics.txt
 	grep "Mesh non-orthogonality" $$< | tr -s ' ' | cut -d' ' -f5 > $$@
@@ -92,6 +92,6 @@ $1/meshMeanCellCentreDistance.txt: \
 
 $1/meshAverageEquatorialSpacing.txt: \
   $1/meshMeanCellCentreDistance.txt
-	python -c "import math; print 360*$$$$(cat $1/meshMeanCellCentreDistance.txt) / (2*math.pi*6.3712e6)" > $$@
+	python3 -c "import math; print(360*$$$$(cat $1/meshMeanCellCentreDistance.txt) / (2*math.pi*6.3712e6))" > $$@
 
 endef
