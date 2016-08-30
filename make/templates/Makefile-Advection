@@ -43,7 +43,7 @@ $(eval $(call InitialTracer,$1,src/advection/radialTracer))
 $(eval $(call TimeInvariantVelocityField,$1-velocity,$2,$3))
 $(eval $(call AnalyticTracer,$1-analyticTracer,$2,5000 10000,src/advection/radialTracer,$3))
 
-$(eval $(call AdvectTracerInFixedWind,$1,$2,$1-velocity,5000 10000,$5,1000,$4))
+$(eval $(call AdvectTracer,$1,$2,$1-velocity,5000 10000,$5,1000,$4))
 
 $(eval $(call FieldDiff,$1,10000,T,$1-analyticTracer/10000/T_analytic))
 $(eval $(call Extrema,$1,10000,T))
@@ -57,40 +57,43 @@ $(eval $(call SamplePlanes,$1,10000,T_diff,src/advection/samplePlane))
 
 endef
 
-# $1 -- case directory
-# $2 -- mesh case
-# $3 -- velocity case
-# $4 -- times (e.g. 5000 10000)
-# $5 -- timestep
-# $6 -- writeInterval (must be a multiple of timestep)
-# $7 -- fvSchemes file list (the first file must be the fvSchemes file itself, the remainder are copied into $1/system)
 define AdvectTracerInFixedWind
 
-$(eval $(call AdvectTracer,$1,$2,$3,$4,$5,$6,$7,))
+$1.intermediate: \
+  $1/0/phi
+
+$(eval $(call AdvectTracer,$1,$2,$3,$4,$5,$6,$7))
+
+$(eval $(call CopyFile,$4,$1/0/phi))
 
 endef
 
 # $1 -- case directory
 # $2 -- mesh case
-# $3 -- velocity case
+# $3 -- velocity case TODO: unused
 # $4 -- times (e.g. 5000 10000)
 # $5 -- timestep
 # $6 -- writeInterval (must be a multiple of timestep)
 # $7 -- fvSchemes file list (the first file must be the fvSchemes file itself, the remainder are copied into $1/system)
+# $8 -- advectionDict
 define AdvectTracerInVaryingWind
 
-$(eval $(call AdvectTracer,$1,$2,$3,$4,$5,$6,$7,-timeVaryingWind))
+$1.intermediate: \
+  $1/$(advectionDict)
+
+$(eval $(call AdvectTracer,$1,$2,$3,$4,$5,$6,$7))
+
+$(eval $(call CopyFile,$8,$1/$(advectionDict)))
 
 endef
 
 # $1 -- case directory
 # $2 -- mesh case
-# $3 -- velocity case
+# $3 -- velocity case TODO: unused
 # $4 -- times (e.g. 5000 10000)
 # $5 -- timestep
 # $6 -- writeInterval (must be a multiple of timestep)
 # $7 -- fvSchemes file list (the first file must be the fvSchemes file itself, the remainder are copied into $1/system)
-# $8 -- time varying wind option
 define AdvectTracer
 
 .INTERMEDIATE: $1.intermediate
@@ -100,15 +103,13 @@ $(addprefix $1/,$(addsuffix /T,$4)): $1.intermediate
 $1.intermediate: \
   $(addprefix $1/,$(meshFiles)) \
   $(addprefix $1/,$(systemFiles)) \
-  $1/0/T \
-  $1.phony.phi
-	$(advectionFoam) -case $1 $8
+  $1/0/T
+	$(advectionFoam) -case $1
 
 # primary fvSchemes file depends upon any auxiliary fvSchemes files
 $1/$(fvSchemes): $(addprefix $1/system/,$(notdir $(call rest,$7)))
 
 $(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
-$(eval $(call CopyTreeWithPattern,$3,phi,$1))
 $(eval $(call ControlDict,$1,$(lastword $4),$5,$6))
 $(eval $(call CopyNamedFile,src/advection,$(fvSolution),$1))
 $(eval $(call CopyFile,$(firstword $7),$1/$(fvSchemes)))

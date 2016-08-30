@@ -1,3 +1,4 @@
+advectionDict := constant/advectionDict
 blockMeshDict := $(polyMesh)/blockMeshDict
 collapseDict := system/collapseDict
 decomposeParDict := system/decomposeParDict
