@@ -22,7 +22,7 @@ $1.intermediate: \
 	$(renumberMesh) -case $1 -constant -overwrite
 
 $(eval $(call CopyFile,$2,$1/mesh.obj))
-$(eval $(call CopyFile,src/mesh/extrudeGeodesicMeshDict,$1/$(extrudeMeshDict)))
+$(eval $(call CopyFile,src/mesh/extrudeGeodesicFromSurface,$1/$(extrudeMeshDict)))
 $(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
 $(eval $(call MakeDir,$1/constant))
 $(eval $(call MakeDir,$1/system))

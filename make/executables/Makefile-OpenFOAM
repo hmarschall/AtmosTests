@@ -27,6 +27,7 @@ setVelocityField := $(FOAM_USER_APPBIN)/setVelocityField
 slantMesh := $(FOAM_USER_APPBIN)/slantMesh
 snappyHexMesh := snappyHexMesh
 subsetMesh := subsetMesh
+tanPoints := $(FOAM_USER_APPBIN)/tanPoints
 terrainFollowingMesh := $(FOAM_USER_APPBIN)/terrainFollowingMesh
 writeCellDataXYZ := $(FOAM_USER_APPBIN)/writeCellDataxyz
 writeMeshObj := writeMeshObj
