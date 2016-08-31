@@ -1,0 +1,3 @@
+$(eval $(call CutCellMesh,build/rampAdvection-mesh-cutCell-0,src/rampAdvection/mesh-cutCell-0,src/rampAdvection/createPatchDict))
+$(eval $(call CutCellMesh,build/rampAdvection-mesh-cutCell-0.5,src/rampAdvection/mesh-cutCell-0.5,src/rampAdvection/createPatchDict))
+

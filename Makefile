@@ -43,3 +43,4 @@ include make/Makefile-Resting
 include make/Makefile-GravityWaves
 include make/Makefile-ThermalAdvection
 include make/Makefile-DeformationSphere
+include make/Makefile-RampAdvection
