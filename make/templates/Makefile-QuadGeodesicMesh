@@ -16,6 +16,7 @@ $1.intermediate: \
 | $1/constant
 	$(tanPoints) -case $1-block
 	$(extrudeMesh) -case $1
+	sed -i 's/patch/empty/g' $1/$(boundary)
 
 $(eval $(call BlockMesh,$1-block,$1/blockMeshDict))
 
