@@ -1,0 +1,35 @@
+# $1 -- resolution
+define MountainAdvectionMeshes
+
+$(eval $(call BlockMesh,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-noOrography-$1))
+$(eval $(call TerrainFollowingMesh,build/mountainAdvection-mesh-btf-$1,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-btf))
+
+endef
+
+# $1 -- case directory
+# $2 -- mesh case
+# $3 -- timestep
+define CubicUpwindMountainAdvection
+
+$(eval $(call Advection,$1,$2,src/mountainAdvection/gaussian,src/mountainAdvection/velocityField,src/advection/system/cubicUpwindCPCFit,$3))
+
+endef
+
+# $1 -- meshType (e.g. btf)
+# $2 -- resolution
+# $3 -- timestep
+define MountainAdvectionTests
+
+$(eval $(call CubicUpwindMountainAdvection,build/mountainAdvection-$1-cubicUpwind-$2,build/mountainAdvection-mesh-$1-$2,$3))
+
+endef
+
+$(eval $(call MountainAdvectionMeshes,5000))
+$(eval $(call MountainAdvectionMeshes,2500))
+$(eval $(call MountainAdvectionMeshes,1250))
+$(eval $(call MountainAdvectionMeshes,500))
+
+$(eval $(call MountainAdvectionTests,btf,5000,200))
+$(eval $(call MountainAdvectionTests,btf,2500,100))
+$(eval $(call MountainAdvectionTests,btf,1250,50))
+$(eval $(call MountainAdvectionTests,btf,500,20))
