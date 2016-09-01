@@ -3,17 +3,12 @@ FoamFile {
     format      ascii;
     class       dictionary;
     location    "constant";
-    object      add2dMountainDict;
+    object      mountainDict;
 }
 
-type			btf;
+type            	schaerCos;
 domainHeight		25e3;
-
-mountain
-{
-	type		schaerCos;
-	halfWidth	25e3;
-	peakHeight	6e3;
-	wavelength	8e3;
-}
-
+halfWidth		25e3;
+peakHeight		6e3;
+wavelength		8e3;
+tolerance		0;

@@ -3,15 +3,8 @@ define MountainAdvectionMeshes
 
 $(eval $(call BlockMesh,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-noOrography-$1))
 $(eval $(call TerrainFollowingMesh,build/mountainAdvection-mesh-btf-$1,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-btf))
-
-endef
-
-# $1 -- case directory
-# $2 -- mesh case
-# $3 -- timestep
-define CubicUpwindMountainAdvection
-
-$(eval $(call Advection,$1,$2,src/mountainAdvection/gaussian,src/mountainAdvection/velocityField,src/advection/system/cubicUpwindCPCFit,$3))
+$(eval $(call SlantedCellMesh,build/mountainAdvection-mesh-slantedCell-$1,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-slantedCell))
+$(eval $(call CutCellMesh,build/mountainAdvection-mesh-cutCell-$1,src/mountainAdvection/mesh-cutCell-$1,src/mountainAdvection/createPatchDict))
 
 endef
 
@@ -20,7 +13,29 @@ endef
 # $3 -- timestep
 define MountainAdvectionTests
 
-$(eval $(call CubicUpwindMountainAdvection,build/mountainAdvection-$1-cubicUpwind-$2,build/mountainAdvection-mesh-$1-$2,$3))
+$(eval $(call Advection,build/mountainAdvection-$1-cubicUpwind-$2,build/mountainAdvection-mesh-$1-$2,src/mountainAdvection/gaussian,src/mountainAdvection/velocityField,src/advection/system/cubicUpwindCPCFit,$3))
+$(eval $(call Advection,build/mountainAdvection-$1-linearUpwind-$2,build/mountainAdvection-mesh-$1-$2,src/mountainAdvection/gaussian,src/mountainAdvection/velocityField,src/advection/system/linearUpwind,$3))
+
+endef
+
+# $1 -- error filename
+# $2 -- resolutions
+define MountainAdvectionCollation
+
+$(eval $(call CollateErrors,build/mountainAdvection-btf-linearUpwind-,$1,$2))
+$(eval $(call CollateErrors,build/mountainAdvection-btf-cubicUpwind-,$1,$2))
+$(eval $(call CollateErrors,build/mountainAdvection-slantedCell-linearUpwind-,$1,$2))
+$(eval $(call CollateErrors,build/mountainAdvection-slantedCell-cubicUpwind-,$1,$2))
+$(eval $(call CollateErrors,build/mountainAdvection-cutCell-linearUpwind-,$1,$2))
+$(eval $(call CollateErrors,build/mountainAdvection-cutCell-cubicUpwind-,$1,$2))
+
+all-mountainAdvection-convergence: \
+  build/mountainAdvection-btf-linearUpwind-collated/$1 \
+  build/mountainAdvection-btf-cubicUpwind-collated/$1 \
+  build/mountainAdvection-slantedCell-linearUpwind-collated/$1 \
+  build/mountainAdvection-slantedCell-cubicUpwind-collated/$1 \
+  build/mountainAdvection-cutCell-linearUpwind-collated/$1 \
+  build/mountainAdvection-cutCell-cubicUpwind-collated/$1
 
 endef
 
@@ -33,3 +48,23 @@ $(eval $(call MountainAdvectionTests,btf,5000,200))
 $(eval $(call MountainAdvectionTests,btf,2500,100))
 $(eval $(call MountainAdvectionTests,btf,1250,50))
 $(eval $(call MountainAdvectionTests,btf,500,20))
+
+$(eval $(call MountainAdvectionTests,slantedCell,5000,50))
+$(eval $(call MountainAdvectionTests,slantedCell,2500,20))
+$(eval $(call MountainAdvectionTests,slantedCell,1250,10))
+$(eval $(call MountainAdvectionTests,slantedCell,500,2.5))
+
+$(eval $(call MountainAdvectionTests,cutCell,5000,3.2))
+$(eval $(call MountainAdvectionTests,cutCell,2500,1.5))
+$(eval $(call MountainAdvectionTests,cutCell,1250,1))
+$(eval $(call MountainAdvectionTests,cutCell,500,0.4))
+
+$(eval $(call MakeDir,build/mountainAdvection-btf-linearUpwind-collated/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-btf-cubicUpwind-collated/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-slantedCell-linearUpwind-collated/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-slantedCell-cubicUpwind-collated/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-cutCell-linearUpwind-collated/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-cutCell-cubicUpwind-collated/10000/))
+
+$(eval $(call MountainAdvectionCollation,10000/l2errorT.txt,5000 2500 1250 500))
+$(eval $(call MountainAdvectionCollation,10000/linferrorT.txt,5000 2500 1250 500))
