@@ -55,7 +55,7 @@ $(eval $(call MountainAdvectionTests,slantedCell,1250,10))
 $(eval $(call MountainAdvectionTests,slantedCell,500,2.5))
 
 $(eval $(call MountainAdvectionTests,cutCell,5000,3.2))
-$(eval $(call MountainAdvectionTests,cutCell,2500,1.5))
+$(eval $(call MountainAdvectionTests,cutCell,2500,1.6))
 $(eval $(call MountainAdvectionTests,cutCell,1250,1))
 $(eval $(call MountainAdvectionTests,cutCell,500,0.4))
 

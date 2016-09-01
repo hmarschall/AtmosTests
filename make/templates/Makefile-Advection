@@ -48,7 +48,7 @@ $(eval $(call AdvectTracerInFixedWind,$1,$2,$1-velocity/0/phi,5000 10000,$6,1000
 
 $(eval $(call FieldDiff,$1,10000,T,$1-analyticTracer/10000/T_analytic))
 $(eval $(call Extrema,$1,10000,T))
-$(eval $(call L2Error,$1,10000,T))
+$(eval $(call Errors,$1,10000,T))
 $(eval $(call Contour,$1,0,T,$1/0/T.samplePlane,0.1))
 $(eval $(call Contour,$1,5000,T,$1/5000/T.samplePlane,0.1))
 $(eval $(call Contour,$1,10000,T,$1/10000/T.samplePlane,0.1))
