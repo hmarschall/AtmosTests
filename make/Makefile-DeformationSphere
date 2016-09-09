@@ -20,6 +20,20 @@ $(eval $(call QuadGeodesicMesh,build/deformationSphere-mesh-quad-240,240))
 # $2 -- mesh
 # $3 -- timestep
 # $4 -- advection scheme
+define DeformationalAdvectionDivergenceTest
+
+$(eval $(call DeformationalAdvection,$1,$2,src/deformationSphere/divergent,src/deformationSphere/geodesicGaussians,$4 src/advection/system/commonFvSchemes,$3))
+
+endef
+
+$(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-linearUpwind-hex-5,build/deformationSphere-mesh-hex-5,3200,src/advection/system/linearUpwind))
+$(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-cubicUpwind-hex-5,build/deformationSphere-mesh-hex-5,3200,src/advection/system/cubicUpwindCPCFit))
+
+
+# $1 -- case
+# $2 -- mesh
+# $3 -- timestep
+# $4 -- advection scheme
 define DeformationalAdvectionConvergenceTest
 
 $(eval $(call DeformationalAdvection,$1,$2,src/deformationSphere/nonDivergent,src/deformationSphere/geodesicGaussians,$4 src/advection/system/commonFvSchemes,$3))
