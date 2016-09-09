@@ -4,7 +4,7 @@
 # $4 -- advection scheme
 define SolidBodyAdvectionTest
 
-$(eval $(call SolidBodyAdvection,$1,$2,src/solidBodySphere/noTilt,src/deformationSphere/geodesicGaussians,$4 src/advection/system/commonFvSchemes,$3))
+$(eval $(call SolidBodyAdvection,$1,$2,src/solidBodySphere/noTilt,src/deformationSphere/geodesicGaussians,$4,$3))
 
 endef
 
