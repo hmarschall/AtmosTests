@@ -1,0 +1,32 @@
+# $1 -- case
+# $2 -- mesh
+# $3 -- timestep
+# $4 -- advection scheme
+define SolidBodyAdvectionTest
+
+$(eval $(call SolidBodyAdvection,$1,$2,src/solidBodySphere/noTilt,src/deformationSphere/geodesicGaussians,$4 src/advection/system/commonFvSchemes,$3))
+
+endef
+
+
+# $1 -- mesh suffix (e.g. hex-4)
+# $2 -- timestep
+define SolidBodyAdvectionTestSuite
+
+$(eval $(call SolidBodyAdvectionTest,build/solidBodySphere-noTilt-linearUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/linearUpwind))
+$(eval $(call SolidBodyAdvectionTest,build/solidBodySphere-noTilt-cubicUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/cubicUpwindCPCFit))
+
+endef
+
+$(eval $(call SolidBodyAdvectionTestSuite,hex-5,3200))
+$(eval $(call SolidBodyAdvectionTestSuite,hex-6,1600))
+$(eval $(call SolidBodyAdvectionTestSuite,hex-7,800))
+$(eval $(call SolidBodyAdvectionTestSuite,hex-8,400))
+$(eval $(call SolidBodyAdvectionTestSuite,tri-4,3200))
+$(eval $(call SolidBodyAdvectionTestSuite,tri-5,1600))
+$(eval $(call SolidBodyAdvectionTestSuite,tri-6,800))
+$(eval $(call SolidBodyAdvectionTestSuite,tri-7,400))
+$(eval $(call SolidBodyAdvectionTestSuite,quad-30,800))
+$(eval $(call SolidBodyAdvectionTestSuite,quad-60,400))
+$(eval $(call SolidBodyAdvectionTestSuite,quad-120,200))
+$(eval $(call SolidBodyAdvectionTestSuite,quad-240,100))
