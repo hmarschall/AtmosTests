@@ -1,10 +1,11 @@
 # $1 -- case
 # $2 -- mesh
-# $3 -- timestep
-# $4 -- advection scheme
+# $3 -- velocityFieldDict
+# $4 -- timestep
+# $5 -- advection scheme
 define SolidBodyAdvectionTest
 
-$(eval $(call SolidBodyAdvection,$1,$2,src/solidBodySphere/noTilt,src/deformationSphere/geodesicGaussians,$4,$3))
+$(eval $(call SolidBodyAdvection,$1,$2,$3,src/deformationSphere/geodesicGaussians,$5,$4))
 
 endef
 
@@ -13,8 +14,10 @@ endef
 # $2 -- timestep
 define SolidBodyAdvectionTestSuite
 
-$(eval $(call SolidBodyAdvectionTest,build/solidBodySphere-noTilt-linearUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/linearUpwind))
-$(eval $(call SolidBodyAdvectionTest,build/solidBodySphere-noTilt-cubicUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/cubicUpwindCPCFit))
+$(eval $(call SolidBodyAdvectionTest,build/solidBodySphere-noTilt-linearUpwind-$1,build/deformationSphere-mesh-$1,src/solidBodySphere/noTilt,$2,src/advection/system/linearUpwind))
+$(eval $(call SolidBodyAdvectionTest,build/solidBodySphere-noTilt-cubicUpwind-$1,build/deformationSphere-mesh-$1,src/solidBodySphere/noTilt,$2,src/advection/system/cubicUpwindCPCFit))
+$(eval $(call SolidBodyAdvectionTest,build/solidBodySphere-90Tilt-linearUpwind-$1,build/deformationSphere-mesh-$1,src/solidBodySphere/90Tilt,$2,src/advection/system/linearUpwind))
+$(eval $(call SolidBodyAdvectionTest,build/solidBodySphere-90Tilt-cubicUpwind-$1,build/deformationSphere-mesh-$1,src/solidBodySphere/90Tilt,$2,src/advection/system/cubicUpwindCPCFit))
 
 endef
 
