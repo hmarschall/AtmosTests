@@ -1,3 +1,5 @@
+advectionEndTime := 10000
+
 # $1 -- case directory
 # $2 -- mesh case
 define LinearHorizontalAdvection
@@ -38,23 +40,23 @@ endef
 # $6 -- timestep
 define Advection
 
-all:: $1/10000/l2errorT.txt $1/10000/minT.txt $1/10000/maxT.txt
+all:: $1/$(advectionEndTime)/l2errorT.txt $1/$(advectionEndTime)/minT.txt $1/$(advectionEndTime)/maxT.txt
 
 $(eval $(call InitialTracer,$1,$3))
 $(eval $(call VelocityField,$1-velocity,$2,$4))
-$(eval $(call AnalyticTracer,$1-analyticTracer,$2,5000 10000,$3,$4))
+$(eval $(call AnalyticTracer,$1-analyticTracer,$2,5000 $(advectionEndTime),$3,$4))
 
-$(eval $(call AdvectTracerInFixedWind,$1,$2,$1-velocity/0/phi,5000 10000,$6,1000,$5 src/advection/system/commonFvSchemes))
+$(eval $(call AdvectTracerInFixedWind,$1,$2,$1-velocity/0/phi,5000 $(advectionEndTime),$6,1000,$5 src/advection/system/commonFvSchemes))
 
-$(eval $(call FieldDiff,$1,10000,T,$1-analyticTracer/10000/T_analytic))
-$(eval $(call Extrema,$1,10000,T))
-$(eval $(call Errors,$1,10000,T))
+$(eval $(call FieldDiff,$1,$(advectionEndTime),T,$1-analyticTracer/$(advectionEndTime)/T_analytic))
+$(eval $(call Extrema,$1,$(advectionEndTime),T))
+$(eval $(call Errors,$1,$(advectionEndTime),T))
 $(eval $(call Contour,$1,0,T,$1/0/T.samplePlane,0.1))
 $(eval $(call Contour,$1,5000,T,$1/5000/T.samplePlane,0.1))
-$(eval $(call Contour,$1,10000,T,$1/10000/T.samplePlane,0.1))
-$(eval $(call Contour,$1,10000,T_diff,$1/10000/T_diff.samplePlane,0.01))
-$(eval $(call SamplePlanes,$1,0 5000 10000,T,src/advection/samplePlane))
-$(eval $(call SamplePlanes,$1,10000,T_diff,src/advection/samplePlane))
+$(eval $(call Contour,$1,$(advectionEndTime),T,$1/$(advectionEndTime)/T.samplePlane,0.1))
+$(eval $(call Contour,$1,$(advectionEndTime),T_diff,$1/$(advectionEndTime)/T_diff.samplePlane,0.01))
+$(eval $(call SamplePlanes,$1,0 5000 $(advectionEndTime),T,src/advection/samplePlane))
+$(eval $(call SamplePlanes,$1,$(advectionEndTime),T_diff,src/advection/samplePlane))
 
 endef
 
