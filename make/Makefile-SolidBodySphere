@@ -21,6 +21,16 @@ $(eval $(call SolidBodyAdvectionTest,build/solidBodySphere-90Tilt-cubicUpwind-$1
 
 endef
 
+# $1 -- mesh type (e.g. hex)
+# $2 -- error filename
+# $3 -- resolutions
+define SolidBodyAdvectionCollation
+
+$(eval $(call CollateErrorsOnSphere,build/solidBodySphere-noTilt-linearUpwind-$1-,$2,$3))
+$(eval $(call CollateErrorsOnSphere,build/solidBodySphere-noTilt-cubicUpwind-$1-,$2,$3))
+
+endef
+
 $(eval $(call SolidBodyAdvectionTestSuite,hex-5,6400))
 $(eval $(call SolidBodyAdvectionTestSuite,hex-6,3200))
 $(eval $(call SolidBodyAdvectionTestSuite,hex-7,1600))
@@ -33,3 +43,17 @@ $(eval $(call SolidBodyAdvectionTestSuite,quad-30,1600))
 $(eval $(call SolidBodyAdvectionTestSuite,quad-60,800))
 $(eval $(call SolidBodyAdvectionTestSuite,quad-120,400))
 $(eval $(call SolidBodyAdvectionTestSuite,quad-240,200))
+
+$(eval $(call SolidBodyAdvectionCollation,hex,$(solidBodyAdvectionEndTime)/l2errorT.txt,5 6 7))
+$(eval $(call SolidBodyAdvectionCollation,hex,$(solidBodyAdvectionEndTime)/linferrorT.txt,5 6 7))
+$(eval $(call SolidBodyAdvectionCollation,tri,$(solidBodyAdvectionEndTime)/l2errorT.txt,4 5 6 7))
+$(eval $(call SolidBodyAdvectionCollation,tri,$(solidBodyAdvectionEndTime)/linferrorT.txt,4 5 6 7))
+$(eval $(call SolidBodyAdvectionCollation,quad,$(solidBodyAdvectionEndTime)/l2errorT.txt,30 60 120))
+$(eval $(call SolidBodyAdvectionCollation,quad,$(solidBodyAdvectionEndTime)/linferrorT.txt,30 60 120))
+
+$(eval $(call MakeDir,build/solidBodySphere-noTilt-linearUpwind-hex-collated/$(solidBodyAdvectionEndTime)/))
+$(eval $(call MakeDir,build/solidBodySphere-noTilt-cubicUpwind-hex-collated/$(solidBodyAdvectionEndTime)/))
+$(eval $(call MakeDir,build/solidBodySphere-noTilt-linearUpwind-tri-collated/$(solidBodyAdvectionEndTime)/))
+$(eval $(call MakeDir,build/solidBodySphere-noTilt-cubicUpwind-tri-collated/$(solidBodyAdvectionEndTime)/))
+$(eval $(call MakeDir,build/solidBodySphere-noTilt-linearUpwind-quad-collated/$(solidBodyAdvectionEndTime)/))
+$(eval $(call MakeDir,build/solidBodySphere-noTilt-cubicUpwind-quad-collated/$(solidBodyAdvectionEndTime)/))
