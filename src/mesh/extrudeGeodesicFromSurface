@@ -19,8 +19,8 @@ expansionRatio      1.0;
 
 linearRadialCoeffs
 {
-    R        6372500;
-    Rsurface 6371500;
+    R        6372200;
+    Rsurface 6370200;
 }
 
 mergeFaces false;
