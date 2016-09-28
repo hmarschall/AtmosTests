@@ -6,6 +6,8 @@ FoamFile {
     object	tracerFieldDict;
 }
 
-type		gaussian;
+type		schaerRadial;
+//type		gaussian;
 centre		(-50e3 0 0);
-width		10e3;
+//width		10e3;
+halfWidth	(25e3 1 10e3);
