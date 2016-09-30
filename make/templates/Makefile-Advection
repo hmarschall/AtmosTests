@@ -10,6 +10,14 @@ endef
 
 # $1 -- case directory
 # $2 -- mesh case
+define LinearUpwindHorizontalAdvection
+
+$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/horizontalVelocityField,src/advection/system/linearUpwind,25))
+
+endef
+
+# $1 -- case directory
+# $2 -- mesh case
 define CubicUpwindHorizontalAdvection
 
 $(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/horizontalVelocityField,src/advection/system/cubicUpwindCPCFit,25))
