@@ -2,6 +2,7 @@ advectionDict := constant/advectionDict
 blockMeshDict := $(polyMesh)/blockMeshDict
 collapseDict := system/collapseDict
 decomposeParDict := system/decomposeParDict
+earthProperties := constant/earthProperties
 tracerFieldDict := constant/tracerFieldDict
 velocityFieldDict := constant/velocityFieldDict
 environmentalProperties := constant/environmentalProperties

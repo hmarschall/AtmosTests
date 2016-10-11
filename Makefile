@@ -32,6 +32,7 @@ include make/templates/Makefile-SlantedCellMesh
 include make/templates/Makefile-HexGeodesicMesh
 include make/templates/Makefile-TriGeodesicMesh
 include make/templates/Makefile-QuadGeodesicMesh
+include make/templates/Makefile-LatLonGeodesicMesh
 include make/templates/Makefile-Advection
 include make/templates/Makefile-DeformationalAdvection
 include make/templates/Makefile-Physical
