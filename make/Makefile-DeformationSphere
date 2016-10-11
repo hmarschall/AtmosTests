@@ -17,6 +17,9 @@ $(eval $(call QuadGeodesicMesh,build/deformationSphere-mesh-quad-120,120))
 $(eval $(call QuadGeodesicMesh,build/deformationSphere-mesh-quad-240,240))
 
 $(eval $(call LatLonGeodesicMesh,build/deformationSphere-mesh-latlon-36,src/deformationSphere/mesh-latlon-36))
+$(eval $(call LatLonGeodesicMesh,build/deformationSphere-mesh-latlon-72,src/deformationSphere/mesh-latlon-72))
+$(eval $(call LatLonGeodesicMesh,build/deformationSphere-mesh-latlon-144,src/deformationSphere/mesh-latlon-144))
+$(eval $(call LatLonGeodesicMesh,build/deformationSphere-mesh-latlon-288,src/deformationSphere/mesh-latlon-288))
 
 # $1 -- case
 # $2 -- mesh
