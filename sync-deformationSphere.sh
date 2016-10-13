@@ -6,3 +6,5 @@ scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-gaussians-nondiv-lin
 scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-gaussians-nondiv-cubicUpwind-hex-collated build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-gaussians-nondiv-linearUpwind-quad-collated build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-gaussians-nondiv-cubicUpwind-quad-collated build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-gaussians-nondiv-linearUpwind-hex-5 build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-cosBells-nondiv-linearUpwind-hex-5 build/
