@@ -10,7 +10,7 @@ define SolidBodyAdvection
 
 $(eval $(call InitialTracer,$1,$4))
 $(eval $(call VelocityField,$1-velocity,$2,$3))
-$(eval $(call AdvectTracerInFixedWind,$1,$2,$1-velocity/0/phi,$(solidBodyAdvectionEndTime),$6,6400,$5 src/advection/system/commonFvSchemes))
+$(eval $(call AdvectTracerInFixedSphericalWind,$1,$2,$1-velocity/0/phi,$(solidBodyAdvectionEndTime),$6,6400,$5 src/advection/system/commonFvSchemes))
 
 $(eval $(call FieldDiff,$1,$(solidBodyAdvectionEndTime),T,$1/0/T))
 $(eval $(call Errors,$1,$(solidBodyAdvectionEndTime),T))

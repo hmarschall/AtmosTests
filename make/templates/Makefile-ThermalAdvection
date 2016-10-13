@@ -46,7 +46,7 @@ $(eval $(call AnalyticThetaField,$1-analyticTracer,$2,$4,$7,src/physical/constan
 
 $(eval $(call VelocityField,$1-velocity,$2,$4))
 
-$(eval $(call AdvectTracer,$1,$2,$3,$1-velocity/0/phi,18000,$5,$6,$8))
+$(eval $(call AdvectTracer,$1,$2,$3,$1-velocity/0/phi,18000,$5,$6,$8,$(advectionFoam)))
 
 endef
 
