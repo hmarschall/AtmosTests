@@ -4,22 +4,11 @@ $(eval $(call HexGeodesicMesh,build/deformationSphere-mesh-hex-6,src/deformation
 $(eval $(call HexGeodesicMesh,build/deformationSphere-mesh-hex-7,src/deformationSphere/mesh-7.obj))
 $(eval $(call HexGeodesicMesh,build/deformationSphere-mesh-hex-8,src/deformationSphere/mesh-8.obj))
 
-$(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-4,build/deformationSphere-mesh-hex-4))
-$(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-5,build/deformationSphere-mesh-hex-5))
-$(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-6,build/deformationSphere-mesh-hex-6))
-$(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-7,build/deformationSphere-mesh-hex-7))
-$(eval $(call TriGeodesicMesh,build/deformationSphere-mesh-tri-8,build/deformationSphere-mesh-hex-8))
-
 $(eval $(call QuadGeodesicMesh,build/deformationSphere-mesh-quad-15,15))
 $(eval $(call QuadGeodesicMesh,build/deformationSphere-mesh-quad-30,30))
 $(eval $(call QuadGeodesicMesh,build/deformationSphere-mesh-quad-60,60))
 $(eval $(call QuadGeodesicMesh,build/deformationSphere-mesh-quad-120,120))
 $(eval $(call QuadGeodesicMesh,build/deformationSphere-mesh-quad-240,240))
-
-$(eval $(call LatLonGeodesicMesh,build/deformationSphere-mesh-latlon-36,src/deformationSphere/mesh-latlon-36))
-$(eval $(call LatLonGeodesicMesh,build/deformationSphere-mesh-latlon-72,src/deformationSphere/mesh-latlon-72))
-$(eval $(call LatLonGeodesicMesh,build/deformationSphere-mesh-latlon-144,src/deformationSphere/mesh-latlon-144))
-$(eval $(call LatLonGeodesicMesh,build/deformationSphere-mesh-latlon-288,src/deformationSphere/mesh-latlon-288))
 
 # $1 -- case
 # $2 -- mesh
@@ -27,7 +16,7 @@ $(eval $(call LatLonGeodesicMesh,build/deformationSphere-mesh-latlon-288,src/def
 # $4 -- advection scheme
 define DeformationalAdvectionDivergenceTest
 
-$(eval $(call DeformationalAdvection,$1,$2,src/deformationSphere/divergent,src/deformationSphere/geodesicGaussians,$4 src/advection/system/commonFvSchemes,$3))
+$(eval $(call DeformationalAdvection,$1,$2,src/deformationSphere/divergent,src/deformationSphere/cosBells,$4 src/advection/system/commonFvSchemes,$3))
 
 endef
 
@@ -39,9 +28,10 @@ $(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBe
 # $2 -- mesh
 # $3 -- timestep
 # $4 -- advection scheme
+# $5 -- tracer profile
 define DeformationalAdvectionConvergenceTest
 
-$(eval $(call DeformationalAdvection,$1,$2,src/deformationSphere/nonDivergent,src/deformationSphere/geodesicGaussians,$4 src/advection/system/commonFvSchemes,$3))
+$(eval $(call DeformationalAdvection,$1,$2,src/deformationSphere/nonDivergent,$5,$4 src/advection/system/commonFvSchemes,$3))
 
 endef
 
@@ -49,8 +39,11 @@ endef
 # $2 -- timestep
 define DeformationalAdvectionConvergenceTestSuite
 
-$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-linearUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/linearUpwind))
-$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-cubicUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/cubicUpwindCPCFit))
+$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-linearUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/linearUpwind,src/deformationSphere/geodesicGaussians))
+$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-cubicUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/cubicUpwindCPCFit,src/deformationSphere/geodesicGaussians))
+
+$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-cosBells-nondiv-linearUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/linearUpwind,src/deformationSphere/cosBells))
+$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-cosBells-nondiv-cubicUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/cubicUpwindCPCFit,src/deformationSphere/cosBells))
 
 endef
 
@@ -62,6 +55,9 @@ define DeformationalAdvectionCollation
 $(eval $(call CollateErrorsOnSphere,build/deformationSphere-gaussians-nondiv-linearUpwind-$1-,$2,$3))
 $(eval $(call CollateErrorsOnSphere,build/deformationSphere-gaussians-nondiv-cubicUpwind-$1-,$2,$3))
 
+$(eval $(call CollateErrorsOnSphere,build/deformationSphere-cosbells-nondiv-linearUpwind-$1-,$2,$3))
+$(eval $(call CollateErrorsOnSphere,build/deformationSphere-cosbells-nondiv-cubicUpwind-$1-,$2,$3))
+
 endef
 
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-4,6400))
@@ -69,10 +65,6 @@ $(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-5,3200))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-6,1600))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-7,800))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-8,400))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,tri-4,3200))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,tri-5,1600))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,tri-6,800))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,tri-7,400))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-15,1600))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-30,800))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-60,400))
@@ -88,7 +80,5 @@ $(eval $(call DeformationalAdvectionCollation,quad,$(deformationalAdvectionEndTi
 
 $(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-linearUpwind-hex-collated/$(deformationalAdvectionEndTime)/))
 $(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-cubicUpwind-hex-collated/$(deformationalAdvectionEndTime)/))
-$(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-linearUpwind-tri-collated/$(deformationalAdvectionEndTime)/))
-$(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-cubicUpwind-tri-collated/$(deformationalAdvectionEndTime)/))
 $(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-linearUpwind-quad-collated/$(deformationalAdvectionEndTime)/))
 $(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-cubicUpwind-quad-collated/$(deformationalAdvectionEndTime)/))
