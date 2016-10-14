@@ -42,21 +42,25 @@ endef
 $(eval $(call MountainAdvectionMeshes,5000))
 $(eval $(call MountainAdvectionMeshes,2500))
 $(eval $(call MountainAdvectionMeshes,1250))
+$(eval $(call MountainAdvectionMeshes,1000))
 $(eval $(call MountainAdvectionMeshes,500))
 
 $(eval $(call MountainAdvectionTests,btf,5000,200))
 $(eval $(call MountainAdvectionTests,btf,2500,100))
 $(eval $(call MountainAdvectionTests,btf,1250,50))
+$(eval $(call MountainAdvectionTests,btf,1000,40))
 $(eval $(call MountainAdvectionTests,btf,500,20))
 
 $(eval $(call MountainAdvectionTests,slantedCell,5000,50))
 $(eval $(call MountainAdvectionTests,slantedCell,2500,20))
 $(eval $(call MountainAdvectionTests,slantedCell,1250,10))
+$(eval $(call MountainAdvectionTests,slantedCell,1000,5))
 $(eval $(call MountainAdvectionTests,slantedCell,500,2.5))
 
 $(eval $(call MountainAdvectionTests,cutCell,5000,3.2))
 $(eval $(call MountainAdvectionTests,cutCell,2500,1.6))
 $(eval $(call MountainAdvectionTests,cutCell,1250,1))
+$(eval $(call MountainAdvectionTests,cutCell,1000,1))
 $(eval $(call MountainAdvectionTests,cutCell,500,0.4))
 
 $(eval $(call MakeDir,build/mountainAdvection-btf-linearUpwind-collated/10000/))

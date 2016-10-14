@@ -37,12 +37,10 @@ endef
 # $1 -- case
 # $2 -- times (e.g. 0 5000 10000)
 # $3 -- field
-# $4 -- sampleDict
+# $4 -- sampleDict name
 define SamplePlanes
 
 $(foreach time,$2,$(eval $(call SamplePlane,$1,$(time),$3,$4)))
-
-$(eval $(call SampleDict,$1,$3,$4))
 
 endef
 
@@ -51,15 +49,15 @@ endef
 # $1 -- case
 # $2 -- time
 # $3 -- field
-# $4 -- sampleDict
+# $4 -- sampleDict name
 define SamplePlane
 
-$1/$2/$3.$(notdir $4): \
+$1/$2/$3.$4: \
   $1/$2/$3 \
-  $1/$(notdir $4)-$3 \
+  $1/system/$4-$3 \
   $(addprefix $1/,$(meshFiles) $(systemFiles))
-	$(sample) -case $1 -time $2 -dict $(notdir $4)-$3
-	cp $1/postProcessing/surfaces/$2/$3_constantPlane.raw $1/$2/$3.$(notdir $4)
+	$(postProcess) -case $1 -time $2 -func $4-$3
+	cp $1/postProcessing/$4-$3/$2/$3_constantPlane.raw $1/$2/$3.$4
 
 endef
 
@@ -81,7 +79,8 @@ endef
 # $3 -- sampleDict template
 define SampleDict
 
-$1/$(notdir $3)-$2: $3
+$1/system/$(notdir $3)-$2: $3
 	FIELD=$2 $(envsubst) < $$< > $$@
 
 endef
+

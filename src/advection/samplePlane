@@ -1,15 +1,9 @@
-FoamFile
-{
-    version     2.0;
-    format      ascii;
-    class       dictionary;
-    object      sampleDict;
-}
+type            surfaces;
+libs            ("libsampling.so");
 
-setFormat raw;
+writeControl    writeTime;
 
 surfaceFormat raw;
-
 interpolationScheme cell;
 
 fields ($FIELD);
@@ -18,9 +12,13 @@ surfaces
 (
     constantPlane
     {
-        type            plane;
-        basePoint       (0 10 10e3);
-        normalVector    (0 1 0);
+        type         cuttingPlane;
+        planeType    pointAndNormal;
+        pointAndNormalDict
+        {
+            basePoint       (0 0 10e3);
+            normalVector    (0 1 0);
+        }
         interpolate     false;
         triangulate     false;
     }

@@ -63,8 +63,11 @@ $(eval $(call Contour,$1,0,T,$1/0/T.samplePlane,0.1))
 $(eval $(call Contour,$1,5000,T,$1/5000/T.samplePlane,0.1))
 $(eval $(call Contour,$1,$(advectionEndTime),T,$1/$(advectionEndTime)/T.samplePlane,0.1))
 $(eval $(call Contour,$1,$(advectionEndTime),T_diff,$1/$(advectionEndTime)/T_diff.samplePlane,0.01))
-$(eval $(call SamplePlanes,$1,0 5000 $(advectionEndTime),T,src/advection/samplePlane))
-$(eval $(call SamplePlanes,$1,$(advectionEndTime),T_diff,src/advection/samplePlane))
+$(eval $(call SamplePlanes,$1,0 5000 $(advectionEndTime),T,samplePlane))
+$(eval $(call SamplePlanes,$1,$(advectionEndTime),T_diff,samplePlane))
+
+$(eval $(call SampleDict,$1,T,src/advection/samplePlane))
+$(eval $(call SampleDict,$1,T_diff,src/advection/samplePlane))
 
 endef
 
