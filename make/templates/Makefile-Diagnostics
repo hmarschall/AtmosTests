@@ -1,10 +1,11 @@
-# collate errors into a single text file, suitable for convergence plots
+# collate files, such as error norms or other statistics, 
+# into a single text file, suitable for convergence plots
 # outputs a file named $1collated/$2
 #
 # $1 -- case prefix
-# $2 -- error filename (e.g. 18000/l2errorT.txt)
+# $2 -- filename (e.g. 18000/l2errorT.txt)
 # $3 -- resolutions
-define CollateErrors
+define Collate
 
 $1collated/$2: \
   $(foreach R,$3,$(addprefix $1,$R/$2)) \
@@ -97,6 +98,7 @@ $1/meshAverageEquatorialSpacing.txt: \
 endef
 
 # $1 -- case
+# $2 -- timestep
 define AdvectionDiagnostics
 
 $1/0/Co: \
@@ -107,5 +109,8 @@ $1/0/Co: \
 
 $1/0/maxCo.txt: $1/0/Co
 	$(postProcess) -case $1 -time 0 -func "minMaxMagnitude(Co)" | perl -ne '/.*max\(Co\) = (.*) at location.*/ && print $$$$1' > $$@
+
+$1/0/maxdt.txt: $1/0/maxCo.txt
+	python3 -c "print($2/$$$$(cat $$<))" >> $$@
 
 endef

@@ -22,12 +22,12 @@ endef
 # $2 -- resolutions
 define MountainAdvectionCollation
 
-$(eval $(call CollateErrors,build/mountainAdvection-btf-linearUpwind-,$1,$2))
-$(eval $(call CollateErrors,build/mountainAdvection-btf-cubicUpwind-,$1,$2))
-$(eval $(call CollateErrors,build/mountainAdvection-slantedCell-linearUpwind-,$1,$2))
-$(eval $(call CollateErrors,build/mountainAdvection-slantedCell-cubicUpwind-,$1,$2))
-$(eval $(call CollateErrors,build/mountainAdvection-cutCell-linearUpwind-,$1,$2))
-$(eval $(call CollateErrors,build/mountainAdvection-cutCell-cubicUpwind-,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-btf-linearUpwind-,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-btf-cubicUpwind-,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-slantedCell-linearUpwind-,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-slantedCell-cubicUpwind-,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-cutCell-linearUpwind-,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-cutCell-cubicUpwind-,$1,$2))
 
 all-mountainAdvection-convergence: \
   build/mountainAdvection-btf-linearUpwind-collated/$1 \
@@ -63,6 +63,12 @@ $(eval $(call MountainAdvectionTests,cutCell,1250,1))
 $(eval $(call MountainAdvectionTests,cutCell,1000,1))
 $(eval $(call MountainAdvectionTests,cutCell,500,0.4))
 
+$(eval $(call MakeDir,build/mountainAdvection-btf-linearUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-btf-cubicUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-slantedCell-linearUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-slantedCell-cubicUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-cutCell-linearUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-cutCell-cubicUpwind-collated/0/))
 $(eval $(call MakeDir,build/mountainAdvection-btf-linearUpwind-collated/10000/))
 $(eval $(call MakeDir,build/mountainAdvection-btf-cubicUpwind-collated/10000/))
 $(eval $(call MakeDir,build/mountainAdvection-slantedCell-linearUpwind-collated/10000/))
@@ -70,5 +76,6 @@ $(eval $(call MakeDir,build/mountainAdvection-slantedCell-cubicUpwind-collated/1
 $(eval $(call MakeDir,build/mountainAdvection-cutCell-linearUpwind-collated/10000/))
 $(eval $(call MakeDir,build/mountainAdvection-cutCell-cubicUpwind-collated/10000/))
 
-$(eval $(call MountainAdvectionCollation,10000/l2errorT.txt,5000 2500 1250 500))
-$(eval $(call MountainAdvectionCollation,10000/linferrorT.txt,5000 2500 1250 500))
+$(eval $(call MountainAdvectionCollation,10000/l2errorT.txt,5000 2500 1250 1000 500))
+$(eval $(call MountainAdvectionCollation,10000/linferrorT.txt,5000 2500 1250 1000 500))
+$(eval $(call MountainAdvectionCollation,0/maxdt.txt,5000 2500 1250 1000 500))

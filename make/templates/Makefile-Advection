@@ -84,7 +84,7 @@ $1.intermediate: \
   $1/0/phi
 
 $(eval $(call AdvectTracer,$1,$2,$4,$5,$6,$7,$(advectionFoam)))
-$(eval $(call AdvectionDiagnostics,$1))
+$(eval $(call AdvectionDiagnostics,$1,$5))
 
 $(eval $(call CopyFile,$3,$1/0/phi))
 
