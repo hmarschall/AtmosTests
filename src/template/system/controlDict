@@ -15,7 +15,7 @@ writeControl    runTime;
 writeInterval   $WRITE_INTERVAL;
 purgeWrite      0;
 writeFormat     binary;
-writePrecision  6;
+writePrecision  12;
 writeCompression uncompressed;
 timeFormat      general;
 timePrecision   6;

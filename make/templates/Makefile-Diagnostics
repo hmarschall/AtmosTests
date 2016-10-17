@@ -95,3 +95,17 @@ $1/meshAverageEquatorialSpacing.txt: \
 	python3 -c "import math; print(360*$$$$(cat $1/meshMeanCellCentreDistance.txt) / (2*math.pi*6.3712e6))" > $$@
 
 endef
+
+# $1 -- case
+define AdvectionDiagnostics
+
+$1/0/Co: \
+  $1/0/phi \
+  $(addprefix $1/,$(meshFiles)) \
+  $(addprefix $1/,$(systemFiles))
+	$(postProcess) -case $1 -time 0 -func CourantNo
+
+$1/0/maxCo.txt: $1/0/Co
+	$(postProcess) -case $1 -time 0 -func "minMaxMagnitude(Co)" | perl -ne '/.*max\(Co\) = (.*) at location.*/ && print $$$$1' > $$@
+
+endef
