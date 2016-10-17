@@ -108,9 +108,9 @@ $1/0/Co: \
 	$(postProcess) -case $1 -time 0 -func CourantNo
 
 $1/0/maxCo.txt: $1/0/Co
-	$(postProcess) -case $1 -time 0 -func "minMaxMagnitude(Co)" | perl -ne '/.*max\(Co\) = (.*) at location.*/ && print $$$$1' > $$@
+	$(postProcess) -case $1 -time 0 -func "minMaxMagnitude(Co)" | perl -ne '/.*max\(Co\) = (.*) at location.*/ && print $$$$1 and last' > $$@
 
 $1/0/maxdt.txt: $1/0/maxCo.txt
-	python3 -c "print($2/$$$$(cat $$<))" >> $$@
+	python3 -c "print($2/$$$$(cat $$<))" > $$@
 
 endef

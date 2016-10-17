@@ -22,6 +22,8 @@ endef
 
 $(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-linearUpwind-hex-5,build/deformationSphere-mesh-hex-5,3200,src/advection/system/linearUpwind))
 $(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-cubicUpwind-hex-5,build/deformationSphere-mesh-hex-5,3200,src/advection/system/cubicUpwindCPCFit))
+$(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-linearUpwind-quad-15,build/deformationSphere-mesh-quad-15,1600,src/advection/system/linearUpwind))
+$(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-cubicUpwind-quad-15,build/deformationSphere-mesh-quad-15,1600,src/advection/system/cubicUpwindCPCFit))
 
 
 # $1 -- case
@@ -55,8 +57,8 @@ define DeformationalAdvectionCollation
 $(eval $(call CollateErrorsOnSphere,build/deformationSphere-gaussians-nondiv-linearUpwind-$1-,$2,$3))
 $(eval $(call CollateErrorsOnSphere,build/deformationSphere-gaussians-nondiv-cubicUpwind-$1-,$2,$3))
 
-$(eval $(call CollateErrorsOnSphere,build/deformationSphere-cosbells-nondiv-linearUpwind-$1-,$2,$3))
-$(eval $(call CollateErrorsOnSphere,build/deformationSphere-cosbells-nondiv-cubicUpwind-$1-,$2,$3))
+$(eval $(call CollateErrorsOnSphere,build/deformationSphere-cosBells-nondiv-linearUpwind-$1-,$2,$3))
+$(eval $(call CollateErrorsOnSphere,build/deformationSphere-cosBells-nondiv-cubicUpwind-$1-,$2,$3))
 
 endef
 
@@ -71,8 +73,8 @@ $(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-60,400))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-120,200))
 $(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-240,100))
 
-$(eval $(call DeformationalAdvectionCollation,hex,$(deformationalAdvectionEndTime)/l2errorT.txt,4 5 6 7))
-$(eval $(call DeformationalAdvectionCollation,hex,$(deformationalAdvectionEndTime)/linferrorT.txt,4 5 6 7))
+$(eval $(call DeformationalAdvectionCollation,hex,$(deformationalAdvectionEndTime)/l2errorT.txt,4 5 6 7 8))
+$(eval $(call DeformationalAdvectionCollation,hex,$(deformationalAdvectionEndTime)/linferrorT.txt,4 5 6 7 8))
 $(eval $(call DeformationalAdvectionCollation,tri,$(deformationalAdvectionEndTime)/l2errorT.txt,4 5 6 7))
 $(eval $(call DeformationalAdvectionCollation,tri,$(deformationalAdvectionEndTime)/linferrorT.txt,4 5 6 7))
 $(eval $(call DeformationalAdvectionCollation,quad,$(deformationalAdvectionEndTime)/l2errorT.txt,15 30 60 120))
@@ -82,3 +84,7 @@ $(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-linearUpwind-hex-
 $(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-cubicUpwind-hex-collated/$(deformationalAdvectionEndTime)/))
 $(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-linearUpwind-quad-collated/$(deformationalAdvectionEndTime)/))
 $(eval $(call MakeDir,build/deformationSphere-gaussians-nondiv-cubicUpwind-quad-collated/$(deformationalAdvectionEndTime)/))
+$(eval $(call MakeDir,build/deformationSphere-cosBells-nondiv-linearUpwind-hex-collated/$(deformationalAdvectionEndTime)/))
+$(eval $(call MakeDir,build/deformationSphere-cosBells-nondiv-cubicUpwind-hex-collated/$(deformationalAdvectionEndTime)/))
+$(eval $(call MakeDir,build/deformationSphere-cosBells-nondiv-linearUpwind-quad-collated/$(deformationalAdvectionEndTime)/))
+$(eval $(call MakeDir,build/deformationSphere-cosBells-nondiv-cubicUpwind-quad-collated/$(deformationalAdvectionEndTime)/))
