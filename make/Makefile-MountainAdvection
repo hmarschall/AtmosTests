@@ -5,6 +5,9 @@ $(eval $(call BlockMesh,build/mountainAdvection-mesh-noOrography-$1,src/mountain
 $(eval $(call TerrainFollowingMesh,build/mountainAdvection-mesh-btf-6km-$1,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-btf-6km))
 $(eval $(call SlantedCellMesh,build/mountainAdvection-mesh-slantedCell-6km-$1,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-slantedCell-6km))
 $(eval $(call CutCellMesh,build/mountainAdvection-mesh-cutCell-6km-$1,src/mountainAdvection/mesh-cutCell-$1-6km,src/mountainAdvection/createPatchDict))
+$(eval $(call TerrainFollowingMesh,build/mountainAdvection-mesh-btf-3km-$1,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-btf-3km))
+$(eval $(call SlantedCellMesh,build/mountainAdvection-mesh-slantedCell-3km-$1,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-slantedCell-3km))
+$(eval $(call CutCellMesh,build/mountainAdvection-mesh-cutCell-3km-$1,src/mountainAdvection/mesh-cutCell-$1-3km,src/mountainAdvection/createPatchDict))
 
 endef
 
@@ -50,6 +53,10 @@ $(eval $(call MountainAdvectionMeshes,500))
 $(eval $(call MountainAdvectionMeshes,333))
 $(eval $(call MountainAdvectionMeshes,250))
 $(eval $(call MountainAdvectionMeshes,125))
+
+$(eval $(call MountainAdvectionTests,btf,3km,1000,10))
+$(eval $(call MountainAdvectionTests,slantedCell,3km,1000,5))
+$(eval $(call MountainAdvectionTests,cutCell,3km,1000,1))
 
 $(eval $(call MountainAdvectionTests,btf,6km,5000,200))
 $(eval $(call MountainAdvectionTests,btf,6km,2500,100))
