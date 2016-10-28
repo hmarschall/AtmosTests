@@ -13,8 +13,8 @@ endef
 # $3 -- timestep
 define MountainAdvectionTests
 
-$(eval $(call Advection,build/mountainAdvection-$1-cubicUpwind-$2,build/mountainAdvection-mesh-$1-$2,src/mountainAdvection/schaerRadial,src/mountainAdvection/velocityField,src/advection/system/cubicUpwindCPCFit,$3))
-$(eval $(call Advection,build/mountainAdvection-$1-linearUpwind-$2,build/mountainAdvection-mesh-$1-$2,src/mountainAdvection/schaerRadial,src/mountainAdvection/velocityField,src/advection/system/linearUpwind,$3))
+$(eval $(call Advection,build/mountainAdvection-$1-cubicUpwind-$2,build/mountainAdvection-mesh-$1-$2,src/mountainAdvection/schaerRadial,src/mountainAdvection/velocityField,src/advection/system/cubicUpwindCPCFit,$3,src/mountainAdvection/T_init))
+$(eval $(call Advection,build/mountainAdvection-$1-linearUpwind-$2,build/mountainAdvection-mesh-$1-$2,src/mountainAdvection/schaerRadial,src/mountainAdvection/velocityField,src/advection/system/linearUpwind,$3,src/mountainAdvection/T_init))
 
 endef
 
