@@ -14,6 +14,6 @@ mountain
 {
 	type		schaerCos;
 	halfWidth	25e3;
-	peakHeight	3e3;
+	peakHeight	0;
 	wavelength	8e3;
 }
