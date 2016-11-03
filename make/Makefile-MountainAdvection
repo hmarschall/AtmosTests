@@ -3,16 +3,16 @@ define MountainAdvectionMeshes
 
 $(eval $(call BlockMesh,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-noOrography-$1))
 
-$(eval $(call MountainAdvectionFixedHeightMeshes,$1,0km))
-$(eval $(call MountainAdvectionFixedHeightMeshes,$1,3km))
-$(eval $(call MountainAdvectionFixedHeightMeshes,$1,4km))
-$(eval $(call MountainAdvectionFixedHeightMeshes,$1,5km))
-$(eval $(call MountainAdvectionFixedHeightMeshes,$1,6km))
+$(eval $(call MountainAdvectionFixedHeightMeshes,$1,0))
+$(eval $(call MountainAdvectionFixedHeightMeshes,$1,3000))
+$(eval $(call MountainAdvectionFixedHeightMeshes,$1,4000))
+$(eval $(call MountainAdvectionFixedHeightMeshes,$1,5000))
+$(eval $(call MountainAdvectionFixedHeightMeshes,$1,6000))
 
 endef
 
 # $1 -- resolution
-# $2 -- mountain height (e.g. 6km)
+# $2 -- mountain height (e.g. 6000)
 define MountainAdvectionFixedHeightMeshes
 
 $(eval $(call TerrainFollowingMesh,build/mountainAdvection-mesh-btf-$2-$1,build/mountainAdvection-mesh-noOrography-$1,src/mountainAdvection/mesh-btf-$2))
@@ -22,7 +22,7 @@ $(eval $(call CutCellMesh,build/mountainAdvection-mesh-cutCell-$2-$1,src/mountai
 endef
 
 # $1 -- meshType (e.g. btf)
-# $2 -- mountain height (e.g. 6km)
+# $2 -- mountain height (e.g. 6000)
 # $3 -- resolution
 # $4 -- timestep
 define MountainAdvectionTests
@@ -32,24 +32,29 @@ $(eval $(call Advection,build/mountainAdvection-$1-$2-linearUpwind-$3,build/moun
 
 endef
 
-# $1 -- error filename
+# $1 -- error filename (e.g. 10000/l2errorT.txt)
 # $2 -- resolutions
-define MountainAdvectionCollation
+define MountainAdvectionCollateByResolution
 
-$(eval $(call Collate,build/mountainAdvection-btf-6km-linearUpwind-,$1,$2))
-$(eval $(call Collate,build/mountainAdvection-btf-6km-cubicUpwind-,$1,$2))
-$(eval $(call Collate,build/mountainAdvection-slantedCell-6km-linearUpwind-,$1,$2))
-$(eval $(call Collate,build/mountainAdvection-slantedCell-6km-cubicUpwind-,$1,$2))
-$(eval $(call Collate,build/mountainAdvection-cutCell-6km-linearUpwind-,$1,$2))
-$(eval $(call Collate,build/mountainAdvection-cutCell-6km-cubicUpwind-,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-btf-6000-linearUpwind-,,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-btf-6000-cubicUpwind-,,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-slantedCell-6000-linearUpwind-,,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-slantedCell-6000-cubicUpwind-,,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-cutCell-6000-linearUpwind-,,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-cutCell-6000-cubicUpwind-,,$1,$2))
 
-all-mountainAdvection-convergence: \
-  build/mountainAdvection-btf-6km-linearUpwind-collated/$1 \
-  build/mountainAdvection-btf-6km-cubicUpwind-collated/$1 \
-  build/mountainAdvection-slantedCell-6km-linearUpwind-collated/$1 \
-  build/mountainAdvection-slantedCell-6km-cubicUpwind-collated/$1 \
-  build/mountainAdvection-cutCell-6km-linearUpwind-collated/$1 \
-  build/mountainAdvection-cutCell-6km-cubicUpwind-collated/$1
+endef
+
+# $1 -- error filename (e.g. 10000/l2errorT.txt)
+# $2 -- mountain heights (e.g. 3000 4000 5000)
+define MountainAdvectionCollateByMountainHeight
+
+$(eval $(call Collate,build/mountainAdvection-btf-,-linearUpwind-1000,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-btf-,-cubicUpwind-1000,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-cutCell-,-linearUpwind-1000,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-cutCell-,-cubicUpwind-1000,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-slantedCell-,-linearUpwind-1000,$1,$2))
+$(eval $(call Collate,build/mountainAdvection-slantedCell-,-cubicUpwind-1000,$1,$2))
 
 endef
 
@@ -64,65 +69,75 @@ $(eval $(call MountainAdvectionMeshes,333))
 $(eval $(call MountainAdvectionMeshes,250))
 $(eval $(call MountainAdvectionMeshes,125))
 
-$(eval $(call MountainAdvectionTests,btf,0km,1000,10))
-$(eval $(call MountainAdvectionTests,slantedCell,0km,1000,5))
-$(eval $(call MountainAdvectionTests,cutCell,0km,1000,1))
-$(eval $(call MountainAdvectionTests,btf,3km,1000,10))
-$(eval $(call MountainAdvectionTests,slantedCell,3km,1000,5))
-$(eval $(call MountainAdvectionTests,cutCell,3km,1000,1))
-$(eval $(call MountainAdvectionTests,btf,4km,1000,10))
-$(eval $(call MountainAdvectionTests,slantedCell,4km,1000,5))
-$(eval $(call MountainAdvectionTests,cutCell,4km,1000,1))
-$(eval $(call MountainAdvectionTests,btf,5km,1000,10))
-$(eval $(call MountainAdvectionTests,slantedCell,5km,1000,5))
-$(eval $(call MountainAdvectionTests,cutCell,5km,1000,1))
+$(eval $(call MountainAdvectionTests,btf,0,1000,10))
+$(eval $(call MountainAdvectionTests,slantedCell,0,1000,5))
+$(eval $(call MountainAdvectionTests,cutCell,0,1000,1))
+$(eval $(call MountainAdvectionTests,btf,3000,1000,10))
+$(eval $(call MountainAdvectionTests,slantedCell,3000,1000,5))
+$(eval $(call MountainAdvectionTests,cutCell,3000,1000,1))
+$(eval $(call MountainAdvectionTests,btf,4000,1000,10))
+$(eval $(call MountainAdvectionTests,slantedCell,4000,1000,5))
+$(eval $(call MountainAdvectionTests,cutCell,4000,1000,1))
+$(eval $(call MountainAdvectionTests,btf,5000,1000,10))
+$(eval $(call MountainAdvectionTests,slantedCell,5000,1000,5))
+$(eval $(call MountainAdvectionTests,cutCell,5000,1000,1))
 
-$(eval $(call MountainAdvectionTests,btf,6km,5000,200))
-$(eval $(call MountainAdvectionTests,btf,6km,2500,100))
-$(eval $(call MountainAdvectionTests,btf,6km,2000,100))
-$(eval $(call MountainAdvectionTests,btf,6km,1250,50))
-$(eval $(call MountainAdvectionTests,btf,6km,1000,10))
-$(eval $(call MountainAdvectionTests,btf,6km,667,25))
-$(eval $(call MountainAdvectionTests,btf,6km,500,20))
-$(eval $(call MountainAdvectionTests,btf,6km,333,10))
-$(eval $(call MountainAdvectionTests,btf,6km,250,10))
-$(eval $(call MountainAdvectionTests,btf,6km,125,5))
+$(eval $(call MountainAdvectionTests,btf,6000,5000,200))
+$(eval $(call MountainAdvectionTests,btf,6000,2500,100))
+$(eval $(call MountainAdvectionTests,btf,6000,2000,100))
+$(eval $(call MountainAdvectionTests,btf,6000,1250,50))
+$(eval $(call MountainAdvectionTests,btf,6000,1000,10))
+$(eval $(call MountainAdvectionTests,btf,6000,667,25))
+$(eval $(call MountainAdvectionTests,btf,6000,500,20))
+$(eval $(call MountainAdvectionTests,btf,6000,333,10))
+$(eval $(call MountainAdvectionTests,btf,6000,250,10))
+$(eval $(call MountainAdvectionTests,btf,6000,125,5))
 
-$(eval $(call MountainAdvectionTests,slantedCell,6km,5000,50))
-$(eval $(call MountainAdvectionTests,slantedCell,6km,2500,20))
-$(eval $(call MountainAdvectionTests,slantedCell,6km,2000,10))
-$(eval $(call MountainAdvectionTests,slantedCell,6km,1250,10))
-$(eval $(call MountainAdvectionTests,slantedCell,6km,1000,5))
-$(eval $(call MountainAdvectionTests,slantedCell,6km,667,5))
-$(eval $(call MountainAdvectionTests,slantedCell,6km,500,2.5))
-$(eval $(call MountainAdvectionTests,slantedCell,6km,333,2))
-$(eval $(call MountainAdvectionTests,slantedCell,6km,250,1))
-$(eval $(call MountainAdvectionTests,slantedCell,6km,125,0.5))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,5000,50))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,2500,20))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,2000,10))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,1250,10))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,1000,5))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,667,5))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,500,2.5))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,333,2))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,250,1))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,125,0.5))
 
-$(eval $(call MountainAdvectionTests,cutCell,6km,5000,3.2))
-$(eval $(call MountainAdvectionTests,cutCell,6km,2500,1.6))
-$(eval $(call MountainAdvectionTests,cutCell,6km,2000,1))
-$(eval $(call MountainAdvectionTests,cutCell,6km,1250,1))
-$(eval $(call MountainAdvectionTests,cutCell,6km,1000,1))
-$(eval $(call MountainAdvectionTests,cutCell,6km,667,0.4))
-$(eval $(call MountainAdvectionTests,cutCell,6km,500,0.4))
-$(eval $(call MountainAdvectionTests,cutCell,6km,333,0.2))
-$(eval $(call MountainAdvectionTests,cutCell,6km,250,0.2))
-$(eval $(call MountainAdvectionTests,cutCell,6km,125,0.1))
+$(eval $(call MountainAdvectionTests,cutCell,6000,5000,3.2))
+$(eval $(call MountainAdvectionTests,cutCell,6000,2500,1.6))
+$(eval $(call MountainAdvectionTests,cutCell,6000,2000,1))
+$(eval $(call MountainAdvectionTests,cutCell,6000,1250,1))
+$(eval $(call MountainAdvectionTests,cutCell,6000,1000,1))
+$(eval $(call MountainAdvectionTests,cutCell,6000,667,0.4))
+$(eval $(call MountainAdvectionTests,cutCell,6000,500,0.4))
+$(eval $(call MountainAdvectionTests,cutCell,6000,333,0.2))
+$(eval $(call MountainAdvectionTests,cutCell,6000,250,0.2))
+$(eval $(call MountainAdvectionTests,cutCell,6000,125,0.1))
 
-$(eval $(call MakeDir,build/mountainAdvection-btf-6km-linearUpwind-collated/0/))
-$(eval $(call MakeDir,build/mountainAdvection-btf-6km-cubicUpwind-collated/0/))
-$(eval $(call MakeDir,build/mountainAdvection-slantedCell-6km-linearUpwind-collated/0/))
-$(eval $(call MakeDir,build/mountainAdvection-slantedCell-6km-cubicUpwind-collated/0/))
-$(eval $(call MakeDir,build/mountainAdvection-cutCell-6km-linearUpwind-collated/0/))
-$(eval $(call MakeDir,build/mountainAdvection-cutCell-6km-cubicUpwind-collated/0/))
-$(eval $(call MakeDir,build/mountainAdvection-btf-6km-linearUpwind-collated/10000/))
-$(eval $(call MakeDir,build/mountainAdvection-btf-6km-cubicUpwind-collated/10000/))
-$(eval $(call MakeDir,build/mountainAdvection-slantedCell-6km-linearUpwind-collated/10000/))
-$(eval $(call MakeDir,build/mountainAdvection-slantedCell-6km-cubicUpwind-collated/10000/))
-$(eval $(call MakeDir,build/mountainAdvection-cutCell-6km-linearUpwind-collated/10000/))
-$(eval $(call MakeDir,build/mountainAdvection-cutCell-6km-cubicUpwind-collated/10000/))
+$(eval $(call MountainAdvectionCollateByResolution,10000/l2errorT.txt,5000 2500 1250 1000 500))
+$(eval $(call MountainAdvectionCollateByResolution,10000/linferrorT.txt,5000 2500 1250 1000 500))
+$(eval $(call MountainAdvectionCollateByResolution,0/maxdt.txt,5000 2500 2000 1250 1000 667 500 333 250 125))
 
-$(eval $(call MountainAdvectionCollation,10000/l2errorT.txt,5000 2500 1250 1000 500))
-$(eval $(call MountainAdvectionCollation,10000/linferrorT.txt,5000 2500 1250 1000 500))
-$(eval $(call MountainAdvectionCollation,0/maxdt.txt,5000 2500 2000 1250 1000 667 500 333 250 125))
+$(eval $(call MountainAdvectionCollateByMountainHeight,10000/l2errorT.txt,0 3000 4000 5000 6000))
+$(eval $(call MountainAdvectionCollateByMountainHeight,10000/linferrorT.txt,0 3000 4000 5000 6000))
+
+$(eval $(call MakeDir,build/mountainAdvection-btf-6000-linearUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-btf-6000-cubicUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-slantedCell-6000-linearUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-slantedCell-6000-cubicUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-cutCell-6000-linearUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-cutCell-6000-cubicUpwind-collated/0/))
+$(eval $(call MakeDir,build/mountainAdvection-btf-6000-linearUpwind-collated/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-btf-6000-cubicUpwind-collated/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-slantedCell-6000-linearUpwind-collated/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-slantedCell-6000-cubicUpwind-collated/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-cutCell-6000-linearUpwind-collated/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-cutCell-6000-cubicUpwind-collated/10000/))
+
+$(eval $(call MakeDir,build/mountainAdvection-btf-collated-linearUpwind-1000/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-btf-collated-cubicUpwind-1000/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-cutCell-collated-linearUpwind-1000/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-cutCell-collated-cubicUpwind-1000/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-slantedCell-collated-linearUpwind-1000/10000/))
+$(eval $(call MakeDir,build/mountainAdvection-slantedCell-collated-cubicUpwind-1000/10000/))

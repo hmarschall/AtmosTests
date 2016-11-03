@@ -3,15 +3,16 @@
 # outputs a file named $1collated/$2
 #
 # $1 -- case prefix
-# $2 -- filename (e.g. 18000/l2errorT.txt)
-# $3 -- resolutions
+# $2 -- case suffix
+# $3 -- filename (e.g. 18000/l2errorT.txt)
+# $4 -- resolutions
 define Collate
 
-$1collated/$2: \
-  $(foreach R,$3,$(addprefix $1,$R/$2)) \
+$1collated$2/$3: \
+  $(foreach R,$4,$1$R$2/$3) \
   $(collate) \
-| $(dir $1collated/$2)
-	$(collate) $1 $2 $3 > $$@
+| $(dir $1collated$2/$3)
+	$(collate) $1 $2 $3 $4 > $$@
 
 endef
 
