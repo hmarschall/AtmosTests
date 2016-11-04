@@ -12,7 +12,7 @@ $1collated$2/$3: \
   $(foreach R,$4,$1$R$2/$3) \
   $(collate) \
 | $(dir $1collated$2/$3)
-	$(collate) $1 $2 $3 $4 > $$@
+	$(collate) $1 '$2' $3 $4 > $$@
 
 endef
 
