@@ -4,7 +4,7 @@ advectionEndTime := 10000
 # $2 -- mesh case
 define LinearHorizontalAdvection
 
-$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/horizontalVelocityField,src/advection/system/linear,25))
+$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/horizontalVelocityField,src/advection/system/linear,25,src/advection/T_init))
 
 endef
 
@@ -12,7 +12,7 @@ endef
 # $2 -- mesh case
 define LinearUpwindHorizontalAdvection
 
-$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/horizontalVelocityField,src/advection/system/linearUpwind,25))
+$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/horizontalVelocityField,src/advection/system/linearUpwind,25,src/advection/T_init))
 
 endef
 
@@ -20,7 +20,7 @@ endef
 # $2 -- mesh case
 define CubicUpwindHorizontalAdvection
 
-$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/horizontalVelocityField,src/advection/system/cubicUpwindCPCFit,25))
+$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/horizontalVelocityField,src/advection/system/cubicUpwindCPCFit,25,src/advection/T_init))
 
 endef
 
@@ -28,7 +28,7 @@ endef
 # $2 -- mesh case
 define LinearTerrainFollowingAdvection
 
-$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/terrainFollowingVelocityField,src/advection/system/linear,20))
+$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/terrainFollowingVelocityField,src/advection/system/linear,20,src/advection/T_init))
 
 endef
 
@@ -36,7 +36,7 @@ endef
 # $2 -- mesh case
 define CubicUpwindTerrainFollowingAdvection
 
-$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/terrainFollowingVelocityField,src/advection/system/cubicUpwindCPCFit,20))
+$(eval $(call Advection,$1,$2,src/advection/radialTracer,src/advection/terrainFollowingVelocityField,src/advection/system/cubicUpwindCPCFit,20,src/advection/T_init))
 
 endef
 
