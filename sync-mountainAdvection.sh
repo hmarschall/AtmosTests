@@ -8,6 +8,14 @@ scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-cutCell-5000-linearU
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-cutCell-5000-cubicUpwind-1000 build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-slantedCell-5000-linearUpwind-1000 build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-slantedCell-5000-cubicUpwind-1000 build/
+
+scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-btf-5000-linearUpwind-1000-analyticTracer build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-btf-5000-cubicUpwind-1000-analyticTracer build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-cutCell-5000-linearUpwind-1000-analyticTracer build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-cutCell-5000-cubicUpwind-1000-analyticTracer build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-slantedCell-5000-linearUpwind-1000-analyticTracer build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-slantedCell-5000-cubicUpwind-1000-analyticTracer build/
+
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-btf-collated-linearUpwind-1000 build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-btf-collated-cubicUpwind-1000 build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-slantedCell-collated-linearUpwind-1000 build/
