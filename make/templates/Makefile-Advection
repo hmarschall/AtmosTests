@@ -146,7 +146,7 @@ $1.intermediate: \
   $(addprefix $1/,$(systemFiles)) \
   $1/0/T \
   $7
-	$7 -case $1 -rk2
+	$7 -case $1 -explicitTimestepping -rk2
 
 # primary fvSchemes file depends upon any auxiliary fvSchemes files
 $1/$(fvSchemes): $(addprefix $1/system/,$(notdir $(call rest,$6)))
