@@ -222,7 +222,8 @@ $1/0/phi: \
   $1/$(velocityFieldDict) \
   $(addprefix $1/,$(meshFiles)) \
   $(addprefix $1/,$(systemFiles)) \
-  $(setVelocityField)
+  $(setVelocityField) \
+| $1/0
 	$(setVelocityField) -case $1
 	touch $$@
 
@@ -230,6 +231,7 @@ $(eval $(call CopyFile,$3,$1/$(velocityFieldDict)))
 $(eval $(call CopyNamedFiles,$2,$(meshFiles),$1))
 $(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
 
+$(eval $(call MakeDir,$1/0))
 $(eval $(call MakeDir,$1/constant))
 $(eval $(call MakeDir,$1/system))
 $(eval $(call MakeDir,$1/$(polyMesh)))
