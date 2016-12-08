@@ -12,6 +12,7 @@ $1.intermediate: \
   $(addprefix $1/,$(systemFiles)) \
   $1/$(collapseDict) \
   $1/$(meshQualityDict) \
+  $1/$(topoSetDict) \
   $(addprefix $2/,$(meshFiles)) \
   $(slantMesh) \
   $(checkCellVolumes) \
@@ -32,10 +33,13 @@ $1.intermediate: \
 	then \
 	  $(collapseEdges) -case $1 -constant -overwrite -collapseFaceSet zeroAreaFaces ; \
 	fi;
+	$(topoSet) -case $1 -constant
+	#$(removeFaces) -case $1 -overwrite prismFaces
 
 $(eval $(call CopyFile,$3,$1/$(mountainDict)))
 $(eval $(call CopyFile,src/mesh/collapseDict,$1/$(collapseDict)))
 $(eval $(call CopyFile,src/mesh/meshQualityDict,$1/$(meshQualityDict)))
+$(eval $(call CopyFile,src/mesh/topoSetDict,$1/$(topoSetDict)))
 $(eval $(call CopyNamedFiles,$(dummy),$(systemFiles),$1))
 $(eval $(call MakeDir,$1/constant))
 $(eval $(call MakeDir,$1/system))

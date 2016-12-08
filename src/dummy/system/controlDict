@@ -21,3 +21,5 @@ writePrecision  12;
 writeCompression uncompressed;
 timeFormat      general;
 timePrecision   6;
+
+libs ("libmeshToolsAtmos.so");
