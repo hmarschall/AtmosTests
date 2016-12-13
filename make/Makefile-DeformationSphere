@@ -25,9 +25,9 @@ $(eval $(call DeformationalAdvection,$1,$2,src/deformationSphere/divergent,src/d
 endef
 
 $(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-linearUpwind-hex-5,build/deformationSphere-mesh-hex-5,3200,src/advection/system/linearUpwind))
-$(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-cubicUpwind-hex-5,build/deformationSphere-mesh-hex-5,3200,src/advection/system/cubicUpwindCPCFit))
+$(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-cubicUpwind-hex-5,build/deformationSphere-mesh-hex-5,3200,src/deformationSphere/system/cubicFit))
 $(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-linearUpwind-quad-15,build/deformationSphere-mesh-quad-15,1600,src/advection/system/linearUpwind))
-$(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-cubicUpwind-quad-15,build/deformationSphere-mesh-quad-15,1600,src/advection/system/cubicUpwindCPCFit))
+$(eval $(call DeformationalAdvectionDivergenceTest,build/deformationSphere-cosBells-div-cubicUpwind-quad-15,build/deformationSphere-mesh-quad-15,1600,src/deformationSphere/system/cubicFit))
 
 
 # $1 -- case
@@ -46,10 +46,10 @@ endef
 define DeformationalAdvectionConvergenceTestSuite
 
 $(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-linearUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/linearUpwind,src/deformationSphere/geodesicGaussians))
-$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-cubicUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/cubicUpwindCPCFit,src/deformationSphere/geodesicGaussians))
+$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-gaussians-nondiv-cubicUpwind-$1,build/deformationSphere-mesh-$1,$2,src/deformationSphere/system/cubicFit,src/deformationSphere/geodesicGaussians))
 
 $(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-cosBells-nondiv-linearUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/linearUpwind,src/deformationSphere/cosBells))
-$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-cosBells-nondiv-cubicUpwind-$1,build/deformationSphere-mesh-$1,$2,src/advection/system/cubicUpwindCPCFit,src/deformationSphere/cosBells))
+$(eval $(call DeformationalAdvectionConvergenceTest,build/deformationSphere-cosBells-nondiv-cubicUpwind-$1,build/deformationSphere-mesh-$1,$2,src/deformationSphere/system/cubicFit,src/deformationSphere/cosBells))
 
 endef
 

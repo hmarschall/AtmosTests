@@ -40,8 +40,8 @@ gradSchemes
 divSchemes
 {
     default         none;
-    div(U,theta)    Gauss cubicUpwindCPCFit 3;
-    div(U,u)        Gauss cubicUpwindCPCFit 3;
+    div(U,theta)    Gauss cubicUpwindCPCFit false;
+    div(U,u)        Gauss cubicUpwindCPCFit false;
 }
 
 laplacianSchemes
