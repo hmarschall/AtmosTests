@@ -145,8 +145,11 @@ $1.intermediate: \
   $(addprefix $1/,$(meshFiles)) \
   $(addprefix $1/,$(systemFiles)) \
   $1/0/T \
-  $7
-	$7 -case $1 -explicitTimestepping -rk2
+  $7 \
+  $1/$(decomposeParDict)
+	$(decomposePar) -case $1 -force -constant
+	$(mpirun) --hostfile machines -np 4 $7 -case $1 -parallel -explicitTimestepping -rk2
+	$(reconstructPar) -case $1 -constant		
 
 # primary fvSchemes file depends upon any auxiliary fvSchemes files
 $1/$(fvSchemes): $(addprefix $1/system/,$(notdir $(call rest,$6)))
@@ -156,6 +159,7 @@ $(eval $(call ControlDict,$1,$(lastword $3),$4,$5))
 $(eval $(call CopyNamedFile,src/advection,$(fvSolution),$1))
 $(eval $(call CopyFile,$(firstword $6),$1/$(fvSchemes)))
 $(foreach F,$(call rest,$6),$(eval $(call CopyNamedFile,$(dir $F),$(notdir $F),$1/system)))
+$(eval $(call CopyNamedFile,src/physical,$(decomposeParDict),$1))
 
 $(eval $(call MakeDir,$1/$(polyMesh)))
 $(eval $(call MakeDir,$1/system))
