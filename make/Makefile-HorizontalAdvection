@@ -1,0 +1,33 @@
+# $1 -- resolution
+# $2 -- timestep
+define HorizontalAdvectionTests
+
+$(eval $(call Advection,build/horizontalAdvection-btf-cubicUpwind-$1,build/mountainAdvection-mesh-btf-6000-$1,src/horizontalAdvection/radialTracer,src/horizontalAdvection/velocityField,src/advection/system/cubicUpwindCPCFit,$2,src/mountainAdvection/T_init))
+$(eval $(call Advection,build/horizontalAdvection-btf-linearUpwind-$1,build/mountainAdvection-mesh-btf-6000-$1,src/horizontalAdvection/schaerRadial,src/horizontalAdvection/velocityField,src/advection/system/linearUpwind,$2,src/mountainAdvection/T_init))
+
+endef
+
+# $1 -- error filename (e.g. 10000/l2errorT.txt)
+# $2 -- resolutions
+define HorizontalAdvectionCollateByResolution
+
+$(eval $(call Collate,build/horizontalAdvection-btf-linearUpwind-,,$1,$2))
+$(eval $(call Collate,build/horizontalAdvection-btf-cubicUpwind-,,$1,$2))
+
+endef
+
+$(eval $(call HorizontalAdvectionTests,5000,40))
+$(eval $(call HorizontalAdvectionTests,2500,20))
+$(eval $(call HorizontalAdvectionTests,2000,16))
+$(eval $(call HorizontalAdvectionTests,1250,10))
+$(eval $(call HorizontalAdvectionTests,1000,8))
+$(eval $(call HorizontalAdvectionTests,667,5))
+$(eval $(call HorizontalAdvectionTests,500,4))
+$(eval $(call HorizontalAdvectionTests,333,2.5))
+$(eval $(call HorizontalAdvectionTests,250,2))
+
+$(eval $(call HorizontalAdvectionCollateByResolution,10000/l2errorT.txt,5000 2500 2000 1250 1000))
+$(eval $(call HorizontalAdvectionCollateByResolution,10000/linferrorT.txt,5000 2500 2000 1250 1000 667 500 333 250))
+
+$(eval $(call MakeDir,build/horizontalAdvection-btf-linearUpwind-collated/10000/))
+$(eval $(call MakeDir,build/horizontalAdvection-btf-cubicUpwind-collated/10000/))
