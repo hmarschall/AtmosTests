@@ -3,7 +3,7 @@
 define HorizontalAdvectionTests
 
 $(eval $(call Advection,build/horizontalAdvection-btf-cubicUpwind-$1,build/mountainAdvection-mesh-btf-6000-$1,src/horizontalAdvection/radialTracer,src/horizontalAdvection/velocityField,src/advection/system/cubicUpwindCPCFit,$2,src/mountainAdvection/T_init))
-$(eval $(call Advection,build/horizontalAdvection-btf-linearUpwind-$1,build/mountainAdvection-mesh-btf-6000-$1,src/horizontalAdvection/schaerRadial,src/horizontalAdvection/velocityField,src/advection/system/linearUpwind,$2,src/mountainAdvection/T_init))
+$(eval $(call Advection,build/horizontalAdvection-btf-linearUpwind-$1,build/mountainAdvection-mesh-btf-6000-$1,src/horizontalAdvection/radialTracer,src/horizontalAdvection/velocityField,src/advection/system/linearUpwind,$2,src/mountainAdvection/T_init))
 
 endef
 
