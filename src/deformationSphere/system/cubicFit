@@ -10,6 +10,6 @@ FoamFile {
 
 divSchemes {
     default         none;
-    div(phi,T)      Gauss cubicUpwindCPCFit false;
-    div(phi,T_0)    Gauss cubicUpwindCPCFit false;
+    div(phi,T)      Gauss cubicUpwindCPCFit true;
+    div(phi,T_0)    Gauss cubicUpwindCPCFit true;
 }

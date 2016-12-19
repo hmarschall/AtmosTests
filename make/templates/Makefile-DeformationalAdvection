@@ -8,7 +8,7 @@ deformationalAdvectionEndTime := 1.0368e+06
 # $6 -- timestep
 define DeformationalAdvection
 
-$(eval $(call InitialTracer,$1,$4))
+$(eval $(call InitialTracer,$1,$4,src/deformationSphere/T_init))
 $(eval $(call AdvectTracerInVaryingSphericalWind,$1,$2,$3,$(deformationalAdvectionEndTime),$6,6400,$5))
 
 $(eval $(call FieldDiff,$1,$(deformationalAdvectionEndTime),T,$1/0/T))
