@@ -25,6 +25,9 @@ scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-cutCell-collated-cub
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-btf-6000-linearUpwind-collated build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-slantedCell-6000-linearUpwind-collated build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-cutCell-6000-linearUpwind-collated build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-btf-6000-cubicUpwind-collated build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-slantedCell-6000-cubicUpwind-collated build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-cutCell-6000-cubicUpwind-collated build/
 
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-mesh-btf-5000-1000 build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/mountainAdvection-mesh-cutCell-5000-1000 build/
