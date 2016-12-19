@@ -26,7 +26,7 @@ $(eval $(call HorizontalAdvectionTests,500,4))
 $(eval $(call HorizontalAdvectionTests,333,2.5))
 $(eval $(call HorizontalAdvectionTests,250,2))
 
-$(eval $(call HorizontalAdvectionCollateByResolution,10000/l2errorT.txt,5000 2500 2000 1250 1000))
+$(eval $(call HorizontalAdvectionCollateByResolution,10000/l2errorT.txt,5000 2500 2000 1250 1000 667 500 333 250))
 $(eval $(call HorizontalAdvectionCollateByResolution,10000/linferrorT.txt,5000 2500 2000 1250 1000 667 500 333 250))
 
 $(eval $(call MakeDir,build/horizontalAdvection-btf-linearUpwind-collated/10000/))
