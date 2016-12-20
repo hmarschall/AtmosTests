@@ -10,7 +10,7 @@ scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-cosBells-nondiv-line
 scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-cosBells-nondiv-cubicUpwind-hex-collated build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-cosBells-nondiv-linearUpwind-quad-collated build/
 scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-cosBells-nondiv-cubicUpwind-quad-collated build/
-scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-gaussians-nondiv-linearUpwind-hex-5 build/
-scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-cosBells-nondiv-linearUpwind-hex-5 build/
-scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-cosBells-div-linearUpwind-hex-5 build/
-scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-cosBells-div-cubicUpwind-hex-5 build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-gaussians-nondiv-cubicUpwind-hex-8 build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-cosBells-nondiv-cubicUpwind-hex-8 build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-mesh-hex-3 build/
+scp -rCp $MACHINE:~/data/AtmosTests/build/deformationSphere-mesh-quad-8 build/
