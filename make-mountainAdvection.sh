@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 make build/mountainAdvection-btf-collated-{linear,cubic}Upwind-1000/10000/l{inf,2}errorT.txt
 make build/mountainAdvection-cutCell-collated-{linear,cubic}Upwind-1000/10000/l{inf,2}errorT.txt
 make build/mountainAdvection-slantedCell-collated-{linear,cubic}Upwind-1000/10000/l{inf,2}errorT.txt
