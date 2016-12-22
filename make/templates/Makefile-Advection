@@ -148,7 +148,7 @@ $1.intermediate: \
   $7 \
   $1/$(decomposeParDict)
 	$(decomposePar) -case $1 -force -constant
-	$(mpirun) --hostfile machines -np 4 $7 -case $1 -parallel -explicitTimestepping -rk2
+	$(mpirun) --hostfile machines -np 4 $7 -case $1 -parallel -explicitTimestepping -heun2
 	$(reconstructPar) -case $1 -constant		
 
 # primary fvSchemes file depends upon any auxiliary fvSchemes files
