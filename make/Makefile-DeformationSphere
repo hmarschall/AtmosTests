@@ -66,17 +66,17 @@ $(eval $(call CollateErrorsOnSphere,build/deformationSphere-cosBells-nondiv-cubi
 
 endef
 
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-4,6400))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-5,3200))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-6,1600))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-7,800))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-8,400))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-9,200))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-15,1600))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-30,800))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-60,400))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-120,200))
-$(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-240,100))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-4,3200))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-5,1600))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-6,800))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-7,400))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-8,200))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,hex-9,100))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-15,1000))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-30,500))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-60,250))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-120,125))
+$(eval $(call DeformationalAdvectionConvergenceTestSuite,quad-240,62.5))
 
 $(eval $(call DeformationalAdvectionCollation,hex,$(deformationalAdvectionEndTime)/l2errorT.txt,4 5 6 7 8 9))
 $(eval $(call DeformationalAdvectionCollation,hex,$(deformationalAdvectionEndTime)/linferrorT.txt,4 5 6 7 8 9))

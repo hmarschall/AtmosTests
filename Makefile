@@ -47,4 +47,5 @@ include make/Makefile-ThermalAdvection
 include make/Makefile-DeformationSphere
 include make/Makefile-RampAdvection
 include make/Makefile-MountainAdvection
+include make/Makefile-HorizontalAdvection
 include make/Makefile-SolidBodySphere
