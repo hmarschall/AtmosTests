@@ -107,8 +107,8 @@ $(eval $(call MountainAdvectionTests,slantedCell,6000,125,0.5))
 $(eval $(call MountainAdvectionTests,cutCell,6000,5000,135))
 $(eval $(call MountainAdvectionTests,cutCell,6000,2500,13))
 $(eval $(call MountainAdvectionTests,cutCell,6000,2000,4))
-$(eval $(call MountainAdvectionTests,cutCell,6000,1250,1.5))
-$(eval $(call MountainAdvectionTests,cutCell,6000,1000,1.5)) # 3.333 for Co~1
+$(eval $(call MountainAdvectionTests,cutCell,6000,1250,1.6))
+$(eval $(call MountainAdvectionTests,cutCell,6000,1000,1.6)) # 3.333 for Co~1
 $(eval $(call MountainAdvectionTests,cutCell,6000,667,0.333))
 $(eval $(call MountainAdvectionTests,cutCell,6000,500,0.3))
 $(eval $(call MountainAdvectionTests,cutCell,6000,333,0.12))
