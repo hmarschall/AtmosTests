@@ -4,6 +4,8 @@ MAKEFLAGS += --no-builtin-rules
 .SUFFIXES:
 .PHONY: all clean
 
+comma := ,
+
 all::
 
 clean:

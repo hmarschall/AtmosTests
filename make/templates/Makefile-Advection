@@ -202,8 +202,9 @@ $1.analytic.intermediate: \
   $(addprefix $1/,$(systemFiles)) \
   $1/$(tracerFieldDict) \
   $1/$(velocityFieldDict) \
-  $(setAnalyticTracerField)
-	$(setAnalyticTracerField) -case $1
+  $(setAnalyticTracerField) \
+| $(addprefix $1/,$3)
+	$(setAnalyticTracerField) -case $1 -time $(call merge,$(comma),$3)
 
 $(eval $(call CopyFile,$4,$1/$(tracerFieldDict)))
 $(eval $(call CopyFile,$5,$1/$(velocityFieldDict)))
@@ -214,6 +215,7 @@ $(eval $(call CopyNamedFiles,$(dummy),$(fvSchemes) $(fvSolution),$1))
 $(eval $(call MakeDir,$1/constant))
 $(eval $(call MakeDir,$1/system))
 $(eval $(call MakeDir,$1/$(polyMesh)))
+$(eval $(call MakeDirs,$(addprefix $1/,$3)))
 
 endef
 
