@@ -25,10 +25,11 @@ endef
 # $2 -- mountain height (e.g. 6000)
 # $3 -- resolution
 # $4 -- timestep
+# $5 -- timestep suffix (optional)
 define MountainAdvectionTests
 
-$(eval $(call Advection,build/mountainAdvection-$1-$2-cubicUpwind-$3,build/mountainAdvection-mesh-$1-$2-$3,src/mountainAdvection/schaerRadial,src/mountainAdvection/velocityField-$2,src/advection/system/cubicUpwindCPCFit,$4,src/mountainAdvection/T_init))
-$(eval $(call Advection,build/mountainAdvection-$1-$2-linearUpwind-$3,build/mountainAdvection-mesh-$1-$2-$3,src/mountainAdvection/schaerRadial,src/mountainAdvection/velocityField-$2,src/advection/system/linearUpwind,$4,src/mountainAdvection/T_init))
+$(eval $(call Advection,build/mountainAdvection-$1-$2-cubicUpwind-$3$5,build/mountainAdvection-mesh-$1-$2-$3,src/mountainAdvection/schaerRadial,src/mountainAdvection/velocityField-$2,src/advection/system/cubicUpwindCPCFit,$4,src/mountainAdvection/T_init))
+$(eval $(call Advection,build/mountainAdvection-$1-$2-linearUpwind-$3$5,build/mountainAdvection-mesh-$1-$2-$3,src/mountainAdvection/schaerRadial,src/mountainAdvection/velocityField-$2,src/advection/system/linearUpwind,$4,src/mountainAdvection/T_init))
 
 endef
 
@@ -86,7 +87,7 @@ $(eval $(call MountainAdvectionTests,btf,6000,5000,198))
 $(eval $(call MountainAdvectionTests,btf,6000,2500,60))
 $(eval $(call MountainAdvectionTests,btf,6000,2000,38))
 $(eval $(call MountainAdvectionTests,btf,6000,1250,18))
-$(eval $(call MountainAdvectionTests,btf,6000,1000,5)) # 13 for Co~1
+$(eval $(call MountainAdvectionTests,btf,6000,1000,5))
 $(eval $(call MountainAdvectionTests,btf,6000,667,8))
 $(eval $(call MountainAdvectionTests,btf,6000,500,6.25))
 $(eval $(call MountainAdvectionTests,btf,6000,333,4))
@@ -97,7 +98,7 @@ $(eval $(call MountainAdvectionTests,slantedCell,6000,5000,145))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,2500,40))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,2000,22))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,1250,11))
-$(eval $(call MountainAdvectionTests,slantedCell,6000,1000,4)) # 9 for Co~1
+$(eval $(call MountainAdvectionTests,slantedCell,6000,1000,4))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,667,5.5))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,500,4))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,333,2.5))
@@ -108,12 +109,17 @@ $(eval $(call MountainAdvectionTests,cutCell,6000,5000,135))
 $(eval $(call MountainAdvectionTests,cutCell,6000,2500,13))
 $(eval $(call MountainAdvectionTests,cutCell,6000,2000,4))
 $(eval $(call MountainAdvectionTests,cutCell,6000,1250,1.6))
-$(eval $(call MountainAdvectionTests,cutCell,6000,1000,1.6)) # 3.333 for Co~1
+$(eval $(call MountainAdvectionTests,cutCell,6000,1000,1.6))
 $(eval $(call MountainAdvectionTests,cutCell,6000,667,0.333))
 $(eval $(call MountainAdvectionTests,cutCell,6000,500,0.3))
 $(eval $(call MountainAdvectionTests,cutCell,6000,333,0.12))
 $(eval $(call MountainAdvectionTests,cutCell,6000,250,0.11))
 $(eval $(call MountainAdvectionTests,cutCell,6000,125,0.1))
+
+# time-stepping tests
+$(eval $(call MountainAdvectionTests,btf,6000,1000,30.3951367781155,-dt30))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,1000,20,-dt20))
+$(eval $(call MountainAdvectionTests,cutCell,6000,1000,7,-dt7))
 
 $(eval $(call MountainAdvectionCollateByResolution,10000/l2errorT.txt,5000 2500 2000 1250 1000 667 500 333 250))
 $(eval $(call MountainAdvectionCollateByResolution,10000/linferrorT.txt,5000 2500 2000 1250 1000 667 500 333 250))
