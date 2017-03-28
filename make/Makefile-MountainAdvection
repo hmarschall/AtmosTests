@@ -119,7 +119,7 @@ $(eval $(call MountainAdvectionTests,cutCell,6000,125,0.1))
 # time-stepping tests
 $(eval $(call MountainAdvectionTests,btf,6000,1000,30.3951367781155,-dt30))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,1000,20,-dt20))
-$(eval $(call MountainAdvectionTests,cutCell,6000,1000,7,-dt7))
+$(eval $(call MountainAdvectionTests,cutCell,6000,1000,10,-dt10))
 
 $(eval $(call MountainAdvectionCollateByResolution,10000/l2errorT.txt,5000 2500 2000 1250 1000 667 500 333 250))
 $(eval $(call MountainAdvectionCollateByResolution,10000/linferrorT.txt,5000 2500 2000 1250 1000 667 500 333 250))
