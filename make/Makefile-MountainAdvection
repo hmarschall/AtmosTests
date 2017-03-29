@@ -82,47 +82,44 @@ $(eval $(call MountainAdvectionTests,cutCell,4000,1000,1.6))
 $(eval $(call MountainAdvectionTests,btf,5000,1000,8))
 $(eval $(call MountainAdvectionTests,slantedCell,5000,1000,5))
 $(eval $(call MountainAdvectionTests,cutCell,5000,1000,0.5))
-
-$(eval $(call MountainAdvectionTests,btf,6000,5000,198))
-$(eval $(call MountainAdvectionTests,btf,6000,2500,60))
-$(eval $(call MountainAdvectionTests,btf,6000,2000,38))
-$(eval $(call MountainAdvectionTests,btf,6000,1250,18))
 $(eval $(call MountainAdvectionTests,btf,6000,1000,5))
-$(eval $(call MountainAdvectionTests,btf,6000,667,8))
-$(eval $(call MountainAdvectionTests,btf,6000,500,6.25))
-$(eval $(call MountainAdvectionTests,btf,6000,333,4))
-$(eval $(call MountainAdvectionTests,btf,6000,250,3))
-$(eval $(call MountainAdvectionTests,btf,6000,125,0.5))
-
-$(eval $(call MountainAdvectionTests,slantedCell,6000,5000,145))
-$(eval $(call MountainAdvectionTests,slantedCell,6000,2500,40))
-$(eval $(call MountainAdvectionTests,slantedCell,6000,2000,22))
-$(eval $(call MountainAdvectionTests,slantedCell,6000,1250,11))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,1000,4))
-$(eval $(call MountainAdvectionTests,slantedCell,6000,667,5.5))
-$(eval $(call MountainAdvectionTests,slantedCell,6000,500,4))
-$(eval $(call MountainAdvectionTests,slantedCell,6000,333,2.5))
-$(eval $(call MountainAdvectionTests,slantedCell,6000,250,1.75))
-$(eval $(call MountainAdvectionTests,slantedCell,6000,125,0.5))
-
-$(eval $(call MountainAdvectionTests,cutCell,6000,5000,135))
-$(eval $(call MountainAdvectionTests,cutCell,6000,2500,13))
-$(eval $(call MountainAdvectionTests,cutCell,6000,2000,4))
-$(eval $(call MountainAdvectionTests,cutCell,6000,1250,1.6))
 $(eval $(call MountainAdvectionTests,cutCell,6000,1000,1.6))
-$(eval $(call MountainAdvectionTests,cutCell,6000,667,0.333))
-$(eval $(call MountainAdvectionTests,cutCell,6000,500,0.3))
-$(eval $(call MountainAdvectionTests,cutCell,6000,333,0.12))
-$(eval $(call MountainAdvectionTests,cutCell,6000,250,0.11))
-$(eval $(call MountainAdvectionTests,cutCell,6000,125,0.1))
 
 # time-stepping tests
+$(eval $(call MountainAdvectionTests,btf,6000,5000,500))
+$(eval $(call MountainAdvectionTests,btf,6000,2500,170))
+$(eval $(call MountainAdvectionTests,btf,6000,2000,90))
+$(eval $(call MountainAdvectionTests,btf,6000,1250,40))
+$(eval $(call MountainAdvectionTests,btf,6000,667,14))
+$(eval $(call MountainAdvectionTests,btf,6000,500,9))
+$(eval $(call MountainAdvectionTests,btf,6000,333,4)) # TODO
+$(eval $(call MountainAdvectionTests,btf,6000,250,3)) # TODO 
+$(eval $(call MountainAdvectionTests,btf,6000,125,0.5)) # TODO
+
+$(eval $(call MountainAdvectionTests,slantedCell,6000,5000,400))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,2500,90))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,2000,55))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,1250,30))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,667,12))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,500,8))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,333,2.5)) # TODO
+$(eval $(call MountainAdvectionTests,slantedCell,6000,250,1.75)) # TODO
+$(eval $(call MountainAdvectionTests,slantedCell,6000,125,0.5)) # TODO
+
+$(eval $(call MountainAdvectionTests,cutCell,6000,5000,400))
+$(eval $(call MountainAdvectionTests,cutCell,6000,2500,36))
+$(eval $(call MountainAdvectionTests,cutCell,6000,2000,12))
+$(eval $(call MountainAdvectionTests,cutCell,6000,1250,4.5))
+$(eval $(call MountainAdvectionTests,cutCell,6000,667,0.85))
+$(eval $(call MountainAdvectionTests,cutCell,6000,500,0.3)) # TODO
+$(eval $(call MountainAdvectionTests,cutCell,6000,333,0.12)) # TODO
+$(eval $(call MountainAdvectionTests,cutCell,6000,250,0.11)) # TODO
+$(eval $(call MountainAdvectionTests,cutCell,6000,125,0.1)) # TODO
+
 $(eval $(call MountainAdvectionTests,btf,6000,1000,30.3951367781155,-dt30))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,1000,20,-dt20))
 $(eval $(call MountainAdvectionTests,cutCell,6000,1000,10,-dt10))
-$(eval $(call MountainAdvectionTests,btf,5000,1000,40,-dt40))
-$(eval $(call MountainAdvectionTests,slantedCell,5000,1000,25,-dt25))
-$(eval $(call MountainAdvectionTests,cutCell,5000,1000,4,-dt4))
 
 $(eval $(call MountainAdvectionCollateByResolution,10000/l2errorT.txt,5000 2500 2000 1250 1000 667 500 333 250))
 $(eval $(call MountainAdvectionCollateByResolution,10000/linferrorT.txt,5000 2500 2000 1250 1000 667 500 333 250))
