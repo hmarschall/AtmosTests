@@ -103,8 +103,8 @@ $(eval $(call MountainAdvectionTests,slantedCell,6000,2000,55))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,1250,30))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,667,12))
 $(eval $(call MountainAdvectionTests,slantedCell,6000,500,8))
-$(eval $(call MountainAdvectionTests,slantedCell,6000,333,2.5)) # TODO
-$(eval $(call MountainAdvectionTests,slantedCell,6000,250,1.75)) # TODO
+$(eval $(call MountainAdvectionTests,slantedCell,6000,333,5))
+$(eval $(call MountainAdvectionTests,slantedCell,6000,250,3.5)) # TODO
 $(eval $(call MountainAdvectionTests,slantedCell,6000,125,0.5)) # TODO
 
 $(eval $(call MountainAdvectionTests,cutCell,6000,5000,400))
