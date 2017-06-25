@@ -1,0 +1,19 @@
+builddir = build
+
+rule cp
+    command = cp $in $out                                                                                                 
+rule blockMesh
+    command = blockMesh -case $case
+
+build $
+$builddir/mesh-blockMesh/constant/polyMesh/points $
+$builddir/mesh-blockMesh/constant/polyMesh/faces $
+$builddir/mesh-blockMesh/constant/polyMesh/owner $
+$builddir/mesh-blockMesh/constant/polyMesh/neighbour $
+$builddir/mesh-blockMesh/constant/polyMesh/boundary: $
+  blockMesh $builddir/mesh-blockMesh/system/blockMeshDict | $
+  $builddir/mesh-blockMesh/system/controlDict
+    case = $builddir/mesh-blockMesh
+
+build $builddir/mesh-blockMesh/system/blockMeshDict: cp src/blockMeshDict
+build $builddir/mesh-blockMesh/system/controlDict: cp src/controlDict

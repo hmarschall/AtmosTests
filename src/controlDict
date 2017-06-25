@@ -1,0 +1,14 @@
+FoamFile {
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+
+deltaT              0;
+writeFrequency      0;
+writeFormat         binary;
+writePrecision      12;
+writeCompression    uncompressed;
+
