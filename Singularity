@@ -53,8 +53,12 @@ From:ubuntu:17.04
 
 	DEBIAN_FRONTEND=noninteractive \
         apt-get install -y --no-install-recommends \
-               ninja-build
+               ninja-build \
+	       openfoam-dev
 
 	DEBIAN_FRONTEND=noninteractive \
-	apt-get install openfoam-dev -y --no-install-recommends
+        apt-get install -y --no-install-recommends --allow-unauthenticated \
+	       atmosfoam-tools \
+	       atmosfoam
+
 	rm -rf /var/lib/apt/lists/*
