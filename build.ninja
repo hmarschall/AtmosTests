@@ -5,4 +5,8 @@ rule cp
 rule blockMesh
     command = blockMesh -case $case
 
-include $builddir/mesh-blockMesh/build.ninja
+rule terrainFollowingMesh
+    command = ninja/terrainFollowingMesh.ninja.sh $blockMeshCase $terrainFollowingMeshCase
+
+include $builddir/schaerAdvect-mesh-noOrography/build.ninja
+include $builddir/schaerAdvect-mesh-btf/build.ninja
