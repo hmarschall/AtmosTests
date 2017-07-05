@@ -1,0 +1,9 @@
+builddir = build
+
+rule blockMesh.ninja
+    command = ninja/blockMesh.ninja.py '$case' $blockMeshDict > $out
+
+build $builddir/mesh-blockMesh/build.ninja: blockMesh.ninja
+    case = $builddir/mesh-blockMesh
+    blockMeshDict = src/blockMeshDict
+
