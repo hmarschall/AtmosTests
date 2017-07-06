@@ -13,7 +13,7 @@ def write(case, sourceBlockMeshDict, sourceControlDict=os.path.join("src", "cont
 
     g.n.build \
     ( \
-            outputs=g.polyMesh(), \
+            outputs=g.polyMeshForCase(), \
             rule="blockMesh", \
             inputs=targetBlockMeshDict, \
             implicit=targetControlDict, \

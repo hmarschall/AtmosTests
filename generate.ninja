@@ -8,6 +8,10 @@ rule terrainFollowingMesh.ninja
     description = terrainFollowingMesh.ninja
     command = ninja/terrainFollowingMesh.ninja.py $case $blockMeshCase $mountainDict > $out
 
+rule schaerAdvect.ninja
+    description = schaerAdvect.ninja
+    command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $interpolationScheme > $out
+
 build $builddir/schaerAdvect-mesh-noOrography/build.ninja: blockMesh.ninja
     case = $builddir/schaerAdvect-mesh-noOrography
     blockMeshDict = src/schaerAdvect/mesh-noOrography
@@ -16,3 +20,9 @@ build $builddir/schaerAdvect-mesh-btf/build.ninja: terrainFollowingMesh.ninja
     case = $builddir/schaerAdvect-mesh-btf
     blockMeshCase = $builddir/schaerAdvect-mesh-noOrography
     mountainDict = src/schaerAdvect/mesh-btf
+
+build $builddir/schaerAdvect-noOrography-linearUpwind/build.ninja: schaerAdvect.ninja
+    case = $builddir/schaerAdvect-noOrography-linearUpwind
+    meshCase = $builddir/schaerAdvect-mesh-noOrography
+    timestep = 8
+    interpolationScheme = linearUpwind

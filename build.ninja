@@ -10,5 +10,9 @@ rule terrainFollowingMesh
     description = terrainFollowingMesh
     command = ninja/terrainFollowingMesh.ninja.sh $blockMeshCase $terrainFollowingMeshCase
 
+rule advectionFoam
+    command = advectionFoam -case $case
+
 include $builddir/schaerAdvect-mesh-noOrography/build.ninja
 include $builddir/schaerAdvect-mesh-btf/build.ninja
+include $builddir/schaerAdvect-noOrography-linearUpwind/build.ninja

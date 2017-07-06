@@ -13,10 +13,10 @@ def write(blockMeshCase, sourceMountainDict, case, sourceControlDict=os.path.joi
 
     g.n.build \
     ( \
-            outputs=g.polyMesh(), \
+            outputs=g.polyMeshForCase(), \
             rule="terrainFollowingMesh", \
             inputs=targetMountainDict, \
-            implicit=g.polyMesh(blockMeshCase) + [targetControlDict], \
+            implicit=g.polyMeshForCase(blockMeshCase) + [targetControlDict], \
             variables={"blockMeshCase": blockMeshCase, "terrainFollowingMeshCase": case} \
     )
     g.n.newline()
