@@ -3,9 +3,11 @@ builddir = build
 rule cp
     command = cp $in $out                                                                                                 
 rule blockMesh
+    description = blockMesh
     command = blockMesh -case $case
 
 rule terrainFollowingMesh
+    description = terrainFollowingMesh
     command = ninja/terrainFollowingMesh.ninja.sh $blockMeshCase $terrainFollowingMeshCase
 
 include $builddir/schaerAdvect-mesh-noOrography/build.ninja
