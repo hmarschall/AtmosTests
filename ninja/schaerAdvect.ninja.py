@@ -15,22 +15,23 @@ class SchaerAdvect:
         self.s3uri = s3uri
 
     def write(self):
-        g = ninja_gen.Generator(self.case)
+        case = self.case
+        g = ninja_gen.Generator()
         g.header()
 
         g.n.build \
         ( \
-                outputs=[g.forCase(str(self.endTime), "T"), \
-                         g.forCase(str(self.writeInterval), "T")], \
+                outputs=[case.path(str(self.endTime), "T"), \
+                         case.path(str(self.writeInterval), "T")], \
                 rule="advectionFoam", \
-                implicit=g.polyMeshForCase() + g.systemFilesForCase() + \
-                        [g.forCase("0", "T"), g.forCase("0", "phi")], \
+                implicit=case.polyMesh + case.systemFiles + \
+                        [case.path("0", "T"), case.path("0", "phi")], \
                 variables={"case": self.case} \
         )
         g.n.newline()
         g.n.build \
         ( \
-                outputs=g.forCase("system", "controlDict"), \
+                outputs=case.controlDict, \
                 rule="gen-controlDict", \
                 inputs=os.path.join("src", "controlDict.template"), \
                 variables= \
@@ -43,42 +44,42 @@ class SchaerAdvect:
         g.n.newline()
         g.n.build \
         ( \
-                outputs=g.forCase("0", "T"), \
+                outputs=case.path("0", "T"), \
                 rule="setInitialTracerField", \
-                implicit=g.polyMeshForCase() + g.systemFilesForCase() + \
-                        [g.forCase("system", "tracerFieldDict"), \
-                         g.forCase("constant", "T_init")], \
+                implicit=case.polyMesh + case.systemFiles + \
+                        [case.path("system", "tracerFieldDict"), \
+                         case.path("constant", "T_init")], \
                 variables={"case": self.case} \
         )
         g.n.newline()
-        g.copy(os.path.join("src", "schaerAdvect", "tracerField"), g.forCase("system", "tracerFieldDict"))
-        g.copy(os.path.join("src", "schaerAdvect", "T_init"), g.forCase("constant", "T_init"))
+        g.copy(os.path.join("src", "schaerAdvect", "tracerField"), case.path("system", "tracerFieldDict"))
+        g.copy(os.path.join("src", "schaerAdvect", "T_init"), case.path("constant", "T_init"))
         g.n.newline()
         g.n.build \
         ( \
-                outputs=g.forCase("0", "phi"), \
+                outputs=case.path("0", "phi"), \
                 rule="setVelocityField", \
-                implicit=g.polyMeshForCase() + g.systemFilesForCase() + \
-                        [g.forCase("system", "velocityFieldDict")], \
+                implicit=case.polyMesh + case.systemFiles + \
+                        [case.path("system", "velocityFieldDict")], \
                 variables={"case": self.case} \
         )
         g.n.newline()
-        g.copy(os.path.join("src", "schaerAdvect", "velocityField"), g.forCase("system", "velocityFieldDict"))
+        g.copy(os.path.join("src", "schaerAdvect", "velocityField"), case.path("system", "velocityFieldDict"))
         g.n.newline()
 
-        g.copyAll(g.polyMesh, source=self.meshCase, target=self.case)
-        g.copy(self.fvSchemes, g.forCase("system", "fvSchemes"))
-        g.copy(os.path.join("src", "schaerAdvect", "fvSolution"), g.forCase("system", "fvSolution"))
+        g.copyAll(ninja_gen.Paths.polyMesh, source=self.meshCase, target=case)
+        g.copy(self.fvSchemes, case.fvSchemes)
+        g.copy(os.path.join("src", "schaerAdvect", "fvSolution"), case.fvSolution)
 
         g.n.build \
         ( \
-                outputs=g.forCase("s3.uploaded"),
+                outputs=case.path("s3.uploaded"),
                 rule="s3-upload", \
-                implicit=g.polyMeshForCase() + g.systemFilesForCase() + \
-                        [g.forCase(str(self.endTime), "T"), \
-                         g.forCase(str(self.writeInterval), "T"), \
-                         g.forCase("0", "T")], \
-                variables={"source": self.case, "target": self.s3uri} \
+                implicit=case.polyMesh + case.systemFiles + \
+                        [case.path(str(self.endTime), "T"), \
+                         case.path(str(self.writeInterval), "T"), \
+                         case.path("0", "T")], \
+                variables={"source": case, "target": self.s3uri} \
         )
 
 if __name__ == '__main__':
@@ -89,4 +90,4 @@ if __name__ == '__main__':
     parser.add_argument('fvSchemes', help="OpenFOAM fvSchemes file")
     args = parser.parse_args()
 
-    SchaerAdvect(args.case, args.meshCase, args.timestep, args.fvSchemes).write()
+    SchaerAdvect(ninja_gen.Case(args.case), ninja_gen.Case(args.meshCase), args.timestep, args.fvSchemes).write()

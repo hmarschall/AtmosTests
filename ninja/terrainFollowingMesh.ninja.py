@@ -5,24 +5,21 @@ import ninja_gen
 import os
 
 def write(blockMeshCase, sourceMountainDict, case, sourceControlDict=os.path.join("src", "controlDict")):
-    g = ninja_gen.Generator(case)
+    g = ninja_gen.Generator()
     g.header()
-
-    targetMountainDict = g.forCase("system", "mountainDict")
-    targetControlDict = g.forCase("system", "controlDict")
 
     g.n.build \
     ( \
-            outputs=g.polyMeshForCase(), \
+            outputs=case.polyMesh, \
             rule="terrainFollowingMesh", \
-            inputs=targetMountainDict, \
-            implicit=g.polyMeshForCase(blockMeshCase) + [targetControlDict], \
+            inputs=case.mountainDict, \
+            implicit=blockMeshCase.polyMesh + [case.controlDict], \
             variables={"blockMeshCase": blockMeshCase, "terrainFollowingMeshCase": case} \
     )
     g.n.newline()
 
-    g.copy(sourceMountainDict, targetMountainDict)
-    g.copy(sourceControlDict, targetControlDict)
+    g.copy(sourceMountainDict, case.mountainDict)
+    g.copy(sourceControlDict, case.controlDict)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate a terrainFollowingMesh .ninja file.')
@@ -31,4 +28,4 @@ if __name__ == '__main__':
     parser.add_argument('mountainDict', help="Location of the mountainDict file")
     args = parser.parse_args()
 
-    write(args.blockMeshCase, args.mountainDict, args.case)
+    write(ninja_gen.Case(args.blockMeshCase), args.mountainDict, ninja_gen.Case(args.case))

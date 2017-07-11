@@ -5,24 +5,21 @@ import ninja_gen
 import os
 
 def write(case, sourceBlockMeshDict, sourceControlDict=os.path.join("src", "controlDict")):
-    g = ninja_gen.Generator(case)
+    g = ninja_gen.Generator()
     g.header()
-
-    targetBlockMeshDict = g.forCase("system", "blockMeshDict")
-    targetControlDict = g.forCase("system", "controlDict")
 
     g.n.build \
     ( \
-            outputs=g.polyMeshForCase(), \
+            outputs=case.polyMesh, \
             rule="blockMesh", \
-            inputs=targetBlockMeshDict, \
-            implicit=targetControlDict, \
+            inputs=case.blockMeshDict, \
+            implicit=case.controlDict, \
             variables={"case": case} \
     )
     g.n.newline()
 
-    g.copy(sourceBlockMeshDict, targetBlockMeshDict)
-    g.copy(sourceControlDict, targetControlDict)
+    g.copy(sourceBlockMeshDict, case.blockMeshDict)
+    g.copy(sourceControlDict, case.controlDict)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate a blockMesh .ninja file.')
@@ -30,4 +27,4 @@ if __name__ == '__main__':
     parser.add_argument('blockMeshDict', help="Location of the blockMeshDict file")
     args = parser.parse_args()
 
-    write(args.case, args.blockMeshDict)
+    write(ninja_gen.Case(args.case), args.blockMeshDict)
