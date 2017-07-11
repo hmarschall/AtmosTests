@@ -2,15 +2,15 @@ builddir = build.ninja.generated
 casedir = build
 
 rule blockMesh.ninja
-    description = blockMesh.ninja
+    description = blockMesh.ninja $case
     command = ninja/blockMesh.ninja.py $case $blockMeshDict > $out
 
 rule terrainFollowingMesh.ninja
-    description = terrainFollowingMesh.ninja
+    description = terrainFollowingMesh.ninja $case
     command = ninja/terrainFollowingMesh.ninja.py $case $blockMeshCase $mountainDict > $out
 
 rule schaerAdvect.ninja
-    description = schaerAdvect.ninja
+    description = schaerAdvect.ninja $case
     command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $fvSchemes > $out
 
 build $builddir/schaerAdvect-mesh-noOrography/build.ninja: blockMesh.ninja

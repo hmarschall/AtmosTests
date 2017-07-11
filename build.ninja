@@ -5,26 +5,27 @@ rule advectionFoam
     command = advectionFoam -case $case -heun2
 
 rule blockMesh
-    description = blockMesh
     command = blockMesh -case $case
 
 rule cp
     command = cp $in $out                                                       
 
 rule gen-controlDict
-    description = gen-controlDict
+    description = gen-controlDict $out
     command = ninja/gen-controlDict.ninja.sh $endTime $timestep $writeInterval < $in > $out
 
+rule s3-upload
+    description = s3-upload $source
+    command = ninja/s3-upload.sh $source $target > $out
+
 rule setInitialTracerField
-    description = setInitialTracerField
     command = setInitialTracerField -case $case
 
 rule setVelocityField
-    description = setVelocityField
     command = setVelocityField -case $case -time 0
 
 rule terrainFollowingMesh
-    description = terrainFollowingMesh
+    description = terrainFollowingMesh $terrainFollowingMeshCase
     command = ninja/terrainFollowingMesh.ninja.sh $blockMeshCase $terrainFollowingMeshCase
 
 include $gendir/schaerAdvect-mesh-noOrography/build.ninja

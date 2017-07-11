@@ -5,13 +5,14 @@ import ninja_gen
 import os
 
 class SchaerAdvect:
-    def __init__(self, case, meshCase, timestep, fvSchemes):
+    def __init__(self, case, meshCase, timestep, fvSchemes, s3uri="s3://atmostests/"):
         self.case = case
         self.meshCase = meshCase
         self.timestep = timestep
         self.endTime = 10000
         self.writeInterval = 5000
         self.fvSchemes = fvSchemes
+        self.s3uri = s3uri
 
     def write(self):
         g = ninja_gen.Generator(self.case)
@@ -68,6 +69,17 @@ class SchaerAdvect:
         g.copyAll(g.polyMesh, source=self.meshCase, target=self.case)
         g.copy(self.fvSchemes, g.forCase("system", "fvSchemes"))
         g.copy(os.path.join("src", "schaerAdvect", "fvSolution"), g.forCase("system", "fvSolution"))
+
+        g.n.build \
+        ( \
+                outputs=g.forCase("s3.uploaded"),
+                rule="s3-upload", \
+                implicit=g.polyMeshForCase() + g.systemFilesForCase() + \
+                        [g.forCase(str(self.endTime), "T"), \
+                         g.forCase(str(self.writeInterval), "T"), \
+                         g.forCase("0", "T")], \
+                variables={"source": self.case, "target": self.s3uri} \
+        )
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate a schaerAdvect .ninja file.')
