@@ -9,7 +9,7 @@ rule blockMesh.ninja
 
 rule schaerAdvect.ninja
     description = schaerAdvect.ninja $case
-    command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $fvSchemes > $out
+    command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $fvSchemes --solver_execution=$solver_execution > $out
 
 rule solver.ninja
     command = ninja/solver.ninja.py $solver_execution $solver_parallel_tasks "$serialCommand" > $out

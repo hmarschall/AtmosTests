@@ -12,9 +12,12 @@ class Case:
         self.blockMeshDict = self.path("system", "blockMeshDict")
         self.controlDict = self.path("system", "controlDict")
         self.decomposeParDict = self.path("system", "decomposeParDict")
-        self.mountainDict = self.path("system", "mountainDict")
         self.fvSchemes = self.path("system", "fvSchemes")
         self.fvSolution = self.path("system", "fvSolution")
+        self.mountainDict = self.path("system", "mountainDict")
+        self.T_init = self.path("constant", "T_init")
+        self.tracerFieldDict = self.path("system", "tracerFieldDict")
+        self.velocityFieldDict = self.path("system", "velocityFieldDict")
 
         self.polyMesh = [self.path(f) for f in Paths.polyMesh]
         self.systemFiles = [self.fvSchemes, self.fvSolution, self.controlDict]
@@ -40,6 +43,17 @@ class Generator:
     def copyAll(self, files, source, target):
         for f in files:
             self.copy(os.path.join(str(source), f), os.path.join(str(target), f))
+
+    def s3upload(self, case, uri, implicit=[]):
+        implicit += case.polyMesh + case.systemFiles
+        self.n.build(
+                outputs=case.path("s3.uploaded"),
+                rule="s3-upload",
+                implicit=implicit,
+                variables={"source": case, "target": uri}
+        )
+        self.n.newline()
+
 
 class Solver:
     def __init__(self, generator, case, parallel=False, decomposeParDict=None):

@@ -43,38 +43,33 @@ class SchaerAdvect:
                 outputs=case.path("0", "T"),
                 rule="setInitialTracerField",
                 implicit=case.polyMesh + case.systemFiles +
-                        [case.path("system", "tracerFieldDict"),
-                         case.path("constant", "T_init")],
+                        [case.tracerFieldDict, case.T_init],
                 variables={"case": self.case}
         )
         g.n.newline()
-        g.copy(os.path.join("src", "schaerAdvect", "tracerField"), case.path("system", "tracerFieldDict"))
-        g.copy(os.path.join("src", "schaerAdvect", "T_init"), case.path("constant", "T_init"))
+        g.copy(os.path.join("src", "schaerAdvect", "tracerField"), case.tracerFieldDict)
+        g.copy(os.path.join("src", "schaerAdvect", "T_init"), case.T_init)
         g.n.newline()
         g.n.build(
                 outputs=case.path("0", "phi"),
                 rule="setVelocityField",
-                implicit=case.polyMesh + case.systemFiles +
-                        [case.path("system", "velocityFieldDict")],
+                implicit=case.polyMesh + case.systemFiles + [case.velocityFieldDict],
                 variables={"case": self.case}
         )
         g.n.newline()
-        g.copy(os.path.join("src", "schaerAdvect", "velocityField"), case.path("system", "velocityFieldDict"))
+        g.copy(os.path.join("src", "schaerAdvect", "velocityField"), case.velocityFieldDict)
         g.n.newline()
 
         g.copyAll(ninja_gen.Paths.polyMesh, source=self.meshCase, target=case)
         g.copy(self.fvSchemes, case.fvSchemes)
         g.copy(os.path.join("src", "schaerAdvect", "fvSolution"), case.fvSolution)
 
-        g.n.build(
-                outputs=case.path("s3.uploaded"),
-                rule="s3-upload",
-                implicit=case.polyMesh + case.systemFiles +
-                        [case.path(str(self.endTime), "T"),
-                         case.path(str(self.writeInterval), "T"),
-                         case.path("0", "T")],
-                variables={"source": case, "target": self.s3uri}
-        )
+        g.s3upload(
+                case,
+                self.s3uri,
+                [case.path(str(self.endTime), "T"),
+                 case.path(str(self.writeInterval), "T"),
+                 case.path("0", "T")])
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate a schaerAdvect .ninja file.  Default values in square brackets.')
