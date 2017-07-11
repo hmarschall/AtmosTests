@@ -1,4 +1,5 @@
 build
+build.ninja.generated
 *.swp
 /*.obj
 *.img

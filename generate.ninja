@@ -1,4 +1,5 @@
-builddir = build
+builddir = build.ninja.generated
+casedir = build
 
 rule blockMesh.ninja
     description = blockMesh.ninja
@@ -13,16 +14,16 @@ rule schaerAdvect.ninja
     command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $fvSchemes > $out
 
 build $builddir/schaerAdvect-mesh-noOrography/build.ninja: blockMesh.ninja
-    case = $builddir/schaerAdvect-mesh-noOrography
+    case = $casedir/schaerAdvect-mesh-noOrography
     blockMeshDict = src/schaerAdvect/mesh-noOrography
 
 build $builddir/schaerAdvect-mesh-btf/build.ninja: terrainFollowingMesh.ninja
-    case = $builddir/schaerAdvect-mesh-btf
-    blockMeshCase = $builddir/schaerAdvect-mesh-noOrography
+    case = $casedir/schaerAdvect-mesh-btf
+    blockMeshCase = $casedir/schaerAdvect-mesh-noOrography
     mountainDict = src/schaerAdvect/mesh-btf
 
 build $builddir/schaerAdvect-noOrography-linearUpwind/build.ninja: schaerAdvect.ninja
-    case = $builddir/schaerAdvect-noOrography-linearUpwind
-    meshCase = $builddir/schaerAdvect-mesh-noOrography
+    case = $casedir/schaerAdvect-noOrography-linearUpwind
+    meshCase = $casedir/schaerAdvect-mesh-noOrography
     timestep = 8
     fvSchemes = src/schaerAdvect/linearUpwind

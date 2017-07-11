@@ -10,40 +10,63 @@ class SchaerAdvect:
         self.meshCase = meshCase
         self.timestep = timestep
         self.endTime = 10000
-        self.writeInterval = 1000
+        self.writeInterval = 5000
         self.fvSchemes = fvSchemes
 
     def write(self):
         g = ninja_gen.Generator(self.case)
         g.header()
 
-        inputs = g.polyMeshForCase() + g.systemFilesForCase()# + \
-#                [g.forCase("0", "T"), g.forCase("0", "phi")]
-
         g.n.build \
         ( \
                 outputs=g.forCase(str(self.endTime), "T"), \
                 rule="advectionFoam", \
-                implicit=inputs, \
+                implicit=g.polyMeshForCase() + g.systemFilesForCase() + \
+                        [g.forCase("0", "T"), g.forCase("0", "phi")], \
                 variables={"case": self.case} \
         )
+        g.n.newline()
+        g.n.build \
+        ( \
+                outputs=g.forCase("system", "controlDict"), \
+                rule="gen-controlDict", \
+                inputs=os.path.join("src", "controlDict.template"), \
+                variables= \
+                { \
+                    "endTime": self.endTime, \
+                    "timestep": self.timestep, \
+                    "writeInterval": self.writeInterval, \
+                } \
+        )
+        g.n.newline()
+        g.n.build \
+        ( \
+                outputs=g.forCase("0", "T"), \
+                rule="setInitialTracerField", \
+                implicit=g.polyMeshForCase() + g.systemFilesForCase() + \
+                        [g.forCase("system", "tracerFieldDict"), \
+                         g.forCase("constant", "T_init")], \
+                variables={"case": self.case} \
+        )
+        g.n.newline()
+        g.copy(os.path.join("src", "schaerAdvect", "tracerField"), g.forCase("system", "tracerFieldDict"))
+        g.copy(os.path.join("src", "schaerAdvect", "T_init"), g.forCase("constant", "T_init"))
+        g.n.newline()
+        g.n.build \
+        ( \
+                outputs=g.forCase("0", "phi"), \
+                rule="setVelocityField", \
+                implicit=g.polyMeshForCase() + g.systemFilesForCase() + \
+                        [g.forCase("system", "velocityFieldDict")], \
+                variables={"case": self.case} \
+        )
+        g.n.newline()
+        g.copy(os.path.join("src", "schaerAdvect", "velocityField"), g.forCase("system", "velocityFieldDict"))
         g.n.newline()
 
         g.copyAll(g.polyMesh, source=self.meshCase, target=self.case)
         g.copy(self.fvSchemes, g.forCase("system", "fvSchemes"))
         g.copy(os.path.join("src", "schaerAdvect", "fvSolution"), g.forCase("system", "fvSolution"))
-
-        controlDictSubstitutions = \
-        { \
-                "endTime": self.endTime, \
-                "timestep": self.timestep, \
-                "writeInterval": self.writeInterval, \
-        }
-        # TODO: system/controlDict
-        # g.substitute(os.path.join("src", "schaerAdvect", "controlDict"), g.forCase("system", "controlDict"), controlDictSubstitutions)
-        
-        # TODO: 0/T
-        # TODO: 0/phi
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate a schaerAdvect .ninja file.')

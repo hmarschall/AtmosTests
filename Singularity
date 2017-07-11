@@ -54,6 +54,7 @@ From:ubuntu:17.04
 	DEBIAN_FRONTEND=noninteractive \
         apt-get install -y --no-install-recommends \
                ninja-build \
+	       gettext-base \
 	       openfoam-dev
 
 	DEBIAN_FRONTEND=noninteractive \

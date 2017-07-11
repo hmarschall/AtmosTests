@@ -1,18 +1,32 @@
 builddir = build
+gendir = build.ninja.generated
 
-rule cp
-    command = cp $in $out                                                                                                 
+rule advectionFoam
+    command = advectionFoam -case $case -heun2
+
 rule blockMesh
     description = blockMesh
     command = blockMesh -case $case
+
+rule cp
+    command = cp $in $out                                                       
+
+rule gen-controlDict
+    description = gen-controlDict
+    command = ninja/gen-controlDict.ninja.sh $endTime $timestep $writeInterval < $in > $out
+
+rule setInitialTracerField
+    description = setInitialTracerField
+    command = setInitialTracerField -case $case
+
+rule setVelocityField
+    description = setVelocityField
+    command = setVelocityField -case $case
 
 rule terrainFollowingMesh
     description = terrainFollowingMesh
     command = ninja/terrainFollowingMesh.ninja.sh $blockMeshCase $terrainFollowingMeshCase
 
-rule advectionFoam
-    command = advectionFoam -case $case
-
-include $builddir/schaerAdvect-mesh-noOrography/build.ninja
-include $builddir/schaerAdvect-mesh-btf/build.ninja
-include $builddir/schaerAdvect-noOrography-linearUpwind/build.ninja
+include $gendir/schaerAdvect-mesh-noOrography/build.ninja
+include $gendir/schaerAdvect-mesh-btf/build.ninja
+include $gendir/schaerAdvect-noOrography-linearUpwind/build.ninja
