@@ -2,7 +2,7 @@
 set -e
 
 display_usage() {
-	echo -e "Usage: gen-controlDict.ninja.sh <endTime> <timestep> <writeInterval>\n"
+	echo -e "Usage: gen-controlDict.sh <endTime> <timestep> <writeInterval>\n"
 }
 
 if [ $# -lt 3 ]

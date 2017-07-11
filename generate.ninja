@@ -1,17 +1,25 @@
 builddir = build.ninja.generated
 casedir = build
 
+include build.properties
+
 rule blockMesh.ninja
     description = blockMesh.ninja $case
     command = ninja/blockMesh.ninja.py $case $blockMeshDict > $out
+
+rule schaerAdvect.ninja
+    description = schaerAdvect.ninja $case
+    command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $fvSchemes > $out
+
+rule solver.ninja
+    command = ninja/solver.ninja.py $solver_execution $solver_parallel_tasks "$serialCommand" > $out
 
 rule terrainFollowingMesh.ninja
     description = terrainFollowingMesh.ninja $case
     command = ninja/terrainFollowingMesh.ninja.py $case $blockMeshCase $mountainDict > $out
 
-rule schaerAdvect.ninja
-    description = schaerAdvect.ninja $case
-    command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $fvSchemes > $out
+build $builddir/advectionFoam.ninja: solver.ninja
+    serialCommand = advectionFoam -case "$$"case -heun2
 
 build $builddir/schaerAdvect-mesh-noOrography/build.ninja: blockMesh.ninja
     case = $casedir/schaerAdvect-mesh-noOrography

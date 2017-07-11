@@ -11,6 +11,7 @@ class Case:
         self.root = root
         self.blockMeshDict = self.path("system", "blockMeshDict")
         self.controlDict = self.path("system", "controlDict")
+        self.decomposeParDict = self.path("system", "decomposeParDict")
         self.mountainDict = self.path("system", "mountainDict")
         self.fvSchemes = self.path("system", "fvSchemes")
         self.fvSolution = self.path("system", "fvSolution")
@@ -40,3 +41,29 @@ class Generator:
         for f in files:
             self.copy(os.path.join(str(source), f), os.path.join(str(target), f))
 
+class Solver:
+    def __init__(self, generator, case, parallel=False, decomposeParDict=None):
+        self.g = generator
+        self.case = case
+        self.parallel = parallel
+        self.decomposeParDict = decomposeParDict
+
+    def solve(self, outputs, rule, inputs=None, implicit=[], order_only=None,
+              variables={}, implicit_outputs=None):
+        implicit += self.case.polyMesh + self.case.systemFiles
+        if self.parallel:
+            implicit += [self.case.decomposeParDict]
+
+        variables["case"] = self.case
+
+        self.g.n.build(outputs, rule, inputs, implicit, order_only, 
+                variables, implicit_outputs)
+        self.g.n.newline() 
+
+        if self.parallel:
+            self.g.n.build(
+                    outputs=self.case.decomposeParDict,
+                    rule="gen-decomposeParDict",
+                    inputs=self.decomposeParDict
+            )
+            self.g.n.newline() 
