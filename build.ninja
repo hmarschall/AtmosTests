@@ -21,7 +21,7 @@ rule setInitialTracerField
 
 rule setVelocityField
     description = setVelocityField
-    command = setVelocityField -case $case
+    command = setVelocityField -case $case -time 0
 
 rule terrainFollowingMesh
     description = terrainFollowingMesh

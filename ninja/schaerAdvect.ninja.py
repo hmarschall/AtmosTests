@@ -19,7 +19,8 @@ class SchaerAdvect:
 
         g.n.build \
         ( \
-                outputs=g.forCase(str(self.endTime), "T"), \
+                outputs=[g.forCase(str(self.endTime), "T"), \
+                         g.forCase(str(self.writeInterval), "T")], \
                 rule="advectionFoam", \
                 implicit=g.polyMeshForCase() + g.systemFilesForCase() + \
                         [g.forCase("0", "T"), g.forCase("0", "phi")], \
