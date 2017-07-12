@@ -65,6 +65,5 @@ From:ubuntu:17.04
 	DEBIAN_FRONTEND=noninteractive \
         apt-get install -y --no-install-recommends --allow-unauthenticated \
 	       atmosfoam-tools \
-	       atmosfoam
-
-	rm -rf /var/lib/apt/lists/*
+	       atmosfoam \
+	       gmd-geodesic-mesh
