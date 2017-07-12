@@ -17,6 +17,14 @@ rule gen-decomposeParDict
     description = gen-decomposeParDict $out
     command = ninja/gen-decomposeParDict.sh $solver_parallel_tasks < $in > $out
 
+rule geodesicHexMesh
+    description = geodesicHexMesh $case
+    command = ninja/geodesicHexMesh.sh $case
+
+rule geodesicHexPatch
+    description = geodesicHexPatch $case
+    command = ninja/geodesicHexPatch.sh $case $refinement
+
 rule s3-upload
     description = s3-upload $source
     command = ninja/s3-upload.sh $source $target > $out
@@ -32,6 +40,7 @@ rule terrainFollowingMesh
     command = ninja/terrainFollowingMesh.ninja.sh $blockMeshCase $terrainFollowingMeshCase
 
 include $gendir/advectionFoam.ninja
+include $gendir/deformationSphere-mesh-hex-3/build.ninja
 include $gendir/schaerAdvect-mesh-noOrography/build.ninja
 include $gendir/schaerAdvect-mesh-btf/build.ninja
 include $gendir/schaerAdvect-noOrography-linearUpwind/build.ninja

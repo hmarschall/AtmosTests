@@ -15,6 +15,6 @@ case=$1
 taskCount=$2
 solver=$3
 
-decomposePar -case $case
-mpirun –hostfile machines -np $taskCount $solver -parallel
-reconstructPar -case $case
+decomposePar -force -constant -case $(realpath $case) # https://bugs.openfoam.org/view.php?id=2610
+mpirun -np $taskCount $solver -parallel
+reconstructPar -case $case -constant

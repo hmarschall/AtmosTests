@@ -9,9 +9,12 @@ def write(execution, taskCount, serialCommand):
     g.header()
 
     if execution == "serial":
-        g.n.rule("advectionFoam", serialCommand)
+        g.n.rule("advectionFoam", serialCommand, description="advectionFoam $case")
     else:
-        g.n.rule("advectionFoam", 'ninja/openfoam-solve.sh $case $solver_parallel_tasks "{serialCommand} -parallel"'.format(serialCommand=serialCommand))
+        g.n.rule(
+                "advectionFoam",
+                'ninja/openfoam-solve.sh $case $solver_parallel_tasks "{serialCommand} -parallel"'.format(serialCommand=serialCommand),
+                description="advectionFoam $case")
 
 
 if __name__ == '__main__':

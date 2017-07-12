@@ -57,7 +57,8 @@ From:ubuntu:17.04
 	       gettext-base \
 	       python3-setuptools \
 	       python3-pip \
-	       openfoam-dev
+	       openfoam-dev \
+	       ssh-client
 
 	pip3 install wheel
 	pip3 install awscli

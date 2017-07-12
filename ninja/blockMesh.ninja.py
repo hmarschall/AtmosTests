@@ -8,13 +8,12 @@ def write(case, sourceBlockMeshDict, sourceControlDict=os.path.join("src", "cont
     g = ninja_gen.Generator()
     g.header()
 
-    g.n.build \
-    ( \
-            outputs=case.polyMesh, \
-            rule="blockMesh", \
-            inputs=case.blockMeshDict, \
-            implicit=case.controlDict, \
-            variables={"case": case} \
+    g.n.build(
+            outputs=case.polyMesh,
+            rule="blockMesh",
+            inputs=case.blockMeshDict,
+            implicit=case.controlDict,
+            variables={"case": case}
     )
     g.n.newline()
 

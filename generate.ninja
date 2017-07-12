@@ -7,6 +7,10 @@ rule blockMesh.ninja
     description = blockMesh.ninja $case
     command = ninja/blockMesh.ninja.py $case $blockMeshDict > $out
 
+rule geodesicHexMesh.ninja
+    description = geodesicHexMesh.ninja $case
+    command = ninja/geodesicHexMesh.ninja.py $case $refinement > $out
+
 rule schaerAdvect.ninja
     description = schaerAdvect.ninja $case
     command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $fvSchemes --solver_execution=$solver_execution > $out
@@ -20,6 +24,10 @@ rule terrainFollowingMesh.ninja
 
 build $builddir/advectionFoam.ninja: solver.ninja
     serialCommand = advectionFoam -case "$$"case -heun2
+
+build $builddir/deformationSphere-mesh-hex-3/build.ninja: geodesicHexMesh.ninja
+    case = $casedir/deformationSphere-mex-hex-3
+    refinement = 3
 
 build $builddir/schaerAdvect-mesh-noOrography/build.ninja: blockMesh.ninja
     case = $casedir/schaerAdvect-mesh-noOrography

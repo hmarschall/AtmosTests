@@ -62,7 +62,7 @@ class SchaerAdvect:
 
         g.copyAll(ninja_gen.Paths.polyMesh, source=self.meshCase, target=case)
         g.copy(self.fvSchemes, case.fvSchemes)
-        g.copy(os.path.join("src", "schaerAdvect", "fvSolution"), case.fvSolution)
+        g.copy(os.path.join("src", "fvSolution"), case.fvSolution)
 
         g.s3upload(
                 case,

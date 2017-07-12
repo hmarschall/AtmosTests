@@ -12,6 +12,7 @@ class Case:
         self.blockMeshDict = self.path("system", "blockMeshDict")
         self.controlDict = self.path("system", "controlDict")
         self.decomposeParDict = self.path("system", "decomposeParDict")
+        self.extrudeMeshDict = self.path("system", "extrudeMeshDict")
         self.fvSchemes = self.path("system", "fvSchemes")
         self.fvSolution = self.path("system", "fvSolution")
         self.mountainDict = self.path("system", "mountainDict")
@@ -69,6 +70,7 @@ class Solver:
             implicit += [self.case.decomposeParDict]
 
         variables["case"] = self.case
+        variables["pool"] = "console"
 
         self.g.n.build(outputs, rule, inputs, implicit, order_only, 
                 variables, implicit_outputs)
