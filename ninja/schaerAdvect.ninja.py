@@ -72,13 +72,13 @@ class SchaerAdvect:
                  case.path("0", "T")])
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate a schaerAdvect .ninja file.  Default values in square brackets.')
-    parser.add_argument('case', help="OpenFOAM case directory")
-    parser.add_argument('meshCase', help="Case directory of the mesh")
-    parser.add_argument('timestep', type=float, help="double-precision float that divides into 1000")
-    parser.add_argument('fvSchemes', help="OpenFOAM fvSchemes file")
-    parser.add_argument('--solver_execution', choices=["serial", "parallel"], default="parallel", help="Determines how the solver is executed [serial]")
-    args = parser.parse_args()
+    parser = ninja_gen.Parser(description='Generate a schaerAdvect .ninja file.  Default values in square brackets.')
+    parser.case()
+    parser.meshCase()
+    parser.p.add_argument('timestep', type=float, help="double-precision float that divides into 5000")
+    parser.p.add_argument('fvSchemes', help="OpenFOAM fvSchemes file")
+    parser.p.add_argument('--solver_execution', choices=["serial", "parallel"], default="parallel", help="Determines how the solver is executed [serial]")
+    args = parser.p.parse_args()
 
     solver = SchaerAdvect(ninja_gen.Case(args.case), ninja_gen.Case(args.meshCase), args.timestep, args.fvSchemes, args.solver_execution=="parallel")
     solver.write()

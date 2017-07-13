@@ -1,3 +1,4 @@
+import argparse
 import datetime
 import ninja_syntax
 import os
@@ -83,3 +84,13 @@ class Solver:
                     inputs=self.decomposeParDict
             )
             self.g.n.newline() 
+
+class Parser:
+    def __init__(self, description):
+        self.p =  argparse.ArgumentParser(description)
+
+    def case(self):
+        self.p.add_argument('case', help="OpenFOAM case directory")
+
+    def meshCase(self):
+        self.p.add_argument('meshCase', help="Case directory of the mesh")
