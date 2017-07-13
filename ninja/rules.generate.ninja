@@ -1,0 +1,23 @@
+rule blockMesh.ninja
+    description = blockMesh.ninja $case
+    command = ninja/blockMesh.ninja.py $case $blockMeshDict > $out
+
+rule deformationSphere.ninja
+    description = deformationSphere.ninja $case
+    command = ninja/deformationSphere.ninja.py $case $meshCase $tracer $timestep $fvSchemes --solver_execution=$solver_execution > $out
+
+rule geodesicHexMesh.ninja
+    description = geodesicHexMesh.ninja $case
+    command = ninja/geodesicHexMesh.ninja.py $case $refinement > $out
+
+rule schaerAdvect.ninja
+    description = schaerAdvect.ninja $case
+    command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $fvSchemes --solver_execution=$solver_execution > $out
+
+rule solver.ninja
+    command = ninja/solver.ninja.py $application $solver_execution $solver_parallel_tasks "$serialCommand" > $out
+
+rule terrainFollowingMesh.ninja
+    description = terrainFollowingMesh.ninja $case
+    command = ninja/terrainFollowingMesh.ninja.py $case $blockMeshCase $mountainDict > $out
+

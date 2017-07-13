@@ -1,0 +1,3 @@
+include $gendir/advectionFoam.ninja
+include $gendir/sphericalAdvectionFoam.ninja
+

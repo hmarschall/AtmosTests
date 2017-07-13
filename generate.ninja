@@ -1,40 +1,9 @@
 builddir = build.ninja.generated
 casedir = build
-
 include build.properties
 
-rule blockMesh.ninja
-    description = blockMesh.ninja $case
-    command = ninja/blockMesh.ninja.py $case $blockMeshDict > $out
-
-rule deformationSphere.ninja
-    description = deformationSphere.ninja $case
-    command = ninja/deformationSphere.ninja.py $case $meshCase $tracer $timestep $fvSchemes --solver_execution=$solver_execution > $out
-
-rule geodesicHexMesh.ninja
-    description = geodesicHexMesh.ninja $case
-    command = ninja/geodesicHexMesh.ninja.py $case $refinement > $out
-
-rule schaerAdvect.ninja
-    description = schaerAdvect.ninja $case
-    command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $fvSchemes --solver_execution=$solver_execution > $out
-
-rule solver.ninja
-    command = ninja/solver.ninja.py $application $solver_execution $solver_parallel_tasks "$serialCommand" > $out
-
-rule terrainFollowingMesh.ninja
-    description = terrainFollowingMesh.ninja $case
-    command = ninja/terrainFollowingMesh.ninja.py $case $blockMeshCase $mountainDict > $out
-
-# solvers
-
-build $builddir/advectionFoam.ninja: solver.ninja
-    application = advectionFoam
-    serialCommand = advectionFoam -case "$$"case -heun2
-
-build $builddir/sphericalAdvectionFoam.ninja: solver.ninja
-    application = sphericalAdvectionFoam
-    serialCommand = sphericalAdvectionFoam -case "$$"case -heun2
+include ninja/rules.generate.ninja
+include ninja/solvers.generate.ninja
 
 # deformationSphere
 
