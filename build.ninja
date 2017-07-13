@@ -11,7 +11,7 @@ rule cp
 
 rule gen-controlDict
     description = gen-controlDict $out
-    command = ninja/gen-controlDict.sh $endTime $timestep $writeInterval < $in > $out
+    command = ninja/gen-controlDict.sh $endTime $writeInterval $timestep < $in > $out
 
 rule gen-decomposeParDict
     description = gen-decomposeParDict $out
@@ -40,8 +40,11 @@ rule terrainFollowingMesh
     command = ninja/terrainFollowingMesh.sh $blockMeshCase $terrainFollowingMeshCase
 
 include $gendir/advectionFoam.ninja
+include $gendir/sphericalAdvectionFoam.ninja
+
 include $gendir/deformationSphere-mesh-hex-4/build.ninja
 include $gendir/deformationSphere-gaussians-hex-4-linearUpwind/build.ninja
+
 include $gendir/schaerAdvect-mesh-noOrography/build.ninja
 include $gendir/schaerAdvect-mesh-btf/build.ninja
 include $gendir/schaerAdvect-noOrography-linearUpwind/build.ninja

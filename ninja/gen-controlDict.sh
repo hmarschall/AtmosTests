@@ -2,7 +2,7 @@
 set -e
 
 display_usage() {
-	echo -e "Usage: gen-controlDict.sh <endTime> <timestep> <writeInterval>\n"
+	echo -e "Usage: gen-controlDict.sh <endTime> <writeInterval> <timestep>\n"
 }
 
 if [ $# -lt 3 ]
@@ -12,7 +12,7 @@ then
 fi
 
 export endTime=$1
-export timestep=$2
-export writeInterval=$3
+export writeInterval=$2
+export timestep=$3
 
 envsubst <&0 >&1

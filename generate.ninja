@@ -26,12 +26,20 @@ rule terrainFollowingMesh.ninja
     description = terrainFollowingMesh.ninja $case
     command = ninja/terrainFollowingMesh.ninja.py $case $blockMeshCase $mountainDict > $out
 
+# solvers
+
 build $builddir/advectionFoam.ninja: solver.ninja
     application = advectionFoam
     serialCommand = advectionFoam -case "$$"case -heun2
 
+build $builddir/sphericalAdvectionFoam.ninja: solver.ninja
+    application = sphericalAdvectionFoam
+    serialCommand = sphericalAdvectionFoam -case "$$"case -heun2
+
+# deformationSphere
+
 build $builddir/deformationSphere-mesh-hex-4/build.ninja: geodesicHexMesh.ninja
-    case = $casedir/deformationSphere-mex-hex-4
+    case = $casedir/deformationSphere-mesh-hex-4
     refinement = 4
 
 build $builddir/deformationSphere-gaussians-hex-4-linearUpwind/build.ninja: deformationSphere.ninja
@@ -40,6 +48,8 @@ build $builddir/deformationSphere-gaussians-hex-4-linearUpwind/build.ninja: defo
     timestep = 3200
     fvSchemes = src/schaerAdvect/linearUpwind
     tracer = src/deformationSphere/gaussians
+
+# schaerAdvect
 
 build $builddir/schaerAdvect-mesh-noOrography/build.ninja: blockMesh.ninja
     case = $casedir/schaerAdvect-mesh-noOrography

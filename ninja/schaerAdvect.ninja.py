@@ -7,9 +7,7 @@ class SchaerAdvect:
     def __init__(self, case, meshCase, timestep, fvSchemes, parallel):
         self.case = case
         self.meshCase = meshCase
-        self.timestep = timestep
-        self.endTime = 10000
-        self.writeInterval = 5000
+        self.timing = ninja_gen.Timing(10000, 5000, timestep)
         self.fvSchemes = fvSchemes
         self.parallel = parallel
 
@@ -18,26 +16,25 @@ class SchaerAdvect:
         g = ninja_gen.Generator()
         g.header()
 
-        solver = ninja_gen.Solver(g, case, self.parallel, os.path.join("src", "decomposeParDict.template"))
+        solver = ninja_gen.Solver(
+                g,
+                case,
+                self.parallel,
+                os.path.join("src", "schaerAdvect", "decomposeParDict.template")
+        )
         solver.solve(
-                outputs=[case.path(str(self.endTime), "T"),
-                         case.path(str(self.writeInterval), "T")],
+                outputs=[case.path(str(self.timing.endTime), "T"),
+                         case.path(str(self.timing.writeInterval), "T")],
                 rule="advectionFoam",
                 implicit=[case.path("0", "T"), case.path("0", "phi")]
         )
 
-        g.controlDict(case, self.endTime, self.timestep, self.writeInterval)
-        g.n.build(
-                outputs=case.path("0", "T"),
-                rule="setInitialTracerField",
-                implicit=case.polyMesh + case.systemFiles +
-                        [case.tracerFieldDict, case.T_init],
-                variables={"case": self.case}
+        g.initialTracer(
+                case,
+                os.path.join("src", "schaerAdvect", "tracerField"),
+                os.path.join("src", "schaerAdvect", "T_init")
         )
-        g.n.newline()
-        g.copy(os.path.join("src", "schaerAdvect", "tracerField"), case.tracerFieldDict)
-        g.copy(os.path.join("src", "schaerAdvect", "T_init"), case.T_init)
-        g.n.newline()
+
         g.n.build(
                 outputs=case.path("0", "phi"),
                 rule="setVelocityField",
@@ -48,14 +45,15 @@ class SchaerAdvect:
         g.copy(os.path.join("src", "schaerAdvect", "velocityField"), case.velocityFieldDict)
         g.n.newline()
 
-        g.copyAll(ninja_gen.Paths.polyMesh, source=self.meshCase, target=case)
+        g.copyMesh(source=self.meshCase, target=case)
         g.copy(self.fvSchemes, case.fvSchemes)
         g.copy(os.path.join("src", "fvSolution"), case.fvSolution)
+        g.controlDict(case, self.timing)
 
         g.s3upload(
                 case,
-                [case.path(str(self.endTime), "T"),
-                 case.path(str(self.writeInterval), "T"),
+                [case.path(str(self.timing.endTime), "T"),
+                 case.path(str(self.timing.writeInterval), "T"),
                  case.path("0", "T")])
 
 if __name__ == '__main__':
