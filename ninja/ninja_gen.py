@@ -92,7 +92,6 @@ class Generator:
         )
         self.n.newline()
 
-
 class Solver:
     def __init__(self, generator, case, parallel=False, decomposeParDict=None):
         self.g = generator

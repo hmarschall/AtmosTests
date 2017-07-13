@@ -4,7 +4,7 @@ rule blockMesh.ninja
 
 rule deformationSphere.ninja
     description = deformationSphere.ninja $case
-    command = ninja/deformationSphere.ninja.py $case $meshCase $tracer $timestep $fvSchemes --solver_execution=$solver_execution > $out
+    command = ninja/deformationSphere.ninja.py $case $meshCase $tracerFieldDict $timestep $fvSchemes --solver_execution=$solver_execution > $out
 
 rule geodesicHexMesh.ninja
     description = geodesicHexMesh.ninja $case
