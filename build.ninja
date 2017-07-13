@@ -40,7 +40,8 @@ rule terrainFollowingMesh
     command = ninja/terrainFollowingMesh.sh $blockMeshCase $terrainFollowingMeshCase
 
 include $gendir/advectionFoam.ninja
-include $gendir/deformationSphere-mesh-hex-3/build.ninja
+include $gendir/deformationSphere-mesh-hex-4/build.ninja
+include $gendir/deformationSphere-gaussians-hex-4-linearUpwind/build.ninja
 include $gendir/schaerAdvect-mesh-noOrography/build.ninja
 include $gendir/schaerAdvect-mesh-btf/build.ninja
 include $gendir/schaerAdvect-noOrography-linearUpwind/build.ninja

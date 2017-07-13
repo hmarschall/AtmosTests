@@ -11,4 +11,4 @@ writeFrequency      0;
 writeFormat         binary;
 writePrecision      12;
 writeCompression    uncompressed;
-
+timeFormat          fixed;

@@ -7,6 +7,10 @@ rule blockMesh.ninja
     description = blockMesh.ninja $case
     command = ninja/blockMesh.ninja.py $case $blockMeshDict > $out
 
+rule deformationSphere.ninja
+    description = deformationSphere.ninja $case
+    command = ninja/deformationSphere.ninja.py $case $meshCase $tracer $timestep $fvSchemes --solver_execution=$solver_execution > $out
+
 rule geodesicHexMesh.ninja
     description = geodesicHexMesh.ninja $case
     command = ninja/geodesicHexMesh.ninja.py $case $refinement > $out
@@ -16,18 +20,26 @@ rule schaerAdvect.ninja
     command = ninja/schaerAdvect.ninja.py $case $meshCase $timestep $fvSchemes --solver_execution=$solver_execution > $out
 
 rule solver.ninja
-    command = ninja/solver.ninja.py $solver_execution $solver_parallel_tasks "$serialCommand" > $out
+    command = ninja/solver.ninja.py $application $solver_execution $solver_parallel_tasks "$serialCommand" > $out
 
 rule terrainFollowingMesh.ninja
     description = terrainFollowingMesh.ninja $case
     command = ninja/terrainFollowingMesh.ninja.py $case $blockMeshCase $mountainDict > $out
 
 build $builddir/advectionFoam.ninja: solver.ninja
+    application = advectionFoam
     serialCommand = advectionFoam -case "$$"case -heun2
 
-build $builddir/deformationSphere-mesh-hex-3/build.ninja: geodesicHexMesh.ninja
-    case = $casedir/deformationSphere-mex-hex-3
-    refinement = 3
+build $builddir/deformationSphere-mesh-hex-4/build.ninja: geodesicHexMesh.ninja
+    case = $casedir/deformationSphere-mex-hex-4
+    refinement = 4
+
+build $builddir/deformationSphere-gaussians-hex-4-linearUpwind/build.ninja: deformationSphere.ninja
+    case = $casedir/deformationSphere-gaussians-hex-4-linearUpwind
+    meshCase = $casedir/deformationSphere-mesh-hex-4
+    timestep = 3200
+    fvSchemes = src/schaerAdvect/linearUpwind
+    tracer = src/deformationSphere/gaussians
 
 build $builddir/schaerAdvect-mesh-noOrography/build.ninja: blockMesh.ninja
     case = $casedir/schaerAdvect-mesh-noOrography

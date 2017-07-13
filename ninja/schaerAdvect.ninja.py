@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import argparse
 import ninja_gen
 import os
 
@@ -75,9 +74,9 @@ if __name__ == '__main__':
     parser = ninja_gen.Parser()
     parser.case()
     parser.meshCase()
-    parser.p.add_argument('timestep', type=float, help="double-precision float that divides into 5000")
-    parser.p.add_argument('fvSchemes', help="OpenFOAM fvSchemes file")
-    parser.p.add_argument('--solver_execution', choices=["serial", "parallel"], default="parallel", help="Determines how the solver is executed [serial]")
+    parser.timestep("double-precision float that divides into 5000")
+    parser.fvSchemes()
+    parser.solverExecution()
     args = parser.p.parse_args()
 
     solver = SchaerAdvect(ninja_gen.Case(args.case), ninja_gen.Case(args.meshCase), args.timestep, args.fvSchemes, args.solver_execution=="parallel")

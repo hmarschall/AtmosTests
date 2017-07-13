@@ -87,10 +87,19 @@ class Solver:
 
 class Parser:
     def __init__(self):
-        self.p =  argparse.ArgumentParser()
+        self.p = argparse.ArgumentParser()
 
     def case(self, help="OpenFOAM case directory"):
         self.p.add_argument('case', help=help)
 
     def meshCase(self):
         self.p.add_argument('meshCase', help="Case directory of the mesh")
+
+    def timestep(self, help="double-precision float"):
+        self.p.add_argument('timestep', type=float, help=help)
+
+    def fvSchemes(self):
+        self.p.add_argument('fvSchemes', help="OpenFOAM fvSchemes file")
+
+    def solverExecution(self):
+        self.p.add_argument('--solver_execution', choices=["serial", "parallel"], default="parallel", help="Determines how the solver is executed [serial]")
