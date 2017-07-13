@@ -27,17 +27,7 @@ class SchaerAdvect:
                 implicit=[case.path("0", "T"), case.path("0", "phi")]
         )
 
-        g.n.build(
-                outputs=case.controlDict,
-                rule="gen-controlDict",
-                inputs=os.path.join("src", "controlDict.template"),
-                variables={
-                    "endTime": self.endTime,
-                    "timestep": self.timestep,
-                    "writeInterval": self.writeInterval,
-                }
-        )
-        g.n.newline()
+        g.controlDict(case, self.endTime, self.timestep, self.writeInterval)
         g.n.build(
                 outputs=case.path("0", "T"),
                 rule="setInitialTracerField",

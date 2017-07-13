@@ -46,6 +46,19 @@ class Generator:
         for f in files:
             self.copy(os.path.join(str(source), f), os.path.join(str(target), f))
 
+    def controlDict(self, case, endTime, timestep, writeInterval):
+        self.n.build(
+                outputs=case.controlDict,
+                rule="gen-controlDict",
+                inputs=os.path.join("src", "controlDict.template"),
+                variables={
+                    "endTime": endTime,
+                    "timestep": timestep,
+                    "writeInterval": writeInterval,
+                }
+        )
+        self.n.newline()
+
     def s3upload(self, case, uri, implicit=[]):
         implicit += case.polyMesh + case.systemFiles
         self.n.build(
