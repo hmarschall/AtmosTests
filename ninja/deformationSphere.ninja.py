@@ -42,7 +42,11 @@ class DeformationSphere:
         g.copy(os.path.join("src", "fvSolution"), case.fvSolution)
         g.controlDict(case, self.timing)
 
-
+        g.s3upload(
+                case,
+                [case.path(str(self.timing.endTime), "T"),
+                 case.path(str(self.timing.endTime/2), "T"),
+                 case.path("0", "T")])
 
 if __name__ == '__main__':
     parser = ninja_gen.Parser()
