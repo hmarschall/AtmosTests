@@ -59,13 +59,13 @@ class Generator:
         )
         self.n.newline()
 
-    def s3upload(self, case, uri, implicit=[]):
+    def s3upload(self, case, implicit=[]):
         implicit += case.polyMesh + case.systemFiles
         self.n.build(
                 outputs=case.path("s3.uploaded"),
                 rule="s3-upload",
                 implicit=implicit,
-                variables={"source": case, "target": uri}
+                variables={"source": case}
         )
         self.n.newline()
 

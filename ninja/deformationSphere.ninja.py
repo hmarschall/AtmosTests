@@ -2,7 +2,7 @@
 import ninja_gen
 
 class DeformationSphere:
-    def __init__(self, case, meshCase, tracer, timestep, fvSchemes, parallel, s3uri="s3://atmostests/"):
+    def __init__(self, case, meshCase, tracer, timestep, fvSchemes, parallel):
         pass
 
     def write(self):

@@ -27,7 +27,7 @@ rule geodesicHexPatch
 
 rule s3-upload
     description = s3-upload $source
-    command = ninja/s3-upload.sh $source $target > $out
+    command = ninja/s3-upload.sh $source $s3uri > $out
 
 rule setInitialTracerField
     command = setInitialTracerField -case $case

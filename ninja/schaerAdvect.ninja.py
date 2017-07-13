@@ -4,7 +4,7 @@ import ninja_gen
 import os
 
 class SchaerAdvect:
-    def __init__(self, case, meshCase, timestep, fvSchemes, parallel, s3uri="s3://atmostests/"):
+    def __init__(self, case, meshCase, timestep, fvSchemes, parallel):
         self.case = case
         self.meshCase = meshCase
         self.timestep = timestep
@@ -12,7 +12,6 @@ class SchaerAdvect:
         self.writeInterval = 5000
         self.fvSchemes = fvSchemes
         self.parallel = parallel
-        self.s3uri = s3uri
 
     def write(self):
         case = self.case
@@ -55,7 +54,6 @@ class SchaerAdvect:
 
         g.s3upload(
                 case,
-                self.s3uri,
                 [case.path(str(self.endTime), "T"),
                  case.path(str(self.writeInterval), "T"),
                  case.path("0", "T")])
