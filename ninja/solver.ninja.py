@@ -18,7 +18,7 @@ def write(execution, taskCount, serialCommand):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate a solver .ninja file.')
+    parser = argparse.ArgumentParser()
     parser.add_argument('execution', choices=["serial", "parallel"], help="Determines how the solver is executed")
     parser.add_argument('taskCount', type=int, help="The number of MPI tasks used for parallel execution")
     parser.add_argument('serialCommand', help="The serial solver command line")

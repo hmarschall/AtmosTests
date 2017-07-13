@@ -21,9 +21,9 @@ def write(case, sourceBlockMeshDict, sourceControlDict=os.path.join("src", "cont
     g.copy(sourceControlDict, case.controlDict)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate a blockMesh .ninja file.')
-    parser.add_argument('case', help="OpenFOAM case directory")
-    parser.add_argument('blockMeshDict', help="Location of the blockMeshDict file")
-    args = parser.parse_args()
+    parser = ninja_gen.Parser()
+    parser.case()
+    parser.p.add_argument('blockMeshDict', help="Location of the blockMeshDict file")
+    args = parser.p.parse_args()
 
     write(ninja_gen.Case(args.case), args.blockMeshDict)

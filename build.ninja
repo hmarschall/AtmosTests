@@ -37,7 +37,7 @@ rule setVelocityField
 
 rule terrainFollowingMesh
     description = terrainFollowingMesh $terrainFollowingMeshCase
-    command = ninja/terrainFollowingMesh.ninja.sh $blockMeshCase $terrainFollowingMeshCase
+    command = ninja/terrainFollowingMesh.sh $blockMeshCase $terrainFollowingMeshCase
 
 include $gendir/advectionFoam.ninja
 include $gendir/deformationSphere-mesh-hex-3/build.ninja

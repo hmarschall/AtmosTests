@@ -72,7 +72,7 @@ class SchaerAdvect:
                  case.path("0", "T")])
 
 if __name__ == '__main__':
-    parser = ninja_gen.Parser(description='Generate a schaerAdvect .ninja file.  Default values in square brackets.')
+    parser = ninja_gen.Parser()
     parser.case()
     parser.meshCase()
     parser.p.add_argument('timestep', type=float, help="double-precision float that divides into 5000")
