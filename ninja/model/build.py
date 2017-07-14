@@ -35,5 +35,12 @@ class Build:
                 raise
 
         for case in self.cases:
-            case.write(self)
+            with open(
+                    '{gendir}/{case}.build.ninja'.format(
+                        gendir=self.gendir, case=case),
+                    'wt') as out:
+                g = gen.Generator(out)
+                g.header()
+
+                case.write(g)
 

@@ -10,27 +10,21 @@ class BlockMesh:
         self.blockMeshDict = blockMeshDict
         self.controlDict = controlDict
 
-    def write(self, build):
+    def write(self, generator):
+        g = generator
         case = self.case
 
-        with open(
-                '{gendir}/{case}.build.ninja'.format(
-                    gendir=build.gendir, case=self),
-                'wt') as out:
-            g = gen.Generator(out)
-            g.header()
+        g.w.build(
+                outputs=case.polyMesh,
+                rule="blockMesh",
+                inputs=case.blockMeshDict,
+                implicit=case.controlDict,
+                variables={"case": case}
+        )
+        g.w.newline()
 
-            g.w.build(
-                    outputs=case.polyMesh,
-                    rule="blockMesh",
-                    inputs=case.blockMeshDict,
-                    implicit=case.controlDict,
-                    variables={"case": case}
-            )
-            g.w.newline()
-
-            g.copy(self.blockMeshDict, case.blockMeshDict)
-            g.copy(self.controlDict, case.controlDict)
+        g.copy(self.blockMeshDict, case.blockMeshDict)
+        g.copy(self.controlDict, case.controlDict)
 
     def __str__(self):
         return self.root
