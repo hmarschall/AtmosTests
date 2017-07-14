@@ -18,6 +18,6 @@ if __name__ == '__main__':
             os.path.join('src', 'schaerAdvect', 'mesh-btf'))
 
     build.add(meshNoOrography)
-    #build.add(meshBtf)
+    build.add(meshBtf)
 
     build.write()
