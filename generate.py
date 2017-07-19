@@ -16,6 +16,7 @@ class AtmosTests:
 
         self.build = ninja.model.Build()
         self.solvers()
+        self.deformationSphere()
         self.schaerAdvect()
 
     def write(self):
@@ -25,6 +26,15 @@ class AtmosTests:
         advectionFoam = ninja.model.Solver('advectionFoam', 'advectionFoam -case $case -heun2', self.parallel)
 
         self.build.add(advectionFoam)
+
+    def deformationSphere(self):
+        b = self.build
+
+        meshHex4 = ninja.model.GeodesicHexMesh(
+                'deformationSphere-mesh-hex-4',
+                4)
+
+        b.add(meshHex4)
 
     def schaerAdvect(self):
         b = self.build

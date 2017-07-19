@@ -1,16 +1,3 @@
-builddir = build.ninja.generated
-casedir = build
-include build.properties
-
-include ninja/rules.generate.ninja
-include ninja/solvers.generate.ninja
-
-# deformationSphere
-
-build $builddir/deformationSphere-mesh-hex-4/build.ninja: geodesicHexMesh.ninja
-    case = $casedir/deformationSphere-mesh-hex-4
-    refinement = 4
-
 build $builddir/deformationSphere-gaussians-hex-4-linearUpwind/build.ninja: deformationSphere.ninja
     case = $casedir/deformationSphere-gaussians-hex-4-linearUpwind
     meshCase = $casedir/deformationSphere-mesh-hex-4
@@ -18,19 +5,3 @@ build $builddir/deformationSphere-gaussians-hex-4-linearUpwind/build.ninja: defo
     fvSchemes = src/schaerAdvect/linearUpwind
     tracerFieldDict = src/deformationSphere/gaussians
 
-# schaerAdvect
-
-build $builddir/schaerAdvect-mesh-noOrography/build.ninja: blockMesh.ninja
-    case = $casedir/schaerAdvect-mesh-noOrography
-    blockMeshDict = src/schaerAdvect/mesh-noOrography
-
-build $builddir/schaerAdvect-mesh-btf/build.ninja: terrainFollowingMesh.ninja
-    case = $casedir/schaerAdvect-mesh-btf
-    blockMeshCase = $casedir/schaerAdvect-mesh-noOrography
-    mountainDict = src/schaerAdvect/mesh-btf
-
-build $builddir/schaerAdvect-noOrography-linearUpwind/build.ninja: schaerAdvect.ninja
-    case = $casedir/schaerAdvect-noOrography-linearUpwind
-    meshCase = $casedir/schaerAdvect-mesh-noOrography
-    timestep = 8
-    fvSchemes = src/schaerAdvect/linearUpwind
