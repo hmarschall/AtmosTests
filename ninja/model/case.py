@@ -3,8 +3,9 @@ from .paths import Paths
 import os
 
 class Case:
-    def __init__(self, root):
-        self.root = os.path.join('$builddir', root)
+    def __init__(self, name):
+        self.name = name
+        self.root = os.path.join('$builddir', name)
         self.advectionDict = self.path("system", "advectionDict")
         self.blockMeshDict = self.path("system", "blockMeshDict")
         self.controlDict = self.path("system", "controlDict")

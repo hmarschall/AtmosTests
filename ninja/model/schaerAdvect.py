@@ -1,22 +1,22 @@
-#!/usr/bin/python3
-
-import ninja_gen
 import os
 
+from .case import Case
+from .timing import Timing
+from .. import gen
+
 class SchaerAdvect:
-    def __init__(self, case, meshCase, timestep, fvSchemes, parallel):
-        self.case = case
-        self.meshCase = meshCase
-        self.timing = ninja_gen.Timing(10000, 5000, timestep)
+    def __init__(self, name, mesh, timestep, fvSchemes, parallel):
+        self.case = Case(name)
+        self.mesh = mesh
+        self.timing = Timing(10000, 5000, timestep)
         self.fvSchemes = fvSchemes
         self.parallel = parallel
 
-    def write(self):
+    def write(self, generator):
+        g = generator
         case = self.case
-        g = ninja_gen.Generator()
-        g.header()
 
-        solver = ninja_gen.Solver(
+        solver = gen.Solver(
                 g,
                 case,
                 self.parallel,
@@ -35,17 +35,17 @@ class SchaerAdvect:
                 os.path.join("src", "schaerAdvect", "T_init")
         )
 
-        g.n.build(
+        g.w.build(
                 outputs=case.path("0", "phi"),
                 rule="setVelocityField",
                 implicit=case.polyMesh + case.systemFiles + [case.velocityFieldDict],
                 variables={"case": self.case}
         )
-        g.n.newline()
+        g.w.newline()
         g.copy(os.path.join("src", "schaerAdvect", "velocityField"), case.velocityFieldDict)
-        g.n.newline()
+        g.w.newline()
 
-        g.copyMesh(source=self.meshCase, target=case)
+        g.copyMesh(source=self.mesh.case, target=case)
         g.copy(self.fvSchemes, case.fvSchemes)
         g.copy(os.path.join("src", "fvSolution"), case.fvSolution)
         g.controlDict(case, self.timing)
@@ -56,14 +56,7 @@ class SchaerAdvect:
                  case.path(str(self.timing.writeInterval), "T"),
                  case.path("0", "T")])
 
-if __name__ == '__main__':
-    parser = ninja_gen.Parser()
-    parser.case()
-    parser.meshCase()
-    parser.timestep("double-precision float that divides into 5000")
-    parser.fvSchemes()
-    parser.solverExecution()
-    args = parser.p.parse_args()
+    def __str__(self):
+        return self.case.name
 
-    solver = SchaerAdvect(ninja_gen.Case(args.case), ninja_gen.Case(args.meshCase), args.timestep, args.fvSchemes, args.solver_execution=="parallel")
-    solver.write()
+

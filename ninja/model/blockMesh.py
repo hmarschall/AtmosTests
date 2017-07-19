@@ -4,9 +4,8 @@ from .case import Case
 from .. import gen
 
 class BlockMesh:
-    def __init__(self, root, blockMeshDict, controlDict=os.path.join("src", "controlDict")):
-        self.root = root
-        self.case = Case(root)
+    def __init__(self, name, blockMeshDict, controlDict=os.path.join("src", "controlDict")):
+        self.case = Case(name)
         self.blockMeshDict = blockMeshDict
         self.controlDict = controlDict
 
@@ -27,5 +26,5 @@ class BlockMesh:
         g.copy(self.controlDict, case.controlDict)
 
     def __str__(self):
-        return self.root
+        return self.case.name
 

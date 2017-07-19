@@ -17,4 +17,4 @@ solver=$3
 
 decomposePar -force -constant -case $(realpath $case) # https://bugs.openfoam.org/view.php?id=2610
 mpirun -np $taskCount $solver -parallel
-reconstructPar -case $case -constant
+reconstructPar -case $case

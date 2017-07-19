@@ -4,9 +4,8 @@ from .case import Case
 from .. import gen
 
 class TerrainFollowingMesh:
-    def __init__(self, root, blockMesh, mountainDict, controlDict=os.path.join("src", "controlDict")):
-        self.root = root
-        self.case = Case(root)
+    def __init__(self, name, blockMesh, mountainDict, controlDict=os.path.join("src", "controlDict")):
+        self.case = Case(name)
         self.blockMesh = blockMesh
         self.mountainDict = mountainDict
         self.controlDict = controlDict
@@ -28,4 +27,4 @@ class TerrainFollowingMesh:
         g.copy(self.controlDict, case.controlDict)
 
     def __str__(self):
-        return self.root
+        return self.case.name
