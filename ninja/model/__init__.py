@@ -1,6 +1,7 @@
 from .blockMesh import BlockMesh
 from .build import Build
 from .case import Case
+from .deformationSphere import DeformationSphere
 from .geodesicHexMesh import GeodesicHexMesh
 from .paths import Paths
 from .terrainFollowingMesh import TerrainFollowingMesh

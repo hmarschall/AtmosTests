@@ -59,4 +59,3 @@ class SchaerAdvect:
     def __str__(self):
         return self.case.name
 
-
