@@ -1,8 +1,0 @@
-build $builddir/advectionFoam.ninja: solver.ninja
-    application = advectionFoam
-    serialCommand = advectionFoam -case "$$"case -heun2
-
-build $builddir/sphericalAdvectionFoam.ninja: solver.ninja
-    application = sphericalAdvectionFoam
-    serialCommand = sphericalAdvectionFoam -case "$$"case -heun2
-

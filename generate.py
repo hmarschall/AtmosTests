@@ -23,9 +23,18 @@ class AtmosTests:
         self.build.write()
 
     def solvers(self):
-        advectionFoam = ninja.model.Solver('advectionFoam', 'advectionFoam -case $case -heun2', self.parallel)
+        advectionFoam = ninja.model.Solver(
+                'advectionFoam',
+                'advectionFoam -case $case -heun2',
+                self.parallel)
+
+        sphericalAdvectionFoam = ninja.model.Solver(
+                'sphericalAdvectionFoam',
+                'sphericalAdvectionFoam -case $case -heun2',
+                self.parallel)
 
         self.build.add(advectionFoam)
+        self.build.add(sphericalAdvectionFoam)
 
     def deformationSphere(self):
         b = self.build
