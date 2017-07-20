@@ -14,4 +14,4 @@ fi
 source=$1
 target=$2
 
-aws s3 cp --recursive $source $target$(basename $source)
+aws s3 cp --recursive --exclude 'processor*' $source $target$(basename $source)

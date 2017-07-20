@@ -39,11 +39,10 @@ class AtmosTests:
     def deformationSphere(self):
         b = self.build
 
-        meshHex4 = ninja.model.GeodesicHexMesh(
-                'deformationSphere-mesh-hex-4',
-                4)
+        meshHex4 = ninja.model.GeodesicHexMesh('deformationSphere-mesh-hex-4', 4)
+        meshHex8 = ninja.model.GeodesicHexMesh('deformationSphere-mesh-hex-8', 8)
 
-        gaussiansHex4LinearUpwind = ninja.model.DeformationSphere(
+        gaussiansHex4linearUpwind = ninja.model.DeformationSphere(
                 'deformationSphere-gaussians-hex-4-linearUpwind',
                 meshHex4,
                 timestep=3200,
@@ -51,8 +50,18 @@ class AtmosTests:
                 tracerFieldDict = os.path.join('src', 'deformationSphere', 'gaussians'),
                 parallel=self.parallel)
 
+        gaussiansHex8cubicFit = ninja.model.DeformationSphere(
+                'deformationSphere-gaussians-hex-8-cubicFit',
+                meshHex8,
+                timestep=200,
+                fvSchemes=os.path.join('src', 'deformationSphere', 'cubicFit'),
+                tracerFieldDict = os.path.join('src', 'deformationSphere', 'gaussians'),
+                parallel=self.parallel)
+
         b.add(meshHex4)
-        b.add(gaussiansHex4LinearUpwind)
+        b.add(meshHex8)
+        b.add(gaussiansHex4linearUpwind)
+        b.add(gaussiansHex8cubicFit)
 
     def schaerAdvect(self):
         b = self.build

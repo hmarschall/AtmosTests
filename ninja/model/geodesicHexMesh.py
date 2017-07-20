@@ -34,7 +34,11 @@ class GeodesicHexMesh:
         g.w.build(
                 outputs=case.path("patch.obj"),
                 rule="geodesicHexPatch",
-                variables={"case": case, "refinement": self.refinement}
+                variables={
+                    "pool": "console",
+                    "case": case,
+                    "refinement": self.refinement
+                }
         )
         g.w.newline()
 

@@ -25,7 +25,7 @@ class DeformationSphere:
         )
         solver.solve(
                 outputs=[case.path(str(self.timing.endTime), "T"),
-                         case.path(str(self.timing.endTime/2), "T")],
+                         case.path(str(self.timing.endTime//2), "T")],
                 rule="sphericalAdvectionFoam",
                 implicit=[case.path("0", "T"), case.advectionDict]
         )
@@ -45,7 +45,7 @@ class DeformationSphere:
         g.s3upload(
                 case,
                 [case.path(str(self.timing.endTime), "T"),
-                 case.path(str(self.timing.endTime/2), "T"),
+                 case.path(str(self.timing.endTime//2), "T"),
                  case.path("0", "T")])
 
     def __str__(self):
