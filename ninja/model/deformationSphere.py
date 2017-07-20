@@ -1,8 +1,23 @@
 import os
 
 from .case import Case
+from .geodesicHexMesh import GeodesicHexMesh
 from .timing import Timing
 from .. import gen
+
+class DeformationSphereBuilder:
+    def __init__(self, parallel, fast, fastMesh):
+        self.parallel = parallel
+        self.fast = fast
+        self.fastMesh = fastMesh
+
+    def test(self, name, mesh, timestep, fvSchemes, tracerFieldDict):
+        if self.fast:
+            mesh = self.fastMesh
+            timestep = 6400
+            fvSchemes = os.path.join('src', 'schaerAdvect', 'linearUpwind')
+
+        return DeformationSphere(name, mesh, timestep, fvSchemes, tracerFieldDict, self.parallel)
 
 class DeformationSphere:
     def __init__(self, name, mesh, timestep, fvSchemes, tracerFieldDict, parallel):

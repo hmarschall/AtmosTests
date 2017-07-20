@@ -13,6 +13,7 @@ class AtmosTests:
         with open('build.properties', 'r') as f:
             config.read_file(itertools.chain(['[default]'], f))
             self.parallel = config['default']['solver_execution'] == 'parallel'
+            self.fast = bool(config['default']['fast_standins'])
 
         self.build = ninja.model.Build()
         self.solvers()
@@ -39,25 +40,27 @@ class AtmosTests:
     def deformationSphere(self):
         b = self.build
 
+        fastMesh = ninja.model.GeodesicHexMesh('deformationSphere-mesh-fast', 3)
         meshHex4 = ninja.model.GeodesicHexMesh('deformationSphere-mesh-hex-4', 4)
         meshHex8 = ninja.model.GeodesicHexMesh('deformationSphere-mesh-hex-8', 8)
 
-        gaussiansHex4linearUpwind = ninja.model.DeformationSphere(
+        deformationSphere = ninja.model.DeformationSphereBuilder(self.parallel, self.fast, fastMesh)
+
+        gaussiansHex4linearUpwind = deformationSphere.test(
                 'deformationSphere-gaussians-hex-4-linearUpwind',
                 meshHex4,
                 timestep=3200,
                 fvSchemes=os.path.join('src', 'schaerAdvect', 'linearUpwind'),
-                tracerFieldDict = os.path.join('src', 'deformationSphere', 'gaussians'),
-                parallel=self.parallel)
+                tracerFieldDict = os.path.join('src', 'deformationSphere', 'gaussians'))
 
-        gaussiansHex8cubicFit = ninja.model.DeformationSphere(
+        gaussiansHex8cubicFit = deformationSphere.test(
                 'deformationSphere-gaussians-hex-8-cubicFit',
                 meshHex8,
                 timestep=200,
                 fvSchemes=os.path.join('src', 'deformationSphere', 'cubicFit'),
-                tracerFieldDict = os.path.join('src', 'deformationSphere', 'gaussians'),
-                parallel=self.parallel)
+                tracerFieldDict = os.path.join('src', 'deformationSphere', 'gaussians'))
 
+        b.add(fastMesh)
         b.add(meshHex4)
         b.add(meshHex8)
         b.add(gaussiansHex4linearUpwind)
