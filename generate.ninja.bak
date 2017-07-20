@@ -1,7 +1,0 @@
-build $builddir/deformationSphere-gaussians-hex-4-linearUpwind/build.ninja: deformationSphere.ninja
-    case = $casedir/deformationSphere-gaussians-hex-4-linearUpwind
-    meshCase = $casedir/deformationSphere-mesh-hex-4
-    timestep = 3200
-    fvSchemes = src/schaerAdvect/linearUpwind
-    tracerFieldDict = src/deformationSphere/gaussians
-
