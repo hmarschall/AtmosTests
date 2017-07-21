@@ -1,7 +1,7 @@
 import errno
 import os
 
-from .. import gen
+from ninjaopenfoam import Generator
 
 class Build:
     def __init__(self):
@@ -13,7 +13,7 @@ class Build:
 
     def write(self):
         with open('build.ninja', 'wt') as out:
-            g = gen.Generator(out)
+            g = Generator(out)
             g.header()
 
             g.w.variable('builddir', 'build')
@@ -39,7 +39,7 @@ class Build:
                     '{gendir}/{case}.build.ninja'.format(
                         gendir=self.gendir, case=case),
                     'wt') as out:
-                g = gen.Generator(out)
+                g = Generator(out)
                 g.header()
 
                 case.write(g)

@@ -1,7 +1,6 @@
 import os
 
 from .case import Case
-from .. import gen
 
 class TerrainFollowingMesh:
     def __init__(self, name, blockMesh, mountainDict, controlDict=os.path.join("src", "controlDict")):

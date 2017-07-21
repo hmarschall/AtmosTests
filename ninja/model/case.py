@@ -1,4 +1,4 @@
-from .paths import Paths
+from ninjaopenfoam import Paths
 
 import os
 

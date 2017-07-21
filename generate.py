@@ -3,7 +3,6 @@
 import configparser
 import errno
 import itertools
-import ninja.gen
 import ninja.model
 import os
 

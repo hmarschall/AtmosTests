@@ -1,7 +1,6 @@
 import os
 
 from .case import Case
-from .. import gen
 
 class BlockMesh:
     def __init__(self, name, blockMeshDict, controlDict=os.path.join("src", "controlDict")):
