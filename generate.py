@@ -3,6 +3,7 @@
 import configparser
 import errno
 import itertools
+from ninjaopenfoam import Build
 import ninja.model
 import os
 
@@ -14,7 +15,7 @@ class AtmosTests:
             self.parallel = config['default']['solver_execution'] == 'parallel'
             self.fast = bool(config['default']['fast_standins'])
 
-        self.build = ninja.model.Build()
+        self.build = Build()
         self.solvers()
         self.deformationSphere()
         self.schaerAdvect()

@@ -58,10 +58,15 @@ From:ubuntu:17.04
 	       python3-setuptools \
 	       python3-pip \
 	       openfoam-dev \
-	       ssh-client
+	       ssh-client \
+	       git \
+	       ca-certificates
 
 	pip3 install wheel
 	pip3 install awscli
+
+	git clone https://github.com/hertzsprung/ninjaopenfoam.git
+	pip3 install ninjaopenfoam/
 
 	DEBIAN_FRONTEND=noninteractive \
         apt-get install -y --no-install-recommends --allow-unauthenticated \
