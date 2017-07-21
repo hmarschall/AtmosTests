@@ -3,8 +3,7 @@
 import configparser
 import errno
 import itertools
-from ninjaopenfoam import Build
-import ninja.model
+from ninjaopenfoam import BlockMesh, Build, DeformationSphereBuilder, GeodesicHexMesh, SolverRule, SchaerAdvect, TerrainFollowingMesh
 import os
 
 class AtmosTests:
@@ -24,12 +23,12 @@ class AtmosTests:
         self.build.write()
 
     def solvers(self):
-        advectionFoam = ninja.model.Solver(
+        advectionFoam = SolverRule(
                 'advectionFoam',
                 'advectionFoam -case $case -heun2',
                 self.parallel)
 
-        sphericalAdvectionFoam = ninja.model.Solver(
+        sphericalAdvectionFoam = SolverRule(
                 'sphericalAdvectionFoam',
                 'sphericalAdvectionFoam -case $case -heun2',
                 self.parallel)
@@ -40,11 +39,11 @@ class AtmosTests:
     def deformationSphere(self):
         b = self.build
 
-        fastMesh = ninja.model.GeodesicHexMesh('deformationSphere-mesh-fast', 3)
-        meshHex4 = ninja.model.GeodesicHexMesh('deformationSphere-mesh-hex-4', 4)
-        meshHex8 = ninja.model.GeodesicHexMesh('deformationSphere-mesh-hex-8', 8)
+        fastMesh = GeodesicHexMesh('deformationSphere-mesh-fast', 3)
+        meshHex4 = GeodesicHexMesh('deformationSphere-mesh-hex-4', 4)
+        meshHex8 = GeodesicHexMesh('deformationSphere-mesh-hex-8', 8)
 
-        deformationSphere = ninja.model.DeformationSphereBuilder(self.parallel, self.fast, fastMesh)
+        deformationSphere = DeformationSphereBuilder(self.parallel, self.fast, fastMesh)
 
         gaussiansHex4linearUpwind = deformationSphere.test(
                 'deformationSphere-gaussians-hex-4-linearUpwind',
@@ -69,16 +68,16 @@ class AtmosTests:
     def schaerAdvect(self):
         b = self.build
 
-        meshNoOrography = ninja.model.BlockMesh(
+        meshNoOrography = BlockMesh(
                 'schaerAdvect-mesh-noOrography',
                 os.path.join('src', 'schaerAdvect', 'mesh-noOrography'))
 
-        meshBtf = ninja.model.TerrainFollowingMesh(
+        meshBtf = TerrainFollowingMesh(
                 'schaerAdvect-mesh-btf',
                 meshNoOrography,
                 os.path.join('src', 'schaerAdvect', 'mesh-btf'))
 
-        noOrographyLinearUpwind = ninja.model.SchaerAdvect(
+        noOrographyLinearUpwind = SchaerAdvect(
                 'schaerAdvect-noOrography-linearUpwind',
                 meshNoOrography,
                 timestep=8,
