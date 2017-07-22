@@ -3,7 +3,7 @@
 import configparser
 import errno
 import itertools
-from ninjaopenfoam import BlockMesh, Build, DeformationSphereBuilder, GeodesicHexMesh, SolverRule, SchaerAdvect, TerrainFollowingMesh
+from ninjaopenfoam import BlockMesh, Build, DeformationSphereBuilder, DeformationSphereCollated, GeodesicHexMesh, SolverRule, SchaerAdvect, TerrainFollowingMesh
 import os
 
 class AtmosTests:
@@ -41,47 +41,58 @@ class AtmosTests:
 
         fastMesh = GeodesicHexMesh('deformationSphere-mesh-fast', 3)
         meshHex4 = GeodesicHexMesh('deformationSphere-mesh-hex-4', 4)
+        meshHex5 = GeodesicHexMesh('deformationSphere-mesh-hex-5', 5)
+        meshHex6 = GeodesicHexMesh('deformationSphere-mesh-hex-6', 6)
+        meshHex7 = GeodesicHexMesh('deformationSphere-mesh-hex-7', 7)
         meshHex8 = GeodesicHexMesh('deformationSphere-mesh-hex-8', 8)
 
         deformationSphere = DeformationSphereBuilder(self.parallel, self.fast, fastMesh)
 
-        gaussiansHex4linearUpwind = deformationSphere.test(
-                'deformationSphere-gaussians-hex-4-linearUpwind',
-                meshHex4,
-                timestep=3200,
-                fvSchemes=os.path.join('src', 'schaerAdvect', 'linearUpwind'),
-                tracerFieldDict = os.path.join('src', 'deformationSphere', 'gaussians'))
+        gaussiansHexLinearUpwindCollated = deformationSphere.collated(
+                'deformationSphere-gaussians-hex-linearUpwind-collated',
+                fvSchemes=os.path.join('src/schaerAdvect/linearUpwind'),
+                tracerFieldDict=os.path.join('src/deformationSphere/gaussians'),
+                tests=[
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-4-linearUpwind', meshHex4, timestep=3200),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-5-linearUpwind', meshHex5, timestep=1600)
+        ])
 
-        gaussiansHex8cubicFit = deformationSphere.test(
-                'deformationSphere-gaussians-hex-8-cubicFit',
-                meshHex8,
-                timestep=200,
-                fvSchemes=os.path.join('src', 'deformationSphere', 'cubicFit'),
-                tracerFieldDict = os.path.join('src', 'deformationSphere', 'gaussians'))
+        gaussiansHexCubicFitCollated = deformationSphere.collated(
+                'deformationSphere-gaussians-hex-cubicFit-collated',
+                fvSchemes=os.path.join('src/deformationSphere/cubicFit'),
+                tracerFieldDict=os.path.join('src/deformationSphere/gaussians'),
+                tests=[
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-4-cubicFit', meshHex4, timestep=3200),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-5-cubicFit', meshHex5, timestep=1600),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-6-cubicFit', meshHex5, timestep=800),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-7-cubicFit', meshHex5, timestep=400),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-8-cubicFit', meshHex5, timestep=200)
+        ])
 
         b.add(fastMesh)
         b.add(meshHex4)
-        b.add(meshHex8)
-        b.add(gaussiansHex4linearUpwind)
-        b.add(gaussiansHex8cubicFit)
+        b.add(meshHex5)
+
+        b.add(gaussiansHexLinearUpwindCollated)
+        b.add(gaussiansHexCubicFitCollated)
 
     def schaerAdvect(self):
         b = self.build
 
         meshNoOrography = BlockMesh(
                 'schaerAdvect-mesh-noOrography',
-                os.path.join('src', 'schaerAdvect', 'mesh-noOrography'))
+                os.path.join('src/schaerAdvect/mesh-noOrography'))
 
         meshBtf = TerrainFollowingMesh(
                 'schaerAdvect-mesh-btf',
                 meshNoOrography,
-                os.path.join('src', 'schaerAdvect', 'mesh-btf'))
+                os.path.join('src/schaerAdvect/mesh-btf'))
 
         noOrographyLinearUpwind = SchaerAdvect(
                 'schaerAdvect-noOrography-linearUpwind',
                 meshNoOrography,
                 timestep=8,
-                fvSchemes=os.path.join('src', 'schaerAdvect', 'linearUpwind'),
+                fvSchemes=os.path.join('src/schaerAdvect/linearUpwind'),
                 parallel=self.parallel)
 
         b.add(meshNoOrography)
