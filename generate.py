@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import configparser
+import distutils.util
 import errno
 import itertools
 from ninjaopenfoam import BlockMesh, Build, DeformationSphereBuilder, DeformationSphereCollated, GeodesicHexMesh, SolverRule, SchaerAdvect, TerrainFollowingMesh
@@ -12,7 +13,7 @@ class AtmosTests:
         with open('build.properties', 'r') as f:
             config.read_file(itertools.chain(['[default]'], f))
             self.parallel = config['default']['solver_execution'] == 'parallel'
-            self.fast = bool(config['default']['fast_standins'])
+            self.fast = bool(distutils.util.strtobool(config['default']['fast_standins']))
 
         self.build = Build()
         self.solvers()
