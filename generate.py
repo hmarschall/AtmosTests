@@ -56,6 +56,9 @@ class AtmosTests:
                 tests=[
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-4-linearUpwind', meshHex4, timestep=3200),
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-5-linearUpwind', meshHex5, timestep=1600)
+#                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-6-linearUpwind', meshHex6, timestep=800),
+#                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-7-linearUpwind', meshHex7, timestep=400),
+#                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-8-linearUpwind', meshHex8, timestep=200)
         ])
 
         gaussiansHexCubicFitCollated = deformationSphere.collated(
@@ -65,8 +68,8 @@ class AtmosTests:
                 tests=[
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-4-cubicFit', meshHex4, timestep=3200),
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-5-cubicFit', meshHex5, timestep=1600),
-                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-6-cubicFit', meshHex5, timestep=800),
-                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-7-cubicFit', meshHex5, timestep=400),
+#                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-6-cubicFit', meshHex5, timestep=800),
+#                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-7-cubicFit', meshHex5, timestep=400),
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-8-cubicFit', meshHex5, timestep=200)
         ])
 
