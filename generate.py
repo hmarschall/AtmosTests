@@ -40,14 +40,13 @@ class AtmosTests:
     def deformationSphere(self):
         b = self.build
 
-        fastMesh = GeodesicHexMesh('deformationSphere-mesh-fast', 3)
-        meshHex4 = GeodesicHexMesh('deformationSphere-mesh-hex-4', 4)
-        meshHex5 = GeodesicHexMesh('deformationSphere-mesh-hex-5', 5)
-        meshHex6 = GeodesicHexMesh('deformationSphere-mesh-hex-6', 6)
-        meshHex7 = GeodesicHexMesh('deformationSphere-mesh-hex-7', 7)
-        meshHex8 = GeodesicHexMesh('deformationSphere-mesh-hex-8', 8)
+        meshHex4 = GeodesicHexMesh('deformationSphere-mesh-hex-4', 4, self.fast)
+        meshHex5 = GeodesicHexMesh('deformationSphere-mesh-hex-5', 5, self.fast)
+        meshHex6 = GeodesicHexMesh('deformationSphere-mesh-hex-6', 6, self.fast)
+        meshHex7 = GeodesicHexMesh('deformationSphere-mesh-hex-7', 7, self.fast)
+        meshHex8 = GeodesicHexMesh('deformationSphere-mesh-hex-8', 8, self.fast)
 
-        deformationSphere = DeformationSphereBuilder(self.parallel, self.fast, fastMesh)
+        deformationSphere = DeformationSphereBuilder(self.parallel, self.fast)
 
         gaussiansHexLinearUpwindCollated = deformationSphere.collated(
                 'deformationSphere-gaussians-hex-linearUpwind-collated',
@@ -55,10 +54,10 @@ class AtmosTests:
                 tracerFieldDict=os.path.join('src/deformationSphere/gaussians'),
                 tests=[
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-4-linearUpwind', meshHex4, timestep=3200),
-                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-5-linearUpwind', meshHex5, timestep=1600)
-#                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-6-linearUpwind', meshHex6, timestep=800),
-#                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-7-linearUpwind', meshHex7, timestep=400),
-#                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-8-linearUpwind', meshHex8, timestep=200)
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-5-linearUpwind', meshHex5, timestep=1600),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-6-linearUpwind', meshHex6, timestep=800),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-7-linearUpwind', meshHex7, timestep=400),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-8-linearUpwind', meshHex8, timestep=200)
         ])
 
         gaussiansHexCubicFitCollated = deformationSphere.collated(
@@ -68,14 +67,16 @@ class AtmosTests:
                 tests=[
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-4-cubicFit', meshHex4, timestep=3200),
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-5-cubicFit', meshHex5, timestep=1600),
-#                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-6-cubicFit', meshHex5, timestep=800),
-#                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-7-cubicFit', meshHex5, timestep=400),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-6-cubicFit', meshHex5, timestep=800),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-hex-7-cubicFit', meshHex5, timestep=400),
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-8-cubicFit', meshHex5, timestep=200)
         ])
 
-        b.add(fastMesh)
         b.add(meshHex4)
         b.add(meshHex5)
+        b.add(meshHex6)
+        b.add(meshHex7)
+        b.add(meshHex8)
 
         b.add(gaussiansHexLinearUpwindCollated)
         b.add(gaussiansHexCubicFitCollated)
