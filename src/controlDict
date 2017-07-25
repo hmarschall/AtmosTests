@@ -6,10 +6,11 @@ FoamFile {
     object      controlDict;
 }
 
-deltaT              0;
+deltaT              1;
 writeFrequency      0;
 writeFormat         binary;
 writePrecision      12;
 writeCompression    uncompressed;
 timeFormat          fixed;
 timePrecision       0;
+

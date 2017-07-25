@@ -4,7 +4,7 @@ import configparser
 import distutils.util
 import errno
 import itertools
-from ninjaopenfoam import BlockMesh, Build, DeformationSphereBuilder, DeformationSphereCollated, GeodesicHexMesh, SolverRule, SchaerAdvect, TerrainFollowingMesh
+from ninjaopenfoam import BlockMesh, Build, CubedSphereMesh, DeformationSphereBuilder, DeformationSphereCollated, GeodesicHexMesh, SolverRule, SchaerAdvect, TerrainFollowingMesh
 import os
 
 class AtmosTests:
@@ -47,6 +47,12 @@ class AtmosTests:
         meshHex8 = GeodesicHexMesh('deformationSphere-mesh-hex-8', 8, self.fast)
         meshHex9 = GeodesicHexMesh('deformationSphere-mesh-hex-9', 9, self.fast)
 
+        meshCubedSphere15 = CubedSphereMesh('deformationSphere-mesh-cubedSphere-15', 15, self.fast)
+        meshCubedSphere30 = CubedSphereMesh('deformationSphere-mesh-cubedSphere-30', 30, self.fast)
+        meshCubedSphere60 = CubedSphereMesh('deformationSphere-mesh-cubedSphere-60', 60, self.fast)
+        meshCubedSphere120 = CubedSphereMesh('deformationSphere-mesh-cubedSphere-120', 120, self.fast)
+        meshCubedSphere240 = CubedSphereMesh('deformationSphere-mesh-cubedSphere-240', 240, self.fast)
+
         deformationSphere = DeformationSphereBuilder(self.parallel, self.fast)
 
         gaussiansHexLinearUpwindCollated = deformationSphere.collated(
@@ -62,6 +68,18 @@ class AtmosTests:
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-9-linearUpwind', meshHex9, timestep=100)
         ])
 
+        gaussiansCubedSphereLinearUpwindCollated = deformationSphere.collated(
+                'deformationSphere-gaussians-cubedSphere-linearUpwind-collated',
+                fvSchemes=os.path.join('src/schaerAdvect/linearUpwind'),
+                tracerFieldDict=os.path.join('src/deformationSphere/gaussians'),
+                tests=[
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-15-linearUpwind', meshCubedSphere15, timestep=800),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-30-linearUpwind', meshCubedSphere30, timestep=400),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-60-linearUpwind', meshCubedSphere60, timestep=200),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-120-linearUpwind', meshCubedSphere120, timestep=100),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-240-linearUpwind', meshCubedSphere240, timestep=50)
+        ])
+
         gaussiansHexCubicFitCollated = deformationSphere.collated(
                 'deformationSphere-gaussians-hex-cubicFit-collated',
                 fvSchemes=os.path.join('src/deformationSphere/cubicFit'),
@@ -75,6 +93,18 @@ class AtmosTests:
                     DeformationSphereCollated.Test('deformationSphere-gaussians-hex-9-cubicFit', meshHex9, timestep=100)
         ])
 
+        gaussiansCubedSphereCubicFitCollated = deformationSphere.collated(
+                'deformationSphere-gaussians-cubedSphere-cubicFit-collated',
+                fvSchemes=os.path.join('src/deformationSphere/cubicFit'),
+                tracerFieldDict=os.path.join('src/deformationSphere/gaussians'),
+                tests=[
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-15-cubicFit', meshCubedSphere15, timestep=800),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-30-cubicFit', meshCubedSphere30, timestep=400),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-60-cubicFit', meshCubedSphere60, timestep=200),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-120-cubicFit', meshCubedSphere120, timestep=100),
+                    DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-240-cubicFit', meshCubedSphere240, timestep=50)
+        ])
+
         b.add(meshHex4)
         b.add(meshHex5)
         b.add(meshHex6)
@@ -82,10 +112,23 @@ class AtmosTests:
         b.add(meshHex8)
         b.add(meshHex9)
 
+        b.add(meshCubedSphere15)
+        b.add(meshCubedSphere30)
+        b.add(meshCubedSphere60)
+        b.add(meshCubedSphere120)
+        b.add(meshCubedSphere240)
+
         b.add(gaussiansHexLinearUpwindCollated)
         b.addAll(gaussiansHexLinearUpwindCollated.tests)
+
+        b.add(gaussiansCubedSphereLinearUpwindCollated)
+        b.addAll(gaussiansCubedSphereLinearUpwindCollated.tests)
+
         b.add(gaussiansHexCubicFitCollated)
         b.addAll(gaussiansHexCubicFitCollated.tests)
+
+        b.add(gaussiansCubedSphereCubicFitCollated)
+        b.addAll(gaussiansCubedSphereCubicFitCollated.tests)
 
     def schaerAdvect(self):
         b = self.build

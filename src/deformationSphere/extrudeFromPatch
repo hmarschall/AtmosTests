@@ -1,0 +1,31 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      extrudeMeshDict;
+}
+
+constructFrom patch;
+
+sourceCase "$blockMeshCase";
+sourcePatches (otherSide);
+
+exposedPatchName "originalPatch";
+
+flipNormals false;
+
+//- Extrudes into sphere around (0 0 0)
+extrudeModel        linearRadial;
+
+nLayers             1;
+expansionRatio      1.0;
+
+linearRadialCoeffs
+{
+    R        6372200;
+    Rsurface 6370200;
+}
+
+mergeFaces false;
+mergeTol 0;
