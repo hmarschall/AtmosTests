@@ -57,6 +57,7 @@ From:ubuntu:17.04
 	       gettext-base \
 	       python3-setuptools \
 	       python3-pip \
+	       datamash \
 	       openfoam-dev \
 	       ssh-client \
 	       git \
