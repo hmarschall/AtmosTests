@@ -40,18 +40,18 @@ class AtmosTests:
     def deformationSphere(self):
         b = self.build
 
-        meshHex4 = GeodesicHexMesh('deformationSphere-mesh-hex-4', 4, self.fast)
-        meshHex5 = GeodesicHexMesh('deformationSphere-mesh-hex-5', 5, self.fast)
-        meshHex6 = GeodesicHexMesh('deformationSphere-mesh-hex-6', 6, self.fast)
-        meshHex7 = GeodesicHexMesh('deformationSphere-mesh-hex-7', 7, self.fast)
-        meshHex8 = GeodesicHexMesh('deformationSphere-mesh-hex-8', 8, self.fast)
-        meshHex9 = GeodesicHexMesh('deformationSphere-mesh-hex-9', 9, self.fast)
+        meshHex4 = b.add(GeodesicHexMesh('deformationSphere-mesh-hex-4', 4, self.fast))
+        meshHex5 = b.add(GeodesicHexMesh('deformationSphere-mesh-hex-5', 5, self.fast))
+        meshHex6 = b.add(GeodesicHexMesh('deformationSphere-mesh-hex-6', 6, self.fast))
+        meshHex7 = b.add(GeodesicHexMesh('deformationSphere-mesh-hex-7', 7, self.fast))
+        meshHex8 = b.add(GeodesicHexMesh('deformationSphere-mesh-hex-8', 8, self.fast))
+        meshHex9 = b.add(GeodesicHexMesh('deformationSphere-mesh-hex-9', 9, self.fast))
 
-        meshCubedSphere15 = CubedSphereMesh('deformationSphere-mesh-cubedSphere-15', 15, self.fast)
-        meshCubedSphere30 = CubedSphereMesh('deformationSphere-mesh-cubedSphere-30', 30, self.fast)
-        meshCubedSphere60 = CubedSphereMesh('deformationSphere-mesh-cubedSphere-60', 60, self.fast)
-        meshCubedSphere120 = CubedSphereMesh('deformationSphere-mesh-cubedSphere-120', 120, self.fast)
-        meshCubedSphere240 = CubedSphereMesh('deformationSphere-mesh-cubedSphere-240', 240, self.fast)
+        meshCubedSphere15 = b.add(CubedSphereMesh('deformationSphere-mesh-cubedSphere-15', 15, self.fast))
+        meshCubedSphere30 = b.add(CubedSphereMesh('deformationSphere-mesh-cubedSphere-30', 30, self.fast))
+        meshCubedSphere60 = b.add(CubedSphereMesh('deformationSphere-mesh-cubedSphere-60', 60, self.fast))
+        meshCubedSphere120 = b.add(CubedSphereMesh('deformationSphere-mesh-cubedSphere-120', 120, self.fast))
+        meshCubedSphere240 = b.add(CubedSphereMesh('deformationSphere-mesh-cubedSphere-240', 240, self.fast))
 
         deformationSphere = DeformationSphereBuilder(self.parallel, self.fast)
 
@@ -105,53 +105,46 @@ class AtmosTests:
                     DeformationSphereCollated.Test('deformationSphere-gaussians-cubedSphere-240-cubicFit', meshCubedSphere240, timestep=50)
         ])
 
-        b.add(meshHex4)
-        b.add(meshHex5)
-        b.add(meshHex6)
-        b.add(meshHex7)
-        b.add(meshHex8)
-        b.add(meshHex9)
-
-        b.add(meshCubedSphere15)
-        b.add(meshCubedSphere30)
-        b.add(meshCubedSphere60)
-        b.add(meshCubedSphere120)
-        b.add(meshCubedSphere240)
-
         b.add(gaussiansHexLinearUpwindCollated)
         b.addAll(gaussiansHexLinearUpwindCollated.tests)
-
         b.add(gaussiansCubedSphereLinearUpwindCollated)
         b.addAll(gaussiansCubedSphereLinearUpwindCollated.tests)
-
         b.add(gaussiansHexCubicFitCollated)
         b.addAll(gaussiansHexCubicFitCollated.tests)
-
         b.add(gaussiansCubedSphereCubicFitCollated)
         b.addAll(gaussiansCubedSphereCubicFitCollated.tests)
 
     def schaerAdvect(self):
         b = self.build
 
-        meshNoOrography = BlockMesh(
-                'schaerAdvect-mesh-noOrography',
-                os.path.join('src/schaerAdvect/mesh-noOrography'))
+        meshNoOrography5000 = b.add(BlockMesh('schaerAdvect-mesh-noOrography-5000', os.path.join('src/schaerAdvect/mesh-noOrography-5000')))
+        meshNoOrography2500 = b.add(BlockMesh('schaerAdvect-mesh-noOrography-2500', os.path.join('src/schaerAdvect/mesh-noOrography-2500')))
+        meshNoOrography2000 = b.add(BlockMesh('schaerAdvect-mesh-noOrography-2000', os.path.join('src/schaerAdvect/mesh-noOrography-2000')))
+        meshNoOrography1250 = b.add(BlockMesh('schaerAdvect-mesh-noOrography-1250', os.path.join('src/schaerAdvect/mesh-noOrography-1250')))
+        meshNoOrography1000 = b.add(BlockMesh('schaerAdvect-mesh-noOrography-1000', os.path.join('src/schaerAdvect/mesh-noOrography-1000')))
+        meshNoOrography667 = b.add(BlockMesh('schaerAdvect-mesh-noOrography-667', os.path.join('src/schaerAdvect/mesh-noOrography-667')))
+        meshNoOrography500 = b.add(BlockMesh('schaerAdvect-mesh-noOrography-500', os.path.join('src/schaerAdvect/mesh-noOrography-500')))
+        meshNoOrography333 = b.add(BlockMesh('schaerAdvect-mesh-noOrography-333', os.path.join('src/schaerAdvect/mesh-noOrography-333')))
+        meshNoOrography250 = b.add(BlockMesh('schaerAdvect-mesh-noOrography-250', os.path.join('src/schaerAdvect/mesh-noOrography-250')))
 
-        meshBtf = TerrainFollowingMesh(
-                'schaerAdvect-mesh-btf',
-                meshNoOrography,
-                os.path.join('src/schaerAdvect/mesh-btf'))
+        meshBtf5000 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-5000', meshNoOrography5000, os.path.join('src/schaerAdvect/mesh-btf')))
+        meshBtf2500 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-2500', meshNoOrography2500, os.path.join('src/schaerAdvect/mesh-btf')))
+        meshBtf2000 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-2000', meshNoOrography2000, os.path.join('src/schaerAdvect/mesh-btf')))
+        meshBtf1250 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-1250', meshNoOrography1250, os.path.join('src/schaerAdvect/mesh-btf')))
+        meshBtf1000 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-1000', meshNoOrography1000, os.path.join('src/schaerAdvect/mesh-btf')))
+        meshBtf667 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-667', meshNoOrography667, os.path.join('src/schaerAdvect/mesh-btf')))
+        meshBtf500 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-500', meshNoOrography500, os.path.join('src/schaerAdvect/mesh-btf')))
+        meshBtf333 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-333', meshNoOrography333, os.path.join('src/schaerAdvect/mesh-btf')))
+        meshBtf250 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-250', meshNoOrography250, os.path.join('src/schaerAdvect/mesh-btf')))
 
-        noOrographyLinearUpwind = SchaerAdvect(
-                'schaerAdvect-noOrography-linearUpwind',
-                meshNoOrography,
-                timestep=8,
-                fvSchemes=os.path.join('src/schaerAdvect/linearUpwind'),
-                parallel=self.parallel)
+#        noOrographyLinearUpwind = SchaerAdvect(
+#                'schaerAdvect-noOrography-linearUpwind',
+#                meshNoOrography,
+#                timestep=8,
+#                fvSchemes=os.path.join('src/schaerAdvect/linearUpwind'),
+#                parallel=self.parallel)
 
-        b.add(meshNoOrography)
-        b.add(meshBtf)
-        b.add(noOrographyLinearUpwind)
+#        schaerAdvect = SchaerAdvectBuilder(self.parallel, self.fast)
 
 
 if __name__ == '__main__':
