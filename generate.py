@@ -4,7 +4,8 @@ import configparser
 import distutils.util
 import errno
 import itertools
-from ninjaopenfoam import BlockMesh, Build, CubedSphereMesh, DeformationSphereBuilder, DeformationSphereCollated, GeodesicHexMesh, SolverRule, SchaerAdvect, TerrainFollowingMesh
+from ninjaopenfoam import BlockMesh, Build, CubedSphereMesh, DeformationSphereBuilder, DeformationSphereCollated, \
+                        GeodesicHexMesh, SolverRule, SchaerAdvectBuilder, SchaerAdvectCollated, TerrainFollowingMesh
 import os
 
 class AtmosTests:
@@ -137,14 +138,25 @@ class AtmosTests:
         meshBtf333 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-333', meshNoOrography333, os.path.join('src/schaerAdvect/mesh-btf')))
         meshBtf250 = b.add(TerrainFollowingMesh('schaerAdvect-mesh-btf-250', meshNoOrography250, os.path.join('src/schaerAdvect/mesh-btf')))
 
-#        noOrographyLinearUpwind = SchaerAdvect(
-#                'schaerAdvect-noOrography-linearUpwind',
-#                meshNoOrography,
-#                timestep=8,
-#                fvSchemes=os.path.join('src/schaerAdvect/linearUpwind'),
-#                parallel=self.parallel)
+        schaerAdvect = SchaerAdvectBuilder(self.parallel, self.fast, fastMesh=meshNoOrography5000)
 
-#        schaerAdvect = SchaerAdvectBuilder(self.parallel, self.fast)
+        btfLinearUpwindCollated = schaerAdvect.collated(
+                'schaerAdvect-btf-linearUpwind-collated',
+                fvSchemes=os.path.join('src/schaerAdvect/linearUpwind'),
+                tests=[
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-5000-linearUpwind', meshBtf5000, timestep=40),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-2500-linearUpwind', meshBtf2500, timestep=20),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-2000-linearUpwind', meshBtf2000, timestep=16),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-1250-linearUpwind', meshBtf1250, timestep=10),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-1000-linearUpwind', meshBtf1000, timestep=8),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-667-linearUpwind', meshBtf667, timestep=5),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-500-linearUpwind', meshBtf500, timestep=4),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-333-linearUpwind', meshBtf333, timestep=2.5),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-250-linearUpwind', meshBtf250, timestep=2)
+        ])
+
+        b.add(btfLinearUpwindCollated)
+        b.addAll(btfLinearUpwindCollated.tests)
 
 
 if __name__ == '__main__':
