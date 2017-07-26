@@ -155,8 +155,25 @@ class AtmosTests:
                     SchaerAdvectCollated.Test('schaerAdvect-btf-250-linearUpwind', meshBtf250, timestep=2)
         ])
 
+        btfCubicFitCollated = schaerAdvect.collated(
+                'schaerAdvect-btf-cubicFit-collated',
+                fvSchemes=os.path.join('src/schaerAdvect/cubicFit'),
+                tests=[
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-5000-cubicFit', meshBtf5000, timestep=40),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-2500-cubicFit', meshBtf2500, timestep=20),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-2000-cubicFit', meshBtf2000, timestep=16),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-1250-cubicFit', meshBtf1250, timestep=10),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-1000-cubicFit', meshBtf1000, timestep=8),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-667-cubicFit', meshBtf667, timestep=5),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-500-cubicFit', meshBtf500, timestep=4),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-333-cubicFit', meshBtf333, timestep=2.5),
+                    SchaerAdvectCollated.Test('schaerAdvect-btf-250-cubicFit', meshBtf250, timestep=2)
+        ])
+
         b.add(btfLinearUpwindCollated)
         b.addAll(btfLinearUpwindCollated.tests)
+        b.add(btfCubicFitCollated)
+        b.addAll(btfCubicFitCollated.tests)
 
 
 if __name__ == '__main__':
