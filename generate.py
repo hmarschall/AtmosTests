@@ -23,6 +23,7 @@ class AtmosTests:
         self.solvers()
         generators.DeformationSphere(self.parallel, self.fast).addTo(self.build)
         generators.SchaerAdvect(self.parallel, self.fast).addTo(self.build)
+        generators.MountainAdvect(self.parallel, self.fast).addTo(self.build)
 
     def write(self):
         self.build.write()
