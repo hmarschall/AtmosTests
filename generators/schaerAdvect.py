@@ -34,6 +34,7 @@ class SchaerAdvect:
 
         self.btfLinearUpwindCollated = schaerAdvect.collated(
                 'schaerAdvect-btf-linearUpwind-collated',
+                mountainHeight=6000,
                 fvSchemes=os.path.join('src/schaerAdvect/linearUpwind'),
                 tests=[
                     SchaerAdvectCollated.Test('schaerAdvect-btf-5000-linearUpwind', 5000, meshBtf5000, timestep=40),
@@ -49,6 +50,7 @@ class SchaerAdvect:
 
         self.btfCubicFitCollated = schaerAdvect.collated(
                 'schaerAdvect-btf-cubicFit-collated',
+                mountainHeight=6000,
                 fvSchemes=os.path.join('src/schaerAdvect/cubicFit'),
                 tests=[
                     SchaerAdvectCollated.Test('schaerAdvect-btf-5000-cubicFit', 5000, meshBtf5000, timestep=40),
