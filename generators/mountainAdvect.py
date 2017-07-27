@@ -6,4 +6,5 @@ class MountainAdvect:
         pass
 
     def addTo(self, build):
-        build.add(CutCellMesh('mountainAdvect-mesh-cutCell-1000-3000m', os.path.join('src/mountainAdvect/mesh-cutCell-1000-3000m'), os.path.join('src/mountainAdvect/createPatchDict')))
+        createPatchDict = os.path.join('src/mountainAdvect/createPatchDict')
+        build.add(CutCellMesh('mountainAdvect-mesh-cutCell-1000-3000m', os.path.join('src/mountainAdvect/mesh-cutCell-1000-3000m'), createPatchDict))
