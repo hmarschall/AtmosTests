@@ -73,4 +73,6 @@ From:ubuntu:17.04
         apt-get install -y --no-install-recommends --allow-unauthenticated \
 	       atmosfoam-tools \
 	       atmosfoam \
-	       gmd-geodesic-mesh
+	       gmd-geodesic-mesh \
+	       asam-gridgen \
+	       gmv2openfoam
