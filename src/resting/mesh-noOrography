@@ -26,14 +26,14 @@ blocks (
 
 boundary (
 	inlet {
-		type inlet;
+		type symmetryPlane;
 		faces (
 			(0 3 7 4)
 		);
 	}
 
 	outlet {
-		type outlet;
+		type symmetryPlane;
 		faces (
 			(1 2 6 5)
 		);
