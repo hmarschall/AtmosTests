@@ -7,7 +7,6 @@ FoamFile {
 }
 
 type            	schaerCos;
-domainHeight		25e3;
 halfWidth		25e3;
 peakHeight		4e3;
 wavelength		8e3;

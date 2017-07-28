@@ -5,7 +5,7 @@ import distutils.util
 import errno
 import generators
 import itertools
-from ninjaopenfoam import Build, SolverRule
+from ninjaopenfoam import Build
 import os
 
 class AtmosTests:
@@ -18,30 +18,20 @@ class AtmosTests:
 
         self.build = Build([
             'generators/deformationSphere.py',
-            'generators/schaerAdvect.py'])
+            'generators/mountainAdvect.py',
+            'generators/resting.py',
+            'generators/schaerAdvect.py',
+            'generators/solvers.py'])
 
-        self.solvers()
+        generators.Solvers(self.parallel).addTo(self.build)
+
         generators.DeformationSphere(self.parallel, self.fast).addTo(self.build)
-        generators.SchaerAdvect(self.parallel, self.fast).addTo(self.build)
         generators.MountainAdvect(self.parallel, self.fast).addTo(self.build)
+        generators.Resting(self.parallel, self.fast).addTo(self.build)
+        generators.SchaerAdvect(self.parallel, self.fast).addTo(self.build)
 
     def write(self):
         self.build.write()
-
-    def solvers(self):
-        advectionFoam = SolverRule(
-                'advectionFoam',
-                'advectionFoam -case $case -heun2',
-                self.parallel)
-
-        sphericalAdvectionFoam = SolverRule(
-                'sphericalAdvectionFoam',
-                'sphericalAdvectionFoam -case $case -heun2',
-                self.parallel)
-
-        self.build.add(advectionFoam)
-        self.build.add(sphericalAdvectionFoam)
-
 
 if __name__ == '__main__':
     AtmosTests().write()
