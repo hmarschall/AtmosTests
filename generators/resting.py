@@ -79,7 +79,6 @@ class Resting:
         build.add(self.sleve1000mCubicFit)
         build.add(self.sleve2000mCubicFit)
         build.add(self.sleve3000mCubicFit)
-        build.add(self.sleve1000mLinearUpwind)
         build.add(self.cutCell1000mLinearUpwind)
         build.add(self.cutCell2000mLinearUpwind)
         build.add(self.cutCell3000mLinearUpwind)
