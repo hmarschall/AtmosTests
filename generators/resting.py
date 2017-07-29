@@ -11,6 +11,10 @@ class Resting:
         meshBtf2000m = TerrainFollowingMesh('resting-mesh-btf-2000m', meshNoOrography, os.path.join('src/resting/mesh-btf-2000m'))
         meshBtf3000m = TerrainFollowingMesh('resting-mesh-btf-3000m', meshNoOrography, os.path.join('src/resting/mesh-btf-3000m'))
 
+        meshSleve1000m = TerrainFollowingMesh('resting-mesh-sleve-1000m', meshNoOrography, os.path.join('src/resting/mesh-sleve-1000m'))
+        meshSleve2000m = TerrainFollowingMesh('resting-mesh-sleve-2000m', meshNoOrography, os.path.join('src/resting/mesh-sleve-2000m'))
+        meshSleve3000m = TerrainFollowingMesh('resting-mesh-sleve-3000m', meshNoOrography, os.path.join('src/resting/mesh-sleve-3000m'))
+
         createPatchDict = os.path.join('src/resting/createPatchDict')
 
         meshCutCell1000m = CutCellMesh('resting-mesh-cutCell-1000m', os.path.join('src/resting/mesh-cutCell-1000m'), createPatchDict)
@@ -28,6 +32,14 @@ class Resting:
         self.btf1000mCubicFit = ninja.Resting('resting-btf-1000m-cubicFit', meshBtf1000m, os.path.join('src/resting/cubicFit'), parallel, fast)
         self.btf2000mCubicFit = ninja.Resting('resting-btf-2000m-cubicFit', meshBtf2000m, os.path.join('src/resting/cubicFit'), parallel, fast)
         self.btf3000mCubicFit = ninja.Resting('resting-btf-3000m-cubicFit', meshBtf3000m, os.path.join('src/resting/cubicFit'), parallel, fast)
+
+        self.sleve1000mLinearUpwind = ninja.Resting('resting-sleve-1000m-linearUpwind', meshSleve1000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
+        self.sleve2000mLinearUpwind = ninja.Resting('resting-sleve-2000m-linearUpwind', meshSleve2000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
+        self.sleve3000mLinearUpwind = ninja.Resting('resting-sleve-3000m-linearUpwind', meshSleve3000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
+
+        self.sleve1000mCubicFit = ninja.Resting('resting-sleve-1000m-cubicFit', meshSleve1000m, os.path.join('src/resting/cubicFit'), parallel, fast)
+        self.sleve2000mCubicFit = ninja.Resting('resting-sleve-2000m-cubicFit', meshSleve2000m, os.path.join('src/resting/cubicFit'), parallel, fast)
+        self.sleve3000mCubicFit = ninja.Resting('resting-sleve-3000m-cubicFit', meshSleve3000m, os.path.join('src/resting/cubicFit'), parallel, fast)
 
         self.cutCell1000mLinearUpwind = ninja.Resting('resting-cutCell-1000m-linearUpwind', meshCutCell1000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
         self.cutCell2000mLinearUpwind = ninja.Resting('resting-cutCell-2000m-linearUpwind', meshCutCell2000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
@@ -48,6 +60,7 @@ class Resting:
         self.meshes = [
                 meshNoOrography,
                 meshBtf1000m, meshBtf2000m, meshBtf3000m,
+                meshSleve1000m, meshSleve2000m, meshSleve3000m,
                 meshCutCell1000m, meshCutCell2000m, meshCutCell3000m,
                 meshSlantedCell1000m, meshSlantedCell2000m, meshSlantedCell3000m
         ]
@@ -60,6 +73,13 @@ class Resting:
         build.add(self.btf1000mCubicFit)
         build.add(self.btf2000mCubicFit)
         build.add(self.btf3000mCubicFit)
+        build.add(self.sleve1000mLinearUpwind)
+        build.add(self.sleve2000mLinearUpwind)
+        build.add(self.sleve3000mLinearUpwind)
+        build.add(self.sleve1000mCubicFit)
+        build.add(self.sleve2000mCubicFit)
+        build.add(self.sleve3000mCubicFit)
+        build.add(self.sleve1000mLinearUpwind)
         build.add(self.cutCell1000mLinearUpwind)
         build.add(self.cutCell2000mLinearUpwind)
         build.add(self.cutCell3000mLinearUpwind)

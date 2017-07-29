@@ -1,0 +1,22 @@
+FoamFile {
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      mountainDict;
+}
+
+type			sleve;
+domainHeight		20e3;
+coarseScale		4e3;
+fineScale		1e3;
+exponent		1.35;
+
+mountain
+{
+	type		schaerExp;
+	halfWidth	5e3;
+	peakHeight	1e3;
+	wavelength	4e3;
+}
+
