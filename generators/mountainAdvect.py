@@ -78,11 +78,11 @@ class MountainAdvect:
 
         # l2ByMountainHeight
 
-        velocityField0m = os.path.join('src/mountainAdvection/velocityField-0m')
-        velocityField3000m = os.path.join('src/mountainAdvection/velocityField-3000m')
-        velocityField4000m = os.path.join('src/mountainAdvection/velocityField-4000m')
-        velocityField5000m = os.path.join('src/mountainAdvection/velocityField-5000m')
-        velocityField6000m = os.path.join('src/mountainAdvection/velocityField-6000m')
+        velocityField0m = os.path.join('src/mountainAdvect/velocityField-0m')
+        velocityField3000m = os.path.join('src/mountainAdvect/velocityField-3000m')
+        velocityField4000m = os.path.join('src/mountainAdvect/velocityField-4000m')
+        velocityField5000m = os.path.join('src/mountainAdvect/velocityField-5000m')
+        velocityField6000m = os.path.join('src/mountainAdvect/velocityField-6000m')
 
         self.btfLinearUpwind = mountainAdvect.collateByMountainHeight(
                 'mountainAdvect-h0-btf-1000-linearUpwind-collated',
