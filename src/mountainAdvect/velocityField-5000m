@@ -6,6 +6,14 @@ FoamFile {
     object      velocityFieldDict;
 }
 
-type			horizontal;
-zeroVelocityHeight	7e3;
-maxVelocityHeight	8e3;
+type			btf;
+speed			10;
+domainHeight		10e3;
+
+mountain
+{
+	type		schaerCos;
+	halfWidth	25e3;
+	peakHeight	5e3;
+	wavelength	8e3;
+}
