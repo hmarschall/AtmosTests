@@ -22,13 +22,16 @@ class AtmosTests:
             'generators/mountainAdvect.py',
             'generators/resting.py',
             'generators/schaerAdvect.py',
-            'generators/solvers.py'])
+            'generators/solvers.py',
+            'generators/tfAdvect.py'
+        ])
 
         generators.Solvers(self.parallel).addTo(self.build)
 
         advect = generators.Advect()
         advect.addTo(self.build)
         generators.SchaerAdvect(advect, self.parallel, self.fast).addTo(self.build)
+        generators.TerrainFollowingAdvect(advect, self.parallel, self.fast).addTo(self.build)
         generators.DeformationSphere(self.parallel, self.fast).addTo(self.build)
         generators.MountainAdvect(advect, self.parallel, self.fast).addTo(self.build)
         generators.Resting(self.parallel, self.fast).addTo(self.build)
