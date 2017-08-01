@@ -3,11 +3,15 @@ import os
 
 class SchaerAdvect:
     def __init__(self, advect, parallel, fast):
-        schaerAdvect = SchaerAdvectBuilder(parallel, fast, fastMesh=advect.meshNoOrography5000)
+        schaerAdvect = SchaerAdvectBuilder(
+                mountainHeight=6000,
+                velocityField=os.path.join('src/schaerAdvect/velocityField'),
+                parallel=parallel,
+                fast=fast,
+                fastMesh=advect.meshNoOrography5000)
 
         self.btfLinearUpwindCollated = schaerAdvect.collated(
                 'schaerAdvect-btf-linearUpwind-collated',
-                mountainHeight=6000,
                 fvSchemes=os.path.join('src/schaerAdvect/linearUpwind'),
                 tests=[
                     SchaerAdvectCollated.Test('schaerAdvect-btf-5000-linearUpwind', 5000,     advect.meshBtf5000_6000m, timestep=40),
@@ -23,7 +27,6 @@ class SchaerAdvect:
 
         self.btfCubicFitCollated = schaerAdvect.collated(
                 'schaerAdvect-btf-cubicFit-collated',
-                mountainHeight=6000,
                 fvSchemes=os.path.join('src/schaerAdvect/cubicFit'),
                 tests=[
                     SchaerAdvectCollated.Test('schaerAdvect-btf-5000-cubicFit', 5000,     advect.meshBtf5000_6000m, timestep=40),
@@ -39,7 +42,6 @@ class SchaerAdvect:
 
         self.cutCellLinearUpwindCollated = schaerAdvect.collated(
                 'schaerAdvect-cutCell-linearUpwind-collated',
-                mountainHeight=6000,
                 fvSchemes=os.path.join('src/schaerAdvect/linearUpwind'),
                 tests=[
                     SchaerAdvectCollated.Test('schaerAdvect-cutCell-5000-linearUpwind', 5000,     advect.meshCutCell5000_6000m, timestep=200),
@@ -55,7 +57,6 @@ class SchaerAdvect:
 
         self.cutCellCubicFitCollated = schaerAdvect.collated(
                 'schaerAdvect-cutCell-cubicFit-collated',
-                mountainHeight=6000,
                 fvSchemes=os.path.join('src/schaerAdvect/cubicFit'),
                 tests=[
                     SchaerAdvectCollated.Test('schaerAdvect-cutCell-5000-cubicFit', 5000,     advect.meshCutCell5000_6000m, timestep=200),
