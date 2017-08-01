@@ -7,4 +7,4 @@ FoamFile {
 }
 
 type		schaerRadial;
-
+centre		(-50e3 0 12e3);
