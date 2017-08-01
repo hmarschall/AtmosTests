@@ -17,6 +17,7 @@ class AtmosTests:
             self.fast = bool(distutils.util.strtobool(config['default']['fast_standins']))
 
         self.build = Build([
+            'generators/advect.py',
             'generators/deformationSphere.py',
             'generators/mountainAdvect.py',
             'generators/resting.py',
@@ -25,10 +26,12 @@ class AtmosTests:
 
         generators.Solvers(self.parallel).addTo(self.build)
 
+        advect = generators.Advect()
+        advect.addTo(self.build)
+        generators.SchaerAdvect(advect, self.parallel, self.fast).addTo(self.build)
         generators.DeformationSphere(self.parallel, self.fast).addTo(self.build)
-        generators.MountainAdvect(self.parallel, self.fast).addTo(self.build)
+        generators.MountainAdvect(advect, self.parallel, self.fast).addTo(self.build)
         generators.Resting(self.parallel, self.fast).addTo(self.build)
-        generators.SchaerAdvect(self.parallel, self.fast).addTo(self.build)
 
     def write(self):
         self.build.write()

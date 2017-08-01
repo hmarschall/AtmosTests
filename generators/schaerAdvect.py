@@ -2,35 +2,23 @@ from ninjaopenfoam import BlockMesh, SchaerAdvectBuilder, SchaerAdvectCollated, 
 import os
 
 class SchaerAdvect:
-    def __init__(self, parallel, fast):
-        meshNoOrography5000 = BlockMesh('schaerAdvect-mesh-noOrography-5000', os.path.join('src/schaerAdvect/mesh-noOrography-5000'))
-        meshNoOrography2500 = BlockMesh('schaerAdvect-mesh-noOrography-2500', os.path.join('src/schaerAdvect/mesh-noOrography-2500'))
-        meshNoOrography2000 = BlockMesh('schaerAdvect-mesh-noOrography-2000', os.path.join('src/schaerAdvect/mesh-noOrography-2000'))
-        meshNoOrography1250 = BlockMesh('schaerAdvect-mesh-noOrography-1250', os.path.join('src/schaerAdvect/mesh-noOrography-1250'))
-        meshNoOrography1000 = BlockMesh('schaerAdvect-mesh-noOrography-1000', os.path.join('src/schaerAdvect/mesh-noOrography-1000'))
-        meshNoOrography667 = BlockMesh('schaerAdvect-mesh-noOrography-667', os.path.join('src/schaerAdvect/mesh-noOrography-667'))
-        meshNoOrography500 = BlockMesh('schaerAdvect-mesh-noOrography-500', os.path.join('src/schaerAdvect/mesh-noOrography-500'))
-        meshNoOrography333 = BlockMesh('schaerAdvect-mesh-noOrography-333', os.path.join('src/schaerAdvect/mesh-noOrography-333'))
-        meshNoOrography250 = BlockMesh('schaerAdvect-mesh-noOrography-250', os.path.join('src/schaerAdvect/mesh-noOrography-250'))
-
-        meshBtf5000 = TerrainFollowingMesh('schaerAdvect-mesh-btf-5000', meshNoOrography5000, os.path.join('src/schaerAdvect/mesh-btf'))
-        meshBtf2500 = TerrainFollowingMesh('schaerAdvect-mesh-btf-2500', meshNoOrography2500, os.path.join('src/schaerAdvect/mesh-btf'))
-        meshBtf2000 = TerrainFollowingMesh('schaerAdvect-mesh-btf-2000', meshNoOrography2000, os.path.join('src/schaerAdvect/mesh-btf'))
-        meshBtf1250 = TerrainFollowingMesh('schaerAdvect-mesh-btf-1250', meshNoOrography1250, os.path.join('src/schaerAdvect/mesh-btf'))
-        meshBtf1000 = TerrainFollowingMesh('schaerAdvect-mesh-btf-1000', meshNoOrography1000, os.path.join('src/schaerAdvect/mesh-btf'))
-        meshBtf667 = TerrainFollowingMesh('schaerAdvect-mesh-btf-667', meshNoOrography667, os.path.join('src/schaerAdvect/mesh-btf'))
-        meshBtf500 = TerrainFollowingMesh('schaerAdvect-mesh-btf-500', meshNoOrography500, os.path.join('src/schaerAdvect/mesh-btf'))
-        meshBtf333 = TerrainFollowingMesh('schaerAdvect-mesh-btf-333', meshNoOrography333, os.path.join('src/schaerAdvect/mesh-btf'))
-        meshBtf250 = TerrainFollowingMesh('schaerAdvect-mesh-btf-250', meshNoOrography250, os.path.join('src/schaerAdvect/mesh-btf'))
+    def __init__(self, advect, parallel, fast):
+        meshBtf5000 = TerrainFollowingMesh('schaerAdvect-mesh-btf-5000', advect.meshNoOrography5000, os.path.join('src/schaerAdvect/mesh-btf'))
+        meshBtf2500 = TerrainFollowingMesh('schaerAdvect-mesh-btf-2500', advect.meshNoOrography2500, os.path.join('src/schaerAdvect/mesh-btf'))
+        meshBtf2000 = TerrainFollowingMesh('schaerAdvect-mesh-btf-2000', advect.meshNoOrography2000, os.path.join('src/schaerAdvect/mesh-btf'))
+        meshBtf1250 = TerrainFollowingMesh('schaerAdvect-mesh-btf-1250', advect.meshNoOrography1250, os.path.join('src/schaerAdvect/mesh-btf'))
+        meshBtf1000 = TerrainFollowingMesh('schaerAdvect-mesh-btf-1000', advect.meshNoOrography1000, os.path.join('src/schaerAdvect/mesh-btf'))
+        meshBtf667 = TerrainFollowingMesh('schaerAdvect-mesh-btf-667', advect.meshNoOrography667, os.path.join('src/schaerAdvect/mesh-btf'))
+        meshBtf500 = TerrainFollowingMesh('schaerAdvect-mesh-btf-500', advect.meshNoOrography500, os.path.join('src/schaerAdvect/mesh-btf'))
+        meshBtf333 = TerrainFollowingMesh('schaerAdvect-mesh-btf-333', advect.meshNoOrography333, os.path.join('src/schaerAdvect/mesh-btf'))
+        meshBtf250 = TerrainFollowingMesh('schaerAdvect-mesh-btf-250', advect.meshNoOrography250, os.path.join('src/schaerAdvect/mesh-btf'))
 
         self.meshes = [
-                meshNoOrography5000, meshNoOrography2500, meshNoOrography2000, meshNoOrography1250, meshNoOrography1000, 
-                meshNoOrography667, meshNoOrography500, meshNoOrography333, meshNoOrography250, 
                 meshBtf5000, meshBtf2500, meshBtf2000, meshBtf1250, meshBtf1000, 
                 meshBtf667, meshBtf500, meshBtf333, meshBtf250
         ]
 
-        schaerAdvect = SchaerAdvectBuilder(parallel, fast, fastMesh=meshNoOrography5000)
+        schaerAdvect = SchaerAdvectBuilder(parallel, fast, fastMesh=advect.meshNoOrography5000)
 
         self.btfLinearUpwindCollated = schaerAdvect.collated(
                 'schaerAdvect-btf-linearUpwind-collated',
