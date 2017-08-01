@@ -5,25 +5,14 @@ import os
 
 class MountainAdvect:
     def __init__(self, advect, parallel, fast):
-        createPatchDict = os.path.join('src/mountainAdvect/createPatchDict')
 
         meshBtf1000_3000m = TerrainFollowingMesh('mountainAdvect-mesh-btf-1000-3000m', advect.meshNoOrography1000, os.path.join('src/mountainAdvect/mesh-btf-3000m'))
         meshBtf1000_4000m = TerrainFollowingMesh('mountainAdvect-mesh-btf-1000-4000m', advect.meshNoOrography1000, os.path.join('src/mountainAdvect/mesh-btf-4000m'))
         meshBtf1000_5000m = TerrainFollowingMesh('mountainAdvect-mesh-btf-1000-5000m', advect.meshNoOrography1000, os.path.join('src/mountainAdvect/mesh-btf-5000m'))
 
-        meshCutCell1000_3000m = CutCellMesh('mountainAdvect-mesh-cutCell-1000-3000m', os.path.join('src/mountainAdvect/mesh-cutCell-1000-3000m'), createPatchDict)
-        meshCutCell1000_4000m = CutCellMesh('mountainAdvect-mesh-cutCell-1000-4000m', os.path.join('src/mountainAdvect/mesh-cutCell-1000-4000m'), createPatchDict)
-        meshCutCell1000_5000m = CutCellMesh('mountainAdvect-mesh-cutCell-1000-5000m', os.path.join('src/mountainAdvect/mesh-cutCell-1000-5000m'), createPatchDict)
-        meshCutCell1000_6000m = CutCellMesh('mountainAdvect-mesh-cutCell-1000-6000m', os.path.join('src/mountainAdvect/mesh-cutCell-1000-6000m'), createPatchDict)
-
-        meshCutCell5000_6000m = CutCellMesh('mountainAdvect-mesh-cutCell-5000-6000m', os.path.join('src/mountainAdvect/mesh-cutCell-5000-6000m'), createPatchDict)
-        meshCutCell2500_6000m = CutCellMesh('mountainAdvect-mesh-cutCell-2500-6000m', os.path.join('src/mountainAdvect/mesh-cutCell-2500-6000m'), createPatchDict)
-        meshCutCell2000_6000m = CutCellMesh('mountainAdvect-mesh-cutCell-2000-6000m', os.path.join('src/mountainAdvect/mesh-cutCell-2000-6000m'), createPatchDict)
-        meshCutCell1250_6000m = CutCellMesh('mountainAdvect-mesh-cutCell-1250-6000m', os.path.join('src/mountainAdvect/mesh-cutCell-1250-6000m'), createPatchDict)
-        meshCutCell667_6000m = CutCellMesh('mountainAdvect-mesh-cutCell-667-6000m', os.path.join('src/mountainAdvect/mesh-cutCell-667-6000m'), createPatchDict)
-        meshCutCell500_6000m = CutCellMesh('mountainAdvect-mesh-cutCell-500-6000m', os.path.join('src/mountainAdvect/mesh-cutCell-500-6000m'), createPatchDict)
-        meshCutCell333_6000m = CutCellMesh('mountainAdvect-mesh-cutCell-333-6000m', os.path.join('src/mountainAdvect/mesh-cutCell-333-6000m'), createPatchDict)
-        meshCutCell250_6000m = CutCellMesh('mountainAdvect-mesh-cutCell-250-6000m', os.path.join('src/mountainAdvect/mesh-cutCell-250-6000m'), createPatchDict)
+        meshCutCell1000_3000m = CutCellMesh('mountainAdvect-mesh-cutCell-1000-3000m', os.path.join('src/mountainAdvect/mesh-cutCell-1000-3000m'), advect.createPatchDict)
+        meshCutCell1000_4000m = CutCellMesh('mountainAdvect-mesh-cutCell-1000-4000m', os.path.join('src/mountainAdvect/mesh-cutCell-1000-4000m'), advect.createPatchDict)
+        meshCutCell1000_5000m = CutCellMesh('mountainAdvect-mesh-cutCell-1000-5000m', os.path.join('src/mountainAdvect/mesh-cutCell-1000-5000m'), advect.createPatchDict)
 
         meshSlantedCell1000_3000m = SlantedCellMesh('mountainAdvect-mesh-slantedCell-1000-3000m', advect.meshNoOrography1000, os.path.join('src/mountainAdvect/mesh-slantedCell-3000m'))
         meshSlantedCell1000_4000m = SlantedCellMesh('mountainAdvect-mesh-slantedCell-1000-4000m', advect.meshNoOrography1000, os.path.join('src/mountainAdvect/mesh-slantedCell-4000m'))
@@ -41,9 +30,7 @@ class MountainAdvect:
 
         self.meshes = [
                 meshBtf1000_3000m, meshBtf1000_4000m, meshBtf1000_5000m,
-                meshCutCell1000_3000m, meshCutCell1000_4000m, meshCutCell1000_5000m, meshCutCell1000_6000m,
-                meshCutCell5000_6000m, meshCutCell2500_6000m, meshCutCell2000_6000m, meshCutCell1250_6000m,
-                meshCutCell667_6000m, meshCutCell500_6000m, meshCutCell333_6000m, meshCutCell250_6000m,
+                meshCutCell1000_3000m, meshCutCell1000_4000m, meshCutCell1000_5000m,
                 meshSlantedCell1000_3000m, meshSlantedCell1000_4000m, meshSlantedCell1000_5000m,
                 meshSlantedCell5000_6000m, meshSlantedCell2500_6000m, meshSlantedCell2000_6000m,
                 meshSlantedCell1250_6000m, meshSlantedCell1000_6000m, meshSlantedCell667_6000m,
@@ -93,7 +80,7 @@ class MountainAdvect:
                     MountainAdvectCollatedByMountainHeight.Test('mountainAdvect-h0-cutCell-1000-3000m-linearUpwind', 3000, meshCutCell1000_3000m, velocityField3000m, timestep=1.6),
                     MountainAdvectCollatedByMountainHeight.Test('mountainAdvect-h0-cutCell-1000-4000m-linearUpwind', 4000, meshCutCell1000_4000m, velocityField4000m, timestep=1.6),
                     MountainAdvectCollatedByMountainHeight.Test('mountainAdvect-h0-cutCell-1000-5000m-linearUpwind', 5000, meshCutCell1000_5000m, velocityField5000m, timestep=0.5),
-                    MountainAdvectCollatedByMountainHeight.Test('mountainAdvect-h0-cutCell-1000-6000m-linearUpwind', 6000, meshCutCell1000_6000m, velocityField6000m, timestep=1.6)
+                    MountainAdvectCollatedByMountainHeight.Test('mountainAdvect-h0-cutCell-1000-6000m-linearUpwind', 6000, advect.meshCutCell1000_6000m, velocityField6000m, timestep=1.6)
         ])
 
         self.cutCellCubicFit = mountainAdvect.collateByMountainHeight(
@@ -105,7 +92,7 @@ class MountainAdvect:
                     MountainAdvectCollatedByMountainHeight.Test('mountainAdvect-h0-cutCell-1000-3000m-cubicFit', 3000, meshCutCell1000_3000m, velocityField3000m, timestep=1.6),
                     MountainAdvectCollatedByMountainHeight.Test('mountainAdvect-h0-cutCell-1000-4000m-cubicFit', 4000, meshCutCell1000_4000m, velocityField4000m, timestep=1.6),
                     MountainAdvectCollatedByMountainHeight.Test('mountainAdvect-h0-cutCell-1000-5000m-cubicFit', 5000, meshCutCell1000_5000m, velocityField5000m, timestep=0.5),
-                    MountainAdvectCollatedByMountainHeight.Test('mountainAdvect-h0-cutCell-1000-6000m-cubicFit', 6000, meshCutCell1000_6000m, velocityField6000m, timestep=1.6)
+                    MountainAdvectCollatedByMountainHeight.Test('mountainAdvect-h0-cutCell-1000-6000m-cubicFit', 6000, advect.meshCutCell1000_6000m, velocityField6000m, timestep=1.6)
         ])
 
         self.slantedCellLinearUpwind = mountainAdvect.collateByMountainHeight(
@@ -157,15 +144,15 @@ class MountainAdvect:
                 velocityField=os.path.join('src/mountainAdvect/velocityField-6000m'),
                 fvSchemes=os.path.join('src/schaerAdvect/cubicFit'),
                 tests=[
-                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-5000-6000m-cubicFit', 5000, meshCutCell5000_6000m, timestep=400),
-                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-2500-6000m-cubicFit', 2500, meshCutCell2500_6000m, timestep=36),
-                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-2000-6000m-cubicFit', 2000, meshCutCell2000_6000m, timestep=12),
-                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-1250-6000m-cubicFit', 1250, meshCutCell1250_6000m, timestep=4.5),
-                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-1000-6000m-cubicFit', 1000, meshCutCell1000_6000m, timestep=10),
-                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-667-6000m-cubicFit', 667, meshCutCell667_6000m, timestep=0.85),
-                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-500-6000m-cubicFit', 500, meshCutCell500_6000m, timestep=0.85),
-                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-333-6000m-cubicFit', 333, meshCutCell333_6000m, timestep=0.35),
-                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-250-6000m-cubicFit', 250, meshCutCell250_6000m, timestep=0.32)
+                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-5000-6000m-cubicFit', 5000, advect.meshCutCell5000_6000m, timestep=400),
+                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-2500-6000m-cubicFit', 2500, advect.meshCutCell2500_6000m, timestep=36),
+                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-2000-6000m-cubicFit', 2000, advect.meshCutCell2000_6000m, timestep=12),
+                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-1250-6000m-cubicFit', 1250, advect.meshCutCell1250_6000m, timestep=4.5),
+                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-1000-6000m-cubicFit', 1000, advect.meshCutCell1000_6000m, timestep=10),
+                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-667-6000m-cubicFit', 667, advect.meshCutCell667_6000m, timestep=0.85),
+                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-500-6000m-cubicFit', 500, advect.meshCutCell500_6000m, timestep=0.85),
+                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-333-6000m-cubicFit', 333, advect.meshCutCell333_6000m, timestep=0.35),
+                    MountainAdvectCollatedByMeshSpacing.Test('mountainAdvect-maxdt-cutCell-250-6000m-cubicFit', 250, advect.meshCutCell250_6000m, timestep=0.32)
         ])
 
         self.maxdtSlantedCell = mountainAdvect.collateByMeshSpacing(

@@ -7,3 +7,5 @@ FoamFile {
 }
 
 type			horizontal;
+zeroVelocityHeight	7e3;
+maxVelocityHeight	8e3;
