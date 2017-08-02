@@ -1,4 +1,5 @@
-from ninjaopenfoam import BlockMesh, CutCellMesh, SlantedCellMesh, TerrainFollowingMesh
+from ninjaopenfoam import BlockMesh, CutCellMesh, RestingBuilder, RestingCollated, \
+        SlantedCellMesh, TerrainFollowingMesh
 import ninjaopenfoam as ninja
 
 import os
@@ -25,38 +26,6 @@ class Resting:
         meshSlantedCell2000m = SlantedCellMesh('resting-mesh-slantedCell-2000m', meshNoOrography, os.path.join('src/resting/mesh-slantedCell-2000m'))
         meshSlantedCell3000m = SlantedCellMesh('resting-mesh-slantedCell-3000m', meshNoOrography, os.path.join('src/resting/mesh-slantedCell-3000m'))
 
-        self.btf1000mLinearUpwind = ninja.Resting('resting-btf-1000m-linearUpwind', meshBtf1000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-        self.btf2000mLinearUpwind = ninja.Resting('resting-btf-2000m-linearUpwind', meshBtf2000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-        self.btf3000mLinearUpwind = ninja.Resting('resting-btf-3000m-linearUpwind', meshBtf3000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-
-        self.btf1000mCubicFit = ninja.Resting('resting-btf-1000m-cubicFit', meshBtf1000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-        self.btf2000mCubicFit = ninja.Resting('resting-btf-2000m-cubicFit', meshBtf2000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-        self.btf3000mCubicFit = ninja.Resting('resting-btf-3000m-cubicFit', meshBtf3000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-
-        self.sleve1000mLinearUpwind = ninja.Resting('resting-sleve-1000m-linearUpwind', meshSleve1000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-        self.sleve2000mLinearUpwind = ninja.Resting('resting-sleve-2000m-linearUpwind', meshSleve2000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-        self.sleve3000mLinearUpwind = ninja.Resting('resting-sleve-3000m-linearUpwind', meshSleve3000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-
-        self.sleve1000mCubicFit = ninja.Resting('resting-sleve-1000m-cubicFit', meshSleve1000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-        self.sleve2000mCubicFit = ninja.Resting('resting-sleve-2000m-cubicFit', meshSleve2000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-        self.sleve3000mCubicFit = ninja.Resting('resting-sleve-3000m-cubicFit', meshSleve3000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-
-        self.cutCell1000mLinearUpwind = ninja.Resting('resting-cutCell-1000m-linearUpwind', meshCutCell1000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-        self.cutCell2000mLinearUpwind = ninja.Resting('resting-cutCell-2000m-linearUpwind', meshCutCell2000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-        self.cutCell3000mLinearUpwind = ninja.Resting('resting-cutCell-3000m-linearUpwind', meshCutCell3000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-
-        self.cutCell1000mCubicFit = ninja.Resting('resting-cutCell-1000m-cubicFit', meshCutCell1000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-        self.cutCell2000mCubicFit = ninja.Resting('resting-cutCell-2000m-cubicFit', meshCutCell2000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-        self.cutCell3000mCubicFit = ninja.Resting('resting-cutCell-3000m-cubicFit', meshCutCell3000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-
-        self.slantedCell1000mLinearUpwind = ninja.Resting('resting-slantedCell-1000m-linearUpwind', meshSlantedCell1000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-        self.slantedCell2000mLinearUpwind = ninja.Resting('resting-slantedCell-2000m-linearUpwind', meshSlantedCell2000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-        self.slantedCell3000mLinearUpwind = ninja.Resting('resting-slantedCell-3000m-linearUpwind', meshSlantedCell3000m, os.path.join('src/resting/linearUpwind'), parallel, fast)
-
-        self.slantedCell1000mCubicFit = ninja.Resting('resting-slantedCell-1000m-cubicFit', meshSlantedCell1000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-        self.slantedCell2000mCubicFit = ninja.Resting('resting-slantedCell-2000m-cubicFit', meshSlantedCell2000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-        self.slantedCell3000mCubicFit = ninja.Resting('resting-slantedCell-3000m-cubicFit', meshSlantedCell3000m, os.path.join('src/resting/cubicFit'), parallel, fast)
-
         self.meshes = [
                 meshNoOrography,
                 meshBtf1000m, meshBtf2000m, meshBtf3000m,
@@ -65,29 +34,57 @@ class Resting:
                 meshSlantedCell1000m, meshSlantedCell2000m, meshSlantedCell3000m
         ]
 
+        # maxwByMountainHeight
+
+        resting = RestingBuilder(parallel, fast, fastMesh=meshNoOrography)
+
+        self.btfLinearUpwind = resting.collateByMountainHeight(
+                'resting-btf-linearUpwind-collated',
+                fvSchemes=os.path.join('src/resting/linearUpwind'),
+                tests=[
+                    RestingCollated.Test('resting-btf-0m-linearUpwind', 0, meshNoOrography, timestep=25),
+                    RestingCollated.Test('resting-btf-1000m-linearUpwind', 1000, meshBtf1000m, timestep=25),
+                    RestingCollated.Test('resting-btf-2000m-linearUpwind', 2000, meshBtf2000m, timestep=25),
+                    RestingCollated.Test('resting-btf-3000m-linearUpwind', 3000, meshBtf3000m, timestep=25),
+        ])
+
+        self.sleveLinearUpwind = resting.collateByMountainHeight(
+                'resting-sleve-linearUpwind-collated',
+                fvSchemes=os.path.join('src/resting/linearUpwind'),
+                tests=[
+                    RestingCollated.Test('resting-sleve-0m-linearUpwind', 0, meshNoOrography, timestep=25),
+                    RestingCollated.Test('resting-sleve-1000m-linearUpwind', 1000, meshSleve1000m, timestep=25),
+                    RestingCollated.Test('resting-sleve-2000m-linearUpwind', 2000, meshSleve2000m, timestep=25),
+                    RestingCollated.Test('resting-sleve-3000m-linearUpwind', 3000, meshSleve3000m, timestep=25),
+        ])
+
+        self.cutCellLinearUpwind = resting.collateByMountainHeight(
+                'resting-cutCell-linearUpwind-collated',
+                fvSchemes=os.path.join('src/resting/linearUpwind'),
+                tests=[
+                    RestingCollated.Test('resting-cutCell-0m-linearUpwind', 0, meshNoOrography, timestep=25),
+                    RestingCollated.Test('resting-cutCell-1000m-linearUpwind', 1000, meshCutCell1000m, timestep=25),
+                    RestingCollated.Test('resting-cutCell-2000m-linearUpwind', 2000, meshCutCell2000m, timestep=25),
+                    RestingCollated.Test('resting-cutCell-3000m-linearUpwind', 3000, meshCutCell3000m, timestep=25),
+        ])
+
+        self.slantedCellLinearUpwind = resting.collateByMountainHeight(
+                'resting-slantedCell-linearUpwind-collated',
+                fvSchemes=os.path.join('src/resting/linearUpwind'),
+                tests=[
+                    RestingCollated.Test('resting-slantedCell-0m-linearUpwind', 0, meshNoOrography, timestep=25),
+                    RestingCollated.Test('resting-slantedCell-1000m-linearUpwind', 1000, meshSlantedCell1000m, timestep=25),
+                    RestingCollated.Test('resting-slantedCell-2000m-linearUpwind', 2000, meshSlantedCell2000m, timestep=25),
+                    RestingCollated.Test('resting-slantedCell-3000m-linearUpwind', 3000, meshSlantedCell3000m, timestep=25),
+        ])
+
     def addTo(self, build):
         build.addAll(self.meshes)
-        build.add(self.btf1000mLinearUpwind)
-        build.add(self.btf2000mLinearUpwind)
-        build.add(self.btf3000mLinearUpwind)
-        build.add(self.btf1000mCubicFit)
-        build.add(self.btf2000mCubicFit)
-        build.add(self.btf3000mCubicFit)
-        build.add(self.sleve1000mLinearUpwind)
-        build.add(self.sleve2000mLinearUpwind)
-        build.add(self.sleve3000mLinearUpwind)
-        build.add(self.sleve1000mCubicFit)
-        build.add(self.sleve2000mCubicFit)
-        build.add(self.sleve3000mCubicFit)
-        build.add(self.cutCell1000mLinearUpwind)
-        build.add(self.cutCell2000mLinearUpwind)
-        build.add(self.cutCell3000mLinearUpwind)
-        build.add(self.cutCell1000mCubicFit)
-        build.add(self.cutCell2000mCubicFit)
-        build.add(self.cutCell3000mCubicFit)
-        build.add(self.slantedCell1000mLinearUpwind)
-        build.add(self.slantedCell2000mLinearUpwind)
-        build.add(self.slantedCell3000mLinearUpwind)
-        build.add(self.slantedCell1000mCubicFit)
-        build.add(self.slantedCell2000mCubicFit)
-        build.add(self.slantedCell3000mCubicFit)
+        build.add(self.btfLinearUpwind)
+        build.addAll(self.btfLinearUpwind.tests)
+        build.add(self.sleveLinearUpwind)
+        build.addAll(self.sleveLinearUpwind.tests)
+        build.add(self.cutCellLinearUpwind)
+        build.addAll(self.cutCellLinearUpwind.tests)
+        build.add(self.slantedCellLinearUpwind)
+        build.addAll(self.slantedCellLinearUpwind.tests)
